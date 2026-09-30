@@ -262,6 +262,11 @@
   }
 }
 
+/* Corner handles on the preview: keep the ring for keyboard users only. */
+svg circle[role='button']:focus:not(:focus-visible) {
+  outline: none;
+}
+
 dialog.viewer {
   padding: 0;
   border: 0;

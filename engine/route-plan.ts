@@ -11,8 +11,12 @@ import { repairAreas } from '@/copy/repair-areas';
 import { services } from '@/copy/services';
 import { siteIsLive } from '@/engine/go-live';
 
-/** Pages that are useful to visitors but not worth a search result. */
-const NEVER_INDEX = new Set(['/privacy-notice']);
+/**
+ * Pages that are useful to visitors but not worth a search result, or not
+ * launched yet. /see-it-on-your-shop stays out of search until it is linked
+ * from the site (the owner will decide where).
+ */
+const NEVER_INDEX = new Set(['/privacy-notice', '/see-it-on-your-shop']);
 
 /** Install cities published as pages (the configured list, filtered to written copy). */
 export function publishedCitySlugs(): string[] {
@@ -36,6 +40,7 @@ export function publicPaths(): string[] {
     '/repairs',
     ...repairAreas().map((a) => `/repairs/${a.slug}`),
     '/our-work',
+    '/see-it-on-your-shop',
     '/prices',
     '/get-a-quote',
     ...guides().map((g) => `/guides/${g.slug}`),

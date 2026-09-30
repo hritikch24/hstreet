@@ -102,6 +102,7 @@ the photo check. They are dev tools; they don't run on Vercel.
 | Enquiries | `ui/QuoteForm.tsx` → `/api/enquiries` (+ `/api/enquiries/reach`); `engine/enquiry-shape.ts` (shared validation), `engine/coverage.ts` (postcodes.io + radius), `engine/mailer.ts` (Resend over fetch) |
 | Back office | `app/hq/*`, `app/api/hq/*`; `proxy.ts` + `engine/hq-gate.ts` (key → cookie, 404 otherwise), `engine/hq-session.ts` (second check in every handler), `engine/stats.ts` (metrics JSON), `engine/reply-writer.ts` (Claude over fetch), `engine/paperwork.ts` |
 | Database | `prisma/schema.prisma`: `visits`, `phone_taps`, `enquiries`, `enquiry_photos`, `reply_drafts`, `clients`, `paperwork` |
+| Shopfront preview (`/see-it-on-your-shop`) | `ui/visualiser/Visualiser.tsx` (photo, corner handles, loupe, controls, send), `ui/visualiser/draw-front.ts` (draws the shopfront or shutter flat), `ui/visualiser/warp.ts` (homography + WebGL2 shader), `copy/front-options.ts` (colours and options the firm supplies; TODO owner confirms). Hands off to the quote form through `sessionStorage['hss.preview']`. |
 | Checks and tools | `tools/check-*.{mjs,py}`, `tools/portfolio.mjs` (reads the registry), `tools/indexnow.mjs`, `tools/prepare-photos.py` |
 
 ## Design system: British shop signage
@@ -145,6 +146,17 @@ the photo check. They are dev tools; they don't run on Vercel.
   `absolute('/')` is the bare origin.
 
 ## Decision log
+
+- **2026-10-01 (shopfront preview):** `/see-it-on-your-shop` lets a customer
+  mark the four corners of their opening on their own photo and see a new
+  shopfront or shutter fitted into it, then send it with a quote request
+  (preview + original photo + a one-line design summary). No AI, no
+  dependencies, nothing uploaded unless they send it: a homography maps the
+  flat drawing into the quad and a WebGL2 shader applies it. Deliberately a
+  preview, not a drawing, and only shows options the firm supplies. Not
+  linked from the site yet and noindex (`NEVER_INDEX` in
+  `engine/route-plan.ts`) until the owner decides where it goes; to launch it,
+  link it and remove it from that set.
 
 - **2026-10-01 (second pass, SEO/GEO and UX):**
   - Body font changed to Public Sans: the previous face slashed its zeros,

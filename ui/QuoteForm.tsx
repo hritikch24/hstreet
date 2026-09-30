@@ -28,7 +28,7 @@ interface Props {
 
 type Reach = { status: 'inside' | 'outside' | 'unknown'; miles?: number; town?: string };
 
-async function shrink(file: File): Promise<Blob> {
+async function shrink(file: Blob): Promise<Blob> {
   try {
     const bitmap = await createImageBitmap(file);
     const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
@@ -47,6 +47,22 @@ async function shrink(file: File): Promise<Blob> {
 }
 
 const noSubscribe = () => () => {};
+
+/** Set by the "see it on your shop" preview when the customer asks for a price. */
+const PREVIEW_KEY = 'hss.preview';
+interface Preview {
+  summary: string;
+  image: string;
+  original: string;
+}
+function readPreview(): string | null {
+  try {
+    return sessionStorage.getItem(PREVIEW_KEY);
+  } catch {
+    return null;
+  }
+}
+const blobFromDataUrl = (url: string) => fetch(url).then((r) => r.blob());
 
 function prefill(search: string): { job: JobType; service: string } {
   const q = new URLSearchParams(search);
@@ -81,6 +97,16 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
   const [message, setMessage] = useState('');
   const [ref, setRef] = useState('');
   const [photos, setPhotos] = useState<File[]>([]);
+  const previewRaw = useSyncExternalStore(noSubscribe, readPreview, () => null);
+  const [dropPreview, setDropPreview] = useState(false);
+  let preview: Preview | null = null;
+  if (!dropPreview && previewRaw && query.includes('preview=1')) {
+    try {
+      preview = JSON.parse(previewRaw) as Preview;
+    } catch {
+      preview = null;
+    }
+  }
   const placeRef = useRef<HTMLInputElement>(null);
 
 
@@ -124,12 +150,24 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
 
     setProblems({});
     setState('sending');
-    for (const p of photos.slice(0, MAX_PHOTOS)) data.append('photos', await shrink(p), p.name.replace(/\.\w+$/, '.jpg'));
+    let room = MAX_PHOTOS;
+    if (preview) {
+      data.set('message', [preview.summary, String(data.get('message') ?? '')].filter(Boolean).join('\n\n'));
+      for (const [name, url] of [['preview.jpg', preview.image], ['my-shop.jpg', preview.original]] as const) {
+        if (room-- > 0) data.append('photos', await shrink(await blobFromDataUrl(url)), name);
+      }
+    }
+    for (const p of photos.slice(0, Math.max(0, room))) data.append('photos', await shrink(p), p.name.replace(/\.\w+$/, '.jpg'));
 
     try {
       const res = await fetch('/api/enquiries', { method: 'POST', body: data });
       const body = (await res.json()) as { ok: boolean; ref?: string; problems?: Problems; outside?: boolean; message?: string; miles?: number };
       if (body.ok) {
+        try {
+          sessionStorage.removeItem(PREVIEW_KEY);
+        } catch {
+          // Nothing to tidy up if storage is blocked.
+        }
         setRef(body.ref ?? '');
         setState('done');
         return;
@@ -334,8 +372,22 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
       </div>
 
       <div>
+        {preview && (
+          <div className="mb-4 flex gap-3 rounded-[8px] border-2 border-navy bg-white p-3">
+            {/* A local preview image held in the browser; next/image can't optimise it. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={preview.image} alt="Your preview of the new front" className="h-20 w-28 flex-none rounded object-cover" />
+            <div className="min-w-0 text-[0.95rem]">
+              <p className="font-bold text-navy">Your preview is attached, with your original photo</p>
+              <p className="mt-0.5 text-slate">{preview.summary}</p>
+              <button type="button" className="mt-1 font-bold text-signal underline" onClick={() => setDropPreview(true)}>
+                Don’t send the preview
+              </button>
+            </div>
+          </div>
+        )}
         <label htmlFor="photos" className="label">
-          Photos <span className="font-normal text-slate">(optional, up to {MAX_PHOTOS})</span>
+          {preview ? 'More photos' : 'Photos'} <span className="font-normal text-slate">(optional, up to {preview ? MAX_PHOTOS - 2 : MAX_PHOTOS})</span>
         </label>
         <input
           id="photos"
