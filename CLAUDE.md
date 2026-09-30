@@ -69,6 +69,15 @@ here.
 11. British English, in the voice of someone who fits shutters. No filler.
     FAQ headings phrased the way a shop owner asks.
 
+## Hosting
+
+Vercel project `hstreet` (team `team-rockstar`), deployed from the private repo
+`hritikch24/hstreet`: **pushing `main` deploys to production**, so confirm with
+the owner before pushing risky changes. Keep the repo private: the docs and
+checks describe the portfolio. Build Command is `npm run vercel-build`;
+`prisma db push` runs on production builds only. Secrets live in Vercel env
+vars (Production, Sensitive), never in the repo.
+
 ## Before saying anything works
 
 ```bash

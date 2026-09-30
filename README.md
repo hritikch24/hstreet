@@ -25,6 +25,13 @@ npx next start
 
 With a database, create the tables once: `npm run db:push`.
 
+## Hosting
+
+- **Vercel:** project `hstreet` in the `team-rockstar` team, deployed from the private GitHub repo `hritikch24/hstreet`. Every push to `main` deploys to production. The team is on the Hobby plan, which is for non-commercial use: **upgrade to Pro before launch.**
+- **Build:** the dashboard's Build Command is `npm run vercel-build`. Production builds run `prisma db push` (never with data loss); preview builds skip it and get no database, so test deploys can't touch real enquiries.
+- **Database:** Neon Postgres, database `hstreet`, used by this site only.
+- **Environment variables** are set in Vercel, Production only, as Sensitive: `DATABASE_URL`, `HQ_KEY`, `HQ_STATS_TOKEN`, `INDEXNOW_KEY`. Copies of the generated keys are in the gitignored `.env.hq-secrets` on the machine that set them up.
+
 ## Environment variables
 
 | Variable | What it is |
