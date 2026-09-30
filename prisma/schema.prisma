@@ -1,0 +1,166 @@
+// High Street Shopfronts: first-party analytics, enquiries and back office.
+// Table and column names are snake_case and belong to this site alone.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// One row per page view on a public page.
+model Visit {
+  id          String   @id @default(cuid())
+  visitId     String   @map("visit_id")
+  path        String
+  referrer    String?
+  utmSource   String?  @map("utm_source")
+  utmMedium   String?  @map("utm_medium")
+  utmCampaign String?  @map("utm_campaign")
+  gclid       String?
+  device      String?
+  browser     String?
+  country     String?
+  city        String?
+  /// IPv4 with the last octet zeroed, or IPv6 truncated to /48.
+  ipPrefix    String?  @map("ip_prefix")
+  seenAt      DateTime @default(now()) @map("seen_at")
+
+  @@index([seenAt])
+  @@index([visitId])
+  @@index([path])
+  @@map("visits")
+}
+
+/// A tap on a phone number or WhatsApp link.
+model PhoneTap {
+  id          String   @id @default(cuid())
+  kind        String // "call" | "whatsapp"
+  target      String
+  path        String
+  visitId     String   @map("visit_id")
+  referrer    String?
+  utmSource   String?  @map("utm_source")
+  utmMedium   String?  @map("utm_medium")
+  utmCampaign String?  @map("utm_campaign")
+  device      String?
+  browser     String?
+  country     String?
+  city        String?
+  ipPrefix    String?  @map("ip_prefix")
+  tappedAt    DateTime @default(now()) @map("tapped_at")
+
+  @@index([tappedAt])
+  @@index([visitId])
+  @@map("phone_taps")
+}
+
+/// A quote or repair request from the form.
+model Enquiry {
+  id            String         @id @default(cuid())
+  ref           String         @unique
+  jobType       String         @map("job_type") // "install" | "repair"
+  service       String
+  place         String // what the customer typed: town or postcode
+  postcode      String?
+  town          String?
+  region        String?
+  milesFromBase Float?         @map("miles_from_base")
+  /// null when the place could not be located.
+  inRepairArea  Boolean?       @map("in_repair_area")
+  wants         String         @default("quote") // "quote" | "callback"
+  name          String
+  phone         String
+  email         String?
+  contactBy     String         @default("phone") @map("contact_by")
+  message       String?
+  source        String?
+  landingPath   String?        @map("landing_path")
+  visitId       String?        @map("visit_id")
+  status        String         @default("new") // new | contacted | quoted | won | lost
+  notes         String?
+  receivedAt    DateTime       @default(now()) @map("received_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  photos        EnquiryPhoto[]
+  drafts        ReplyDraft[]
+  client        Client?
+
+  @@index([receivedAt])
+  @@index([jobType])
+  @@index([status])
+  @@map("enquiries")
+}
+
+model EnquiryPhoto {
+  id        String   @id @default(cuid())
+  enquiryId String   @map("enquiry_id")
+  enquiry   Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  mime      String
+  bytes     Bytes
+  sizeBytes Int      @map("size_bytes")
+  addedAt   DateTime @default(now()) @map("added_at")
+
+  @@index([enquiryId])
+  @@map("enquiry_photos")
+}
+
+/// AI-drafted replies, kept so the owner can see what was suggested.
+model ReplyDraft {
+  id        String   @id @default(cuid())
+  enquiryId String   @map("enquiry_id")
+  enquiry   Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  channel   String // "whatsapp" | "email"
+  body      String
+  model     String
+  draftedAt DateTime @default(now()) @map("drafted_at")
+
+  @@index([enquiryId])
+  @@map("reply_drafts")
+}
+
+model Client {
+  id          String      @id @default(cuid())
+  name        String
+  shopName    String?     @map("shop_name")
+  phone       String
+  email       String?
+  siteAddress String?     @map("site_address")
+  town        String?
+  notes       String?
+  enquiryId   String?     @unique @map("enquiry_id")
+  enquiry     Enquiry?    @relation(fields: [enquiryId], references: [id], onDelete: SetNull)
+  addedAt     DateTime    @default(now()) @map("added_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  paperwork   Paperwork[]
+
+  @@index([addedAt])
+  @@map("clients")
+}
+
+/// Quotes and invoices. Money is stored in pence.
+model Paperwork {
+  id            String    @id @default(cuid())
+  kind          String // "quote" | "invoice"
+  ref           String    @unique
+  clientId      String?   @map("client_id")
+  client        Client?   @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  billTo        String    @map("bill_to")
+  billAddress   String?   @map("bill_address")
+  lines         Json
+  subtotalPence Int       @map("subtotal_pence")
+  vatPercent    Float     @default(0) @map("vat_percent")
+  vatPence      Int       @default(0) @map("vat_pence")
+  totalPence    Int       @map("total_pence")
+  terms         String?
+  issuedOn      DateTime  @default(now()) @map("issued_on")
+  dueOn         DateTime? @map("due_on")
+  state         String    @default("draft") // draft | sent | accepted | paid | void
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@index([kind])
+  @@index([clientId])
+  @@map("paperwork")
+}
