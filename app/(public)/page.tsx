@@ -1,14 +1,17 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import { profile, radius } from '@/business/profile';
 import { home } from '@/copy/pages';
 import { photoByName } from '@/copy/job-photos';
-import { installServices, repairServices } from '@/copy/services';
-import { faqNode, firmNode, graph, ownerNode, pageMeta, siteNode } from '@/engine/search-meta';
-import { JsonLd, PhotoGrid, Questions, TwoAreas, WorkPhoto } from '@/ui/blocks';
+import { repairServices } from '@/copy/services';
+import { faqNode, firmNode, graph, ownerNode, pageMeta, pageNode, siteNode } from '@/engine/search-meta';
+import { JsonLd, PhotoGrid, Questions } from '@/ui/blocks';
+import { InstallCards } from '@/ui/InstallCards';
 import { PhotoForQuote } from '@/ui/reach';
 
 export const metadata = pageMeta({ path: '/', title: home().title, description: home().description });
 
-const heroPhotos = ['black-aluminium-shopfront-parade-obscured-glass', 'grey-roller-shutter-full-shop-frontage'];
+const HERO = 'black-aluminium-shopfront-parade-obscured-glass';
 const proof = [
   'black-aluminium-shopfront-sliding-doors-daylight',
   'automatic-sliding-doors-convenience-store-aisles',
@@ -20,92 +23,128 @@ const proof = [
 
 export default function HomePage() {
   const c = home();
+  const hero = photoByName(HERO);
   return (
     <>
-      <JsonLd data={graph(firmNode(), siteNode(), ownerNode(), faqNode('/', c.questions))} />
+      <JsonLd
+        data={graph(
+          pageNode({ path: '/', name: c.title, description: c.description, image: hero.file }),
+          firmNode(),
+          siteNode(),
+          ownerNode(),
+          faqNode('/', c.questions),
+        )}
+      />
 
-      <section className="bg-navy pb-10 text-cream">
-        <div className="shell grid gap-8 pt-8 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:pt-12">
-          <div>
-            <p className="kicker text-cream/70">{c.kicker}</p>
-            <h1 className="mt-3 text-[2.1rem] !text-cream sm:text-[3rem]">{c.h1}</h1>
-            <p className="mt-4 max-w-[60ch] text-[1.125rem] text-cream/90">{c.answer}</p>
+      {/* Hero: the work itself, full bleed, with the offer over it. */}
+      <section className="relative overflow-hidden bg-navy text-cream">
+        <div className="relative aspect-[16/10] sm:aspect-[16/8] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[58%]">
+          <Image src={hero.file} alt={hero.alt} fill preload sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/10 to-transparent lg:bg-gradient-to-r lg:from-navy lg:via-navy/35 lg:to-transparent" />
+          <p className="absolute right-3 bottom-2 hidden rounded bg-navy-deep/70 px-2 py-1 text-xs text-cream/85 lg:block">
+            Our work: {hero.caption.toLowerCase()}
+          </p>
+        </div>
+        <div className="shell relative pt-2 pb-10 lg:flex lg:min-h-[38rem] lg:items-center lg:py-16">
+          <div className="lg:w-[50%]">
+            <p className="kicker text-cream/75">{c.kicker}</p>
+            <h1 className="mt-3 text-[2.2rem] !text-cream sm:text-[3.2rem]">{c.h1}</h1>
+            <p className="mt-4 max-w-[56ch] text-[1.125rem] text-cream/90">{c.answer}</p>
             <div className="mt-6">
               <PhotoForQuote tone="navy" />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 lg:self-center">
-            {heroPhotos.map((name, i) => (
-              <WorkPhoto
-                key={name}
-                photo={photoByName(name)}
-                preload={i === 0}
-                sizes="(min-width: 1024px) 540px, 50vw"
-                className={i === 0 ? 'lg:col-span-2' : 'lg:hidden'}
-              />
+        </div>
+      </section>
+
+      {/* Installs, shown with a real job photo each. */}
+      <section className="shell py-12">
+        <p className="kicker text-signal">Fitted anywhere in the UK</p>
+        <h2 className="mt-2 text-[1.8rem] sm:text-[2.2rem]">{c.linesHeading}</h2>
+        <div className="signrule" aria-hidden="true" />
+        <div className="mt-7">
+          <InstallCards
+            extra={
+              <Link
+                href="/nationwide"
+                className="lift flex h-full flex-col justify-between rounded-[10px] bg-navy p-5 text-cream no-underline"
+              >
+                <span>
+                  <span className="sign block text-[1.4rem] !text-cream">Not in Birmingham?</span>
+                  <span className="mt-2 block text-cream/90">
+                    We fit anywhere in the UK. See how a price, survey and fit work when the team travels to you.
+                  </span>
+                </span>
+                <span className="mt-4 font-bold text-cream underline">How UK-wide installs work</span>
+              </Link>
+            }
+          />
+        </div>
+      </section>
+
+      {/* Repairs: Birmingham only, said plainly. */}
+      <section className="bg-signal text-white">
+        <div className="shell grid gap-6 py-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+          <div>
+            <p className="kicker text-white/80">Repairs and emergencies</p>
+            <h2 className="mt-2 text-[1.8rem] !text-white sm:text-[2.2rem]">Birmingham and up to {radius()} miles</h2>
+            <p className="mt-3 max-w-[52ch] text-white/95">
+              Stuck shutters, broken glass, doors that won’t lock. We aim to reach an emergency{' '}
+              {profile.response.value.emergency}. We don’t do repairs anywhere else.
+            </p>
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-3">
+            {repairServices().map((s) => (
+              <li key={s.path}>
+                <Link href={s.path} className="lift block h-full rounded-[10px] bg-white p-4 text-ink no-underline">
+                  <span className="sign block text-[1.15rem]">{s.name}</span>
+                  <span className="mt-1 block text-[0.95rem]">{s.summary}</span>
+                </Link>
+              </li>
             ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* How a remote price works: a numbered run, not a row of boxes. */}
+      <section className="shell py-12">
+        <h2 className="text-[1.8rem] sm:text-[2.2rem]">{c.howHeading}</h2>
+        <div className="signrule" aria-hidden="true" />
+        <ol className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {c.how.map((h, i) => (
+            <li key={h.step} className="border-t-4 border-navy pt-4">
+              <span className="sign text-[2.4rem] leading-none text-signal">{i + 1}</span>
+              <h3 className="mt-2 text-[1.15rem]">{h.step}</h3>
+              <p className="mt-1">{h.text}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8">
+          <Link href="/guides/photograph-and-measure-your-shopfront" className="btn btn-plain">
+            Which photos and measurements to send
+          </Link>
+        </p>
+      </section>
+
+      <section className="bg-cream-deep py-12">
+        <div className="shell">
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <h2 className="text-[1.8rem] sm:text-[2.2rem]">{c.proofHeading}</h2>
+            <Link href="/our-work" className="font-bold">
+              All our work
+            </Link>
+          </div>
+          <div className="signrule" aria-hidden="true" />
+          <p className="mt-3 text-slate">{c.proofNote}</p>
+          <div className="mt-6">
+            <PhotoGrid photos={proof.map(photoByName)} />
           </div>
         </div>
       </section>
 
-      <section className="shell py-10">
-        <TwoAreas />
-      </section>
-
-      <section className="shell py-4">
-        <h2 className="text-[1.6rem] sm:text-[2rem]">{c.linesHeading}</h2>
-        <ul className="mt-5 divide-y-2 divide-rule border-y-2 border-navy">
-          {[...installServices(), ...repairServices()].map((s) => (
-            <li key={s.path}>
-              <Link
-                href={s.path}
-                className="group grid gap-1 py-4 no-underline sm:grid-cols-[16rem_1fr_auto] sm:items-baseline sm:gap-6"
-              >
-                <span className="sign text-[1.3rem] group-hover:underline">{s.name}</span>
-                <span className="text-ink">{s.summary}</span>
-                <span className="text-sm font-bold text-signal">
-                  {s.kind === 'install' ? 'Fitted UK-wide' : 'Birmingham only'}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="bg-cream-deep py-10">
-        <div className="shell">
-          <h2 className="text-[1.6rem] sm:text-[2rem]">{c.howHeading}</h2>
-          <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {c.how.map((h, i) => (
-              <li key={h.step} className="plate p-5">
-                <span className="sign text-[2rem] text-signal">{i + 1}</span>
-                <h3 className="mt-1 text-[1.1rem]">{h.step}</h3>
-                <p className="mt-1 text-[0.98rem]">{h.text}</p>
-              </li>
-            ))}
-          </ol>
-          <p className="mt-5">
-            <Link href="/guides/photograph-and-measure-your-shopfront" className="font-bold">
-              Which photos and measurements to send
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      <section className="shell py-10">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="text-[1.6rem] sm:text-[2rem]">{c.proofHeading}</h2>
-          <Link href="/our-work" className="font-bold">
-            All our work
-          </Link>
-        </div>
-        <p className="mt-2 text-slate">{c.proofNote}</p>
-        <div className="mt-5">
-          <PhotoGrid photos={proof.map(photoByName)} />
-        </div>
-      </section>
-
-      <Questions questions={c.questions} />
+      <div className="py-4">
+        <Questions questions={c.questions} heading="Questions shop owners ask first" />
+      </div>
     </>
   );
 }

@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { priceBasis, priceRange, profile, vatNote, type PriceKey } from '@/business/profile';
 import { pricesPage } from '@/copy/pages';
-import { graph, pageMeta, trailNode } from '@/engine/search-meta';
-import { JsonLd, Opening, Section } from '@/ui/blocks';
+import { graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
+import { JsonLd, Opening, Reviewed, Section } from '@/ui/blocks';
 import { PhotoForQuote } from '@/ui/reach';
 
 const c = pricesPage();
@@ -62,7 +62,7 @@ export default function PricesPage() {
   ];
   return (
     <>
-      <JsonLd data={graph(trailNode('/prices', trail))} />
+      <JsonLd data={graph(pageNode({ path: '/prices', name: c.h1, description: c.description }), trailNode('/prices', trail))} />
       <Opening trail={trail} h1={c.h1} answer={`${c.answer} ${vatNote()}`} />
       <Section heading={c.installHeading}>
         <PriceTable rows={installRows} lead="Order to fitted" />
@@ -78,6 +78,9 @@ export default function PricesPage() {
         </ul>
         <div className="mt-8 max-w-2xl">
           <PhotoForQuote />
+        </div>
+        <div className="mt-6">
+          <Reviewed />
         </div>
       </Section>
     </>

@@ -16,6 +16,7 @@ import type { QA, ServicePage } from '@/copy/services';
 import { mayIndex } from '@/engine/route-plan';
 
 export const FIRM_ID = `${origin}/the-firm#hss-firm`;
+export const LOGO = absolute('/icon.svg');
 export const OWNER_ID = `${origin}/the-firm#hss-owner`;
 export const SITE_ID = `${origin}/#hss-site`;
 
@@ -28,11 +29,21 @@ export interface PageMetaInput {
   image?: string;
 }
 
+const SUFFIX = ` · ${profile.name}`;
+/** Google shows roughly 60 characters of a title. */
+export const TITLE_MAX = 60;
+
+/** Adds the brand only when the whole title still fits in a search result. */
+export function fullTitle(path: string, title: string): string {
+  if (path === '/' || title.includes(profile.name)) return title;
+  return title.length + SUFFIX.length <= TITLE_MAX ? `${title}${SUFFIX}` : title;
+}
+
 export function pageMeta({ path, title, description, image }: PageMetaInput): Metadata {
   const url = absolute(path);
   const index = mayIndex(path);
   return {
-    title: path === '/' ? { absolute: title } : title,
+    title: { absolute: fullTitle(path, title) },
     description,
     alternates: { canonical: url },
     robots: index
@@ -57,7 +68,7 @@ export function rootMeta(): Metadata {
   const bing = trackingId(profile.tracking.bingToken);
   return {
     metadataBase: new URL(origin),
-    title: { default: profile.name, template: `%s · ${profile.name}` },
+    title: { default: profile.name, template: `%s${SUFFIX}` },
     description: profile.oneLiner,
     applicationName: profile.name,
     formatDetection: { telephone: false },
@@ -99,7 +110,9 @@ export function firmNode(): Node {
     url: absolute('/'),
     description: profile.oneLiner,
     image: absolute(DEFAULT_IMAGE),
+    logo: { '@type': 'ImageObject', url: LOGO },
     telephone: phone?.e164,
+    priceRange: known(profile.prices) ? priceSpan() : undefined,
     email: known(profile.email),
     address: address
       ? {
@@ -193,6 +206,61 @@ export function trailNode(path: string, trail: Crumb[]): Node {
     '@type': 'BreadcrumbList',
     '@id': `${absolute(path)}#hss-trail`,
     itemListElement: trail.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: absolute(c.path) })),
+  };
+}
+
+function priceSpan(): string {
+  const bands = Object.values(profile.prices.value);
+  const lo = Math.min(...bands.map((b) => b.from));
+  const hi = Math.max(...bands.map((b) => b.to));
+  return `£${lo.toLocaleString('en-GB')}–£${hi.toLocaleString('en-GB')}`;
+}
+
+/**
+ * The page itself: what it is about, its main image, and when its copy was
+ * last reviewed. Answer engines weigh freshness and a clear main subject.
+ */
+export function pageNode(opts: {
+  path: string;
+  name: string;
+  description: string;
+  image?: string;
+  about?: string;
+  type?: 'WebPage' | 'CollectionPage' | 'ContactPage' | 'AboutPage' | 'FAQPage';
+}): Node {
+  const url = absolute(opts.path);
+  return drop({
+    '@type': opts.type ?? 'WebPage',
+    '@id': `${url}#hss-page`,
+    url,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: 'en-GB',
+    isPartOf: { '@id': SITE_ID },
+    about: { '@id': opts.about ?? FIRM_ID },
+    primaryImageOfPage: opts.image ? { '@type': 'ImageObject', url: absolute(opts.image) } : undefined,
+    dateModified: profile.copyReviewedOn,
+    breadcrumb: opts.path === '/' ? undefined : { '@id': `${url}#hss-trail` },
+  });
+}
+
+/** Photos of the firm's own work, for /our-work. Locations only once confirmed. */
+export function galleryNode(path: string, photos: { file: string; alt: string; caption: string; town: { value: string; isPlaceholder: boolean } }[]): Node {
+  return {
+    '@type': 'ImageGallery',
+    '@id': `${absolute(path)}#hss-gallery`,
+    name: `Work by ${profile.name}`,
+    about: { '@id': FIRM_ID },
+    image: photos.map((p) =>
+      drop({
+        '@type': 'ImageObject',
+        contentUrl: absolute(p.file),
+        caption: p.caption,
+        description: p.alt,
+        creator: { '@id': FIRM_ID },
+        contentLocation: p.town.isPlaceholder ? undefined : { '@type': 'Place', name: p.town.value },
+      }),
+    ),
   };
 }
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { profile, radius } from '@/business/profile';
 import { contactPage } from '@/copy/pages';
-import { firmNode, graph, pageMeta, trailNode } from '@/engine/search-meta';
+import { firmNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening, Section } from '@/ui/blocks';
 import { CallLink, ChatGlyph, PhoneGlyph, WhatsAppLink } from '@/ui/reach';
 
@@ -16,7 +16,7 @@ export default function TalkToUsPage() {
   const a = profile.address.value;
   return (
     <>
-      <JsonLd data={graph(firmNode(), trailNode('/talk-to-us', trail))} />
+      <JsonLd data={graph(pageNode({ path: '/talk-to-us', name: c.h1, description: c.description, type: 'ContactPage' }), firmNode(), trailNode('/talk-to-us', trail))} />
       <Opening trail={trail} h1={c.h1} answer={c.answer} />
       <Section>
         <div className="grid gap-4 md:grid-cols-3">

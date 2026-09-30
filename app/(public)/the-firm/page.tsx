@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { known, profile } from '@/business/profile';
 import { firmPage } from '@/copy/pages';
-import { firmNode, graph, ownerNode, pageMeta, trailNode } from '@/engine/search-meta';
+import { firmNode, graph, ownerNode, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening, Section, TwoAreas } from '@/ui/blocks';
 
 const c = firmPage();
@@ -16,7 +16,7 @@ export default function FirmPage() {
   const team = known(profile.team) ?? [];
   return (
     <>
-      <JsonLd data={graph(firmNode(), ownerNode(), trailNode('/the-firm', trail))} />
+      <JsonLd data={graph(pageNode({ path: '/the-firm', name: c.h1, description: c.description, type: 'AboutPage' }), firmNode(), ownerNode(), trailNode('/the-firm', trail))} />
       <Opening trail={trail} h1={c.h1} answer={c.answer} />
 
       <Section heading={c.ownerHeading}>

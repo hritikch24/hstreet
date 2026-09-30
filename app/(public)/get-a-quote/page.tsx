@@ -1,6 +1,6 @@
 import { profile, radius } from '@/business/profile';
 import { quotePage } from '@/copy/pages';
-import { graph, pageMeta, trailNode } from '@/engine/search-meta';
+import { graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening } from '@/ui/blocks';
 import { QuoteForm } from '@/ui/QuoteForm';
 import { PhotoForQuote } from '@/ui/reach';
@@ -15,7 +15,7 @@ export default function QuotePage() {
   ];
   return (
     <>
-      <JsonLd data={graph(trailNode('/get-a-quote', trail))} />
+      <JsonLd data={graph(pageNode({ path: '/get-a-quote', name: c.h1, description: c.description }), trailNode('/get-a-quote', trail))} />
       <Opening trail={trail} h1={c.h1} answer={c.answer} />
       <div className="shell grid gap-8 pb-8 lg:grid-cols-[1.4fr_1fr] lg:items-start">
         <section aria-labelledby="form-heading" className="plate p-5 sm:p-6">

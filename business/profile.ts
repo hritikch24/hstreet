@@ -73,6 +73,11 @@ export interface Profile {
 
   /** Profile URLs that have been fetched and checked live. Empty until they exist. */
   sameAs: string[];
+
+  /** When the page copy was last read through (ISO date). Shown on pages and in dateModified. */
+  copyReviewedOn: string;
+  /** When the owner last confirmed the price ranges (ISO date). Shown only once confirmed. */
+  pricesCheckedOn: Fact<string>;
 }
 
 export type PriceKey =
@@ -140,16 +145,16 @@ export const profile: Profile = {
   prices: unconfirmed(
     {
       shopfront: { from: 3500, to: 7500, basis: 'for a typical single-door frontage up to about 5 metres wide' },
-      shutterManual: { from: 900, to: 1600, basis: 'for a manual shutter over a standard shop window' },
-      shutterElectric: { from: 1400, to: 3000, basis: 'for an electric shutter with a manual override' },
+      shutterManual: { from: 900, to: 1600, basis: 'over a standard shop window' },
+      shutterElectric: { from: 1400, to: 3000, basis: 'with a manual override' },
       autoDoors: { from: 3500, to: 6500, basis: 'for a bi-parting sliding pair with sensors' },
-      steelDoor: { from: 900, to: 1800, basis: 'for a single steel security door, frame and locks' },
-      fireExitPair: { from: 1400, to: 2600, basis: 'for a double fire-exit set with push bars' },
-      aluminiumDoor: { from: 900, to: 2200, basis: 'for a single aluminium door with frame' },
-      shutterRepair: { from: 120, to: 350, basis: 'for most shutter repairs, parts included' },
-      emergencyCallout: { from: 150, to: 180, basis: 'callout, before parts' },
-      glassPane: { from: 250, to: 700, basis: 'per toughened or laminated pane, fitted' },
-      lockRepair: { from: 90, to: 300, basis: 'for most lock, closer and hinge repairs' },
+      steelDoor: { from: 900, to: 1800, basis: 'including the frame and locks' },
+      fireExitPair: { from: 1400, to: 2600, basis: 'fitted, push bars included' },
+      aluminiumDoor: { from: 900, to: 2200, basis: 'including the frame' },
+      shutterRepair: { from: 120, to: 350, basis: 'with parts' },
+      emergencyCallout: { from: 150, to: 180, basis: 'before parts' },
+      glassPane: { from: 250, to: 700, basis: 'toughened or laminated, fitted' },
+      lockRepair: { from: 90, to: 300, basis: 'depending on the part' },
     },
     'Real price ranges for each line of work',
   ),
@@ -179,6 +184,9 @@ export const profile: Profile = {
   },
 
   sameAs: [],
+
+  copyReviewedOn: '2026-10-01',
+  pricesCheckedOn: unconfirmed('', 'The date you last checked the price ranges are right'),
 };
 
 /** Canonical origin, no trailing slash. */

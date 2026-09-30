@@ -36,7 +36,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Erdington',
     postcodes: 'B23 and B24',
     council: 'Birmingham City Council',
-    title: 'Shutter and Shopfront Repairs in Erdington',
+    title: 'Shutter & Shopfront Repairs in Erdington',
     description: `Stuck shutters, jammed shop doors and broken shop glass repaired in Erdington, B23 and B24. Emergency response ${profile.response.value.emergency}.`,
     answer: `${opening('Erdington')} Erdington is well inside our Birmingham repair area.`,
     roads: [
@@ -68,8 +68,8 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Sutton Coldfield',
     postcodes: 'B72 to B76',
     council: 'Birmingham City Council (Royal Sutton Coldfield Town Council for local matters)',
-    title: 'Shopfront, Door and Shutter Repairs in Sutton Coldfield',
-    description: 'Shop door, lock, glass and shutter repairs in Sutton Coldfield town centre, Boldmere and Mere Green. Birmingham-based, response times and prices stated up front.',
+    title: 'Shop Door & Shutter Repairs, Sutton Coldfield',
+    description: 'Shop door, lock, glass and shutter repairs in Sutton Coldfield town centre, Boldmere and Mere Green, with response times and prices stated up front.',
     answer: `${opening('Sutton Coldfield')} That covers the town centre, Boldmere, Mere Green and Wylde Green.`,
     roads: [
       { name: 'The Parade and the town-centre shopping streets', note: 'chain stores and the shopping centre; many units have centre or landlord rules for contractors' },
@@ -100,7 +100,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Alum Rock',
     postcodes: 'B8',
     council: 'Birmingham City Council',
-    title: 'Roller Shutter Repairs on Alum Rock Road, B8',
+    title: 'Shutter Repairs on Alum Rock Road, B8',
     description: `Shutter, lock and shopfront glass repairs for shops on Alum Rock Road and around B8. Emergencies ${profile.response.value.emergency}; prices given before we start.`,
     answer: `${opening('Alum Rock')} Most of our calls here are to shops on Alum Rock Road itself.`,
     roads: [
@@ -131,7 +131,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Sparkhill',
     postcodes: 'B11',
     council: 'Birmingham City Council',
-    title: 'Shopfront and Shutter Repairs on Stratford Road, Sparkhill',
+    title: 'Shutter & Glass Repairs, Stratford Road B11',
     description: 'Shutters, shop doors, locks and glass repaired for shops on Stratford Road and around Sparkhill, B11. Birmingham repair team; response times and prices stated.',
     answer: `${opening('Sparkhill')} Most calls are to shops along the Stratford Road.`,
     roads: [
@@ -162,7 +162,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Small Heath',
     postcodes: 'B10',
     council: 'Birmingham City Council',
-    title: 'Shutter, Door and Glass Repairs in Small Heath, B10',
+    title: 'Shutter & Door Repairs in Small Heath, B10',
     description: 'Roller shutter, shop door and glass repairs for shops on Coventry Road and around Small Heath, B10. Birmingham-based repair team.',
     answer: `${opening('Small Heath')} Most of our work here is on the Coventry Road.`,
     roads: [
@@ -191,7 +191,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Handsworth',
     postcodes: 'B20 and B21',
     council: 'Birmingham City Council',
-    title: 'Shop Shutter and Door Repairs on Soho Road, Handsworth',
+    title: 'Shutter Repairs on Soho Road, Handsworth',
     description: 'Shutter, lock, door and shop glass repairs for Soho Road and Handsworth, B21. Response times and prices stated before we come out.',
     answer: `${opening('Handsworth')} Most calls here are to shops on and around the Soho Road.`,
     roads: [
@@ -222,7 +222,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Solihull',
     postcodes: 'B90 to B94',
     council: 'Solihull Metropolitan Borough Council',
-    title: 'Shutter, Glass and Shop Door Repairs in Solihull',
+    title: 'Shop Door, Glass & Shutter Repairs, Solihull',
     description: 'Shop door, lock, glass and roller shutter repairs in Solihull town centre, Shirley and Olton. Birmingham-based repair team.',
     answer: `${opening('Solihull')} That includes the town centre, Shirley and Olton.`,
     roads: [
@@ -254,7 +254,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Tamworth',
     postcodes: 'B77 to B79',
     council: 'Tamworth Borough Council',
-    title: 'Shopfront and Shutter Repairs in Tamworth',
+    title: 'Shopfront & Shutter Repairs in Tamworth',
     description: `Roller shutter, shop door and glass repairs in Tamworth town centre and retail parks, within our ${profile.repairRadiusMiles.value}-mile Birmingham repair area.`,
     answer: `${opening('Tamworth')} Tamworth is towards the edge of our repair area, so tell us where you are when you call and we will give you an honest arrival time.`,
     roads: [
@@ -286,7 +286,7 @@ export const repairAreas = (): RepairArea[] => [
     name: 'Lichfield',
     postcodes: 'WS13 and WS14',
     council: 'Lichfield District Council',
-    title: 'Shopfront, Door and Shutter Repairs in Lichfield',
+    title: 'Shopfront & Shutter Repairs in Lichfield',
     description: 'Shop door, lock, glass and shutter repairs in Lichfield city centre, including advice for shops in the conservation area and the heritage shopfront grant.',
     answer: `${opening('Lichfield')} Lichfield is at the edge of our repair area, and most of the city centre is a conservation area, which changes what can be replaced like for like.`,
     roads: [

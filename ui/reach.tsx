@@ -2,6 +2,7 @@
  * Phone and WhatsApp links. Every one carries `data-tap`, which the beacon
  * listens for, so call and WhatsApp taps are counted wherever they appear.
  */
+import Link from 'next/link';
 import { profile } from '@/business/profile';
 
 export function PhoneGlyph({ className = 'h-5 w-5' }: { className?: string }) {
@@ -77,6 +78,43 @@ export function PhotoForQuote({ tone = 'plate', repair = false }: { tone?: 'plat
           <ChatGlyph /> WhatsApp {profile.whatsapp.value.display}
         </WhatsAppLink>
         <CallLink className={navy ? 'btn border-2 border-cream/60 text-cream hover:bg-navy-soft' : 'btn btn-plain'}>
+          <PhoneGlyph /> {profile.phone.value.display}
+        </CallLink>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * "Get a price" panel for the side of service pages. The quote link carries
+ * the job type and service, so the form opens already filled in.
+ */
+export function PriceCard({
+  what,
+  job,
+  service,
+}: {
+  what: string;
+  job: 'install' | 'repair';
+  service: string;
+}) {
+  const href = `/get-a-quote?job=${job}&service=${encodeURIComponent(service)}`;
+  return (
+    <div className="plate p-5">
+      <p className="sign text-[1.3rem]">{job === 'repair' ? 'Need it fixed?' : `A price for ${what.toLowerCase()}`}</p>
+      <p className="mt-1 text-[0.95rem] text-slate">
+        {job === 'repair'
+          ? 'Send a photo of the problem and where the shop is.'
+          : 'A photo from across the road and the rough width is enough to start.'}
+      </p>
+      <div className="mt-4 grid gap-2">
+        <Link href={href} className="btn btn-signal w-full">
+          {job === 'repair' ? 'Book a repair' : 'Get a quote'}
+        </Link>
+        <WhatsAppLink text={job === 'repair' ? REPAIR_MESSAGE : QUOTE_MESSAGE} className="btn btn-wa w-full">
+          <ChatGlyph /> WhatsApp a photo
+        </WhatsAppLink>
+        <CallLink className="btn btn-plain w-full">
           <PhoneGlyph /> {profile.phone.value.display}
         </CallLink>
       </div>

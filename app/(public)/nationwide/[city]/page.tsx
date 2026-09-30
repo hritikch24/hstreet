@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import { priceRange, profile } from '@/business/profile';
 import { confirmedJobs } from '@/copy/job-photos';
 import { installCityBySlug } from '@/copy/install-cities';
-import { faqNode, graph, pageMeta, trailNode } from '@/engine/search-meta';
+import { faqNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { publishedCitySlugs } from '@/engine/route-plan';
-import { JsonLd, Opening, PhotoGrid, Questions, Section } from '@/ui/blocks';
+import { JsonLd, Opening, PhotoGrid, Questions, Reviewed, Section } from '@/ui/blocks';
 import { PhotoForQuote } from '@/ui/reach';
 
 export const dynamicParams = false;
@@ -35,7 +35,7 @@ export default async function CityPage({ params }: PageProps<'/nationwide/[city]
 
   return (
     <>
-      <JsonLd data={graph(faqNode(path, city.questions), trailNode(path, trail))} />
+      <JsonLd data={graph(pageNode({ path, name: `Shopfronts and shutters fitted in ${city.name}`, description: city.description }), faqNode(path, city.questions), trailNode(path, trail))} />
       <Opening
         trail={trail}
         kicker={`Installing in ${city.name}`}
@@ -88,6 +88,9 @@ export default async function CityPage({ params }: PageProps<'/nationwide/[city]
             How every UK-wide installation works
           </Link>
         </p>
+        <div className="mt-6">
+          <Reviewed />
+        </div>
       </section>
     </>
   );

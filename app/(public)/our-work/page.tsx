@@ -1,16 +1,17 @@
-import { confirmedJobs, photosFor, type WorkLine } from '@/copy/job-photos';
+import { confirmedJobs, jobPhotos, photosFor, type WorkLine } from '@/copy/job-photos';
 import { workPage } from '@/copy/pages';
-import { graph, pageMeta, trailNode } from '@/engine/search-meta';
-import { JsonLd, Opening, PhotoGrid, Section } from '@/ui/blocks';
+import { galleryNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
+import { JsonLd, Opening, PhotoGrid, Reviewed, Section } from '@/ui/blocks';
+import { WorkGallery } from '@/ui/WorkGallery';
 
 const c = workPage();
 export const metadata = pageMeta({ path: '/our-work', title: c.title, description: c.description });
 
 const lines: { line: WorkLine; heading: string }[] = [
-  { line: 'shopfronts', heading: 'Aluminium and glass shopfronts' },
-  { line: 'automatic-doors', heading: 'Automatic and sliding doors' },
+  { line: 'shopfronts', heading: 'Shopfronts' },
   { line: 'shutters', heading: 'Roller shutters' },
-  { line: 'security-doors', heading: 'Steel security doors and fire exits' },
+  { line: 'automatic-doors', heading: 'Automatic doors' },
+  { line: 'security-doors', heading: 'Security and fire-exit doors' },
   { line: 'aluminium-doors', heading: 'Aluminium and glazed doors' },
 ];
 
@@ -22,7 +23,13 @@ export default function OurWorkPage() {
   const jobs = confirmedJobs();
   return (
     <>
-      <JsonLd data={graph(trailNode('/our-work', trail))} />
+      <JsonLd
+        data={graph(
+          pageNode({ path: '/our-work', name: c.h1, description: c.description, image: jobPhotos[0].file, type: 'CollectionPage' }),
+          galleryNode('/our-work', jobPhotos),
+          trailNode('/our-work', trail),
+        )}
+      />
       <Opening trail={trail} h1={c.h1} answer={c.answer} />
 
       {jobs.length > 0 && (
@@ -41,13 +48,13 @@ export default function OurWorkPage() {
         </Section>
       )}
 
-      {lines.map((l, i) => (
-        <Section key={l.line} heading={l.heading} tone={i % 2 ? 'deep' : 'cream'}>
-          <PhotoGrid photos={photosFor(l.line)} />
-        </Section>
-      ))}
-
-      <p className="shell py-6 text-sm text-slate">{c.namesNote}</p>
+      <div className="shell pb-8">
+        <WorkGallery groups={lines.map((l) => ({ id: l.line, heading: l.heading, photos: photosFor(l.line) }))} />
+        <p className="mt-8 text-sm text-slate">{c.namesNote}</p>
+        <div className="mt-2">
+          <Reviewed />
+        </div>
+      </div>
     </>
   );
 }

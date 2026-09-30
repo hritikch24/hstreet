@@ -31,7 +31,7 @@ export const installCities = (): InstallCity[] => [
   {
     slug: 'london',
     name: 'London',
-    title: 'Shopfront and Shutter Installation in London, From Birmingham',
+    title: 'Shopfront & Shutter Fitting in London',
     description: 'How a Birmingham fitting team installs aluminium shopfronts, shutters and shop doors in London: survey, borough rules, ULEZ, parking suspensions and lead times.',
     miles: 120,
     drive: 'two and a half to three hours',
@@ -62,7 +62,7 @@ export const installCities = (): InstallCity[] => [
   {
     slug: 'manchester',
     name: 'Manchester',
-    title: 'Shopfront and Roller Shutter Installation in Manchester',
+    title: 'Shopfront Installation in Manchester',
     description: 'How our Birmingham team fits aluminium shopfronts, roller shutters and shop doors in Manchester: survey, travel, timings and working on busy roads.',
     miles: 85,
     drive: 'about two hours',
@@ -92,7 +92,7 @@ export const installCities = (): InstallCity[] => [
   {
     slug: 'bristol',
     name: 'Bristol',
-    title: 'Shopfront and Shutter Installation in Bristol',
+    title: 'Shopfronts & Shutters Fitted in Bristol',
     description: 'How our Birmingham fitters install shopfronts, roller shutters and shop doors in Bristol: the Clean Air Zone, survey, travel and what to plan for.',
     miles: 90,
     drive: 'about an hour and three quarters',
@@ -116,8 +116,8 @@ export const installCities = (): InstallCity[] => [
   {
     slug: 'leicester',
     name: 'Leicester',
-    title: 'Shopfront and Shutter Installation in Leicester',
-    description: 'Aluminium shopfronts, roller shutters and shop doors fitted in Leicester by our Birmingham team, about an hour away: Belgrave Road, Narborough Road and the city centre.',
+    title: 'Shopfront & Shutter Fitters for Leicester',
+    description: 'Aluminium shopfronts, roller shutters and shop doors fitted in Leicester by our Birmingham team, an hour away: Belgrave Road, Narborough Road and beyond.',
     miles: 43,
     drive: 'about an hour',
     route: 'the M6 and M69',
@@ -140,7 +140,7 @@ export const installCities = (): InstallCity[] => [
   {
     slug: 'nottingham',
     name: 'Nottingham',
-    title: 'Shopfront and Shutter Installation in Nottingham',
+    title: 'Shopfront Installation in Nottingham',
     description: 'How our Birmingham team fits aluminium shopfronts, roller shutters and shop doors in Nottingham: tram streets, the Lace Market, travel and lead times.',
     miles: 52,
     drive: 'about an hour and a quarter',
@@ -164,7 +164,7 @@ export const installCities = (): InstallCity[] => [
   {
     slug: 'sheffield',
     name: 'Sheffield',
-    title: 'Shopfront and Shutter Installation in Sheffield',
+    title: 'Shopfronts & Shutters Fitted in Sheffield',
     description: 'How our Birmingham fitters install shopfronts, roller shutters and shop doors in Sheffield: the Clean Air Zone, survey, travel and what to expect.',
     miles: 85,
     drive: 'about an hour and three quarters',

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { repairsHub } from '@/copy/pages';
 import { repairAreas } from '@/copy/repair-areas';
 import { repairServices } from '@/copy/services';
-import { firmNode, graph, pageMeta, trailNode } from '@/engine/search-meta';
-import { JsonLd, Opening, Section } from '@/ui/blocks';
+import { firmNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
+import { JsonLd, Opening, Reviewed, Section } from '@/ui/blocks';
 import { PhotoForQuote } from '@/ui/reach';
 
 const c = repairsHub();
@@ -17,7 +17,7 @@ export default function RepairsPage() {
   const areas = repairAreas();
   return (
     <>
-      <JsonLd data={graph(firmNode(), trailNode('/repairs', trail))} />
+      <JsonLd data={graph(pageNode({ path: '/repairs', name: c.h1, description: c.description }), firmNode(), trailNode('/repairs', trail))} />
       <Opening trail={trail} kicker="Birmingham area only" h1={c.h1} answer={c.answer}>
         <div className="mt-5 max-w-2xl">
           <PhotoForQuote repair />
@@ -51,23 +51,28 @@ export default function RepairsPage() {
 
       <Section heading={c.areasHeading} tone="deep">
         <p className="max-w-[68ch]">{c.areasIntro}</p>
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
+        <dl className="mt-6 grid border-t-2 border-navy md:grid-cols-2 md:gap-x-10">
           {areas.map((a) => (
-            <article key={a.slug} className="plate p-4">
-              <h3 className="text-[1.15rem]">
+            <div key={a.slug} className="border-b border-rule py-4">
+              <dt className="text-[1.15rem] font-bold">
                 <Link href={`/repairs/${a.slug}`}>{a.name}</Link>{' '}
                 <span className="text-sm font-normal text-slate">{a.postcodes}</span>
-              </h3>
-              <p className="mt-1 text-[0.98rem]">{a.roads[0].name}: {a.roads[0].note}.</p>
-            </article>
+              </dt>
+              <dd className="mt-1 text-[0.98rem]">
+                {a.roads[0].name}: {a.roads[0].note}.
+              </dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </Section>
 
       <Section heading={c.outsideHeading}>
         <p className="max-w-[68ch]">
           {c.outside} <Link href="/nationwide">How UK-wide installs work</Link>.
         </p>
+        <div className="mt-6">
+          <Reviewed />
+        </div>
       </Section>
     </>
   );

@@ -4,7 +4,8 @@
  *
  *  - every internal link points at a page or file that exists
  *  - every page has exactly one canonical, pointing at itself
- *  - no two pages share a title or a meta description
+ *  - no two pages share a title or a meta description; titles fit in a search
+ *    result (60 characters) and descriptions run 70 to 160 characters
  *  - the sitemap lists exactly the pages whose robots meta allows indexing
  *  - every page has a robots meta tag, and every JSON-LD block parses
  *  - no placeholder phone number reaches structured data
@@ -36,6 +37,8 @@ function walk(dir, acc = []) {
 }
 
 const read = (rel) => readFileSync(join(APP, rel), 'utf8');
+const decode = (s) =>
+  s.replace(/&amp;/g, '&').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 const origin = (() => {
   const m = read('index.html').match(/<link rel="canonical" href="(https:\/\/[^/"]+)\/?"/);
   return m ? m[1] : null;
@@ -53,7 +56,7 @@ for (const f of walk(APP)) {
   const path = rel === 'index.html' ? '/' : `/${rel.replace(/\.html$/, '')}`;
   pages.set(path, readFileSync(f, 'utf8'));
 }
-const routeFiles = new Set(['/sitemap.xml', '/robots.txt', '/llms.txt', '/icon.svg']);
+const routeFiles = new Set(['/sitemap.xml', '/robots.txt', '/llms.txt', '/llms-full.txt', '/icon.svg']);
 const publicFile = (p) => existsSync(join(ROOT, 'public', decodeURIComponent(p)));
 
 const titles = new Map();
@@ -67,11 +70,15 @@ for (const [path, html] of pages) {
   else if (canon[0] !== expected) fail(`${path}: canonical is ${canon[0]}, expected ${expected}`);
 
   const title = html.match(/<title>([^<]*)<\/title>/)?.[1];
+  const plainTitle = title ? decode(title) : '';
+  if (plainTitle.length > 60) fail(`${path}: title is ${plainTitle.length} characters (max 60): "${plainTitle}"`);
   if (!title) fail(`${path}: no <title>`);
   else if (titles.has(title)) fail(`${path}: title duplicates ${titles.get(title)}: "${title}"`);
   else titles.set(title, path);
 
   const desc = html.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  const plainDesc = desc ? decode(desc) : '';
+  if (desc && (plainDesc.length > 160 || plainDesc.length < 70)) fail(`${path}: description is ${plainDesc.length} characters (want 70 to 160)`);
   if (!desc) fail(`${path}: no meta description`);
   else if (descriptions.has(desc)) fail(`${path}: description duplicates ${descriptions.get(desc)}`);
   else descriptions.set(desc, path);
@@ -117,10 +124,14 @@ const robotsTxt = read('robots.txt.body');
 for (const bot of ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'PerplexityBot', 'ClaudeBot', 'Claude-SearchBot', 'Google-Extended', '*']) {
   const block = robotsTxt.split(/\n\s*\n/).find((b) => new RegExp(`^User-Agent: ${bot.replace('*', '\\*')}$`, 'mi').test(b));
   if (!block) fail(`robots.txt has no rule for ${bot}`);
-  else if (!/Disallow: \/hq/.test(block) || !/Disallow: \/api\//.test(block)) fail(`robots.txt lets ${bot} into /hq or /api`);
+  else if (!/^Disallow: \/$/m.test(block) && (!/Disallow: \/hq/.test(block) || !/Disallow: \/api\//.test(block)))
+    fail(`robots.txt lets ${bot} into /hq or /api`);
 }
 
 if (!existsSync(join(APP, 'llms.txt.body'))) fail('llms.txt was not built');
+if (!existsSync(join(APP, 'llms-full.txt.body'))) fail('llms-full.txt was not built');
+// Before launch, answer-engine crawlers must be kept out (placeholder facts).
+if (indexable.size === 0 && !/User-Agent: GPTBot[\s\S]*?Disallow: \/\n/.test(robotsTxt)) fail('robots.txt lets AI crawlers read placeholder facts before launch');
 
 console.log(`Sanity check: ${pages.size} pages, ${indexable.size} indexable, ${listed.size} in the sitemap.`);
 if (indexable.size === 0) console.log('  (Site is noindex while placeholders remain, so the sitemap is empty by design.)');

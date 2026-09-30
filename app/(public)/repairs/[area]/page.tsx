@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation';
 import { priceRange, profile } from '@/business/profile';
 import { repairAreas } from '@/copy/repair-areas';
 import { repairServices } from '@/copy/services';
-import { faqNode, graph, pageMeta, trailNode } from '@/engine/search-meta';
-import { JsonLd, Opening, Questions, Section } from '@/ui/blocks';
+import { faqNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
+import { JsonLd, Opening, Questions, Reviewed, Section } from '@/ui/blocks';
 import { PhotoForQuote } from '@/ui/reach';
 
 export const dynamicParams = false;
@@ -32,7 +32,7 @@ export default async function RepairAreaPage({ params }: PageProps<'/repairs/[ar
   ];
   return (
     <>
-      <JsonLd data={graph(faqNode(path, a.questions), trailNode(path, trail))} />
+      <JsonLd data={graph(pageNode({ path, name: `Shutter, door and glass repairs in ${a.name}`, description: a.description }), faqNode(path, a.questions), trailNode(path, trail))} />
       <Opening
         trail={trail}
         kicker={`Repairs in ${a.name}, ${a.postcodes}`}
@@ -82,6 +82,9 @@ export default async function RepairAreaPage({ params }: PageProps<'/repairs/[ar
           Need something new rather than a repair? New shopfronts, shutters and doors are{' '}
           <Link href="/nationwide">fitted anywhere in the UK</Link>, {a.name} included.
         </p>
+        <div className="mt-6">
+          <Reviewed />
+        </div>
       </Section>
     </>
   );

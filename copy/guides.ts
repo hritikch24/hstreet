@@ -24,7 +24,7 @@ export interface Guide {
 export const guides = (): Guide[] => [
   {
     slug: 'photograph-and-measure-your-shopfront',
-    title: 'How to Photograph and Measure Your Shopfront for a Quote',
+    title: 'How to Measure Your Shopfront for a Quote',
     h1: 'How to photograph and measure your shopfront for a quote',
     description:
       'The five photos and four measurements we need to price a new shopfront, shutter or shop door from WhatsApp, before anyone visits.',
@@ -64,7 +64,7 @@ export const guides = (): Guide[] => [
   },
   {
     slug: 'shutter-stuck-what-to-check',
-    title: 'Roller Shutter Stuck? What to Check Safely Before Calling',
+    title: 'Roller Shutter Stuck? What to Check Safely',
     h1: 'Shutter stuck? What to check safely, and what to leave alone',
     description:
       'Your shop shutter is stuck halfway, won’t open or won’t close. The checks that are safe to do yourself, the ones that aren’t, and when to call a repairer.',
@@ -108,7 +108,7 @@ export const guides = (): Guide[] => [
     title: 'Manual or Electric Shutter for a Small Shop?',
     h1: 'Manual or electric shutter for a small shop?',
     description:
-      'How to choose between a manual and an electric roller shutter for a takeaway, corner shop or salon: width, how often it goes up and down, cost and what goes wrong.',
+      'Choosing a manual or electric roller shutter for a takeaway, corner shop or salon: width, how often it opens, cost and what tends to go wrong.',
     answer: `Under about three metres wide, lifted twice a day by someone who can manage it, a manual shutter is cheaper and simpler: ${priceRange('shutterManual')}. Wider than that, or if it goes up and down more often, an electric shutter at ${priceRange('shutterElectric')} is worth it, and should always have a manual override.`,
     sections: [
       {

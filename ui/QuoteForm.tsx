@@ -12,7 +12,7 @@
  * upload, so a phone photo fits comfortably within the request limit.
  */
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRef, useState, useSyncExternalStore } from 'react';
 import {
   checkEnquiry,
   MAX_PHOTOS,
@@ -46,6 +46,15 @@ async function shrink(file: File): Promise<Blob> {
   return file;
 }
 
+const noSubscribe = () => () => {};
+
+function prefill(search: string): { job: JobType; service: string } {
+  const q = new URLSearchParams(search);
+  const job: JobType = q.get('job') === 'repair' ? 'repair' : 'install';
+  const svc = q.get('service') ?? '';
+  return { job, service: SERVICE_CHOICES[job].some((c) => c.value === svc) ? svc : '' };
+}
+
 function visitId(): string {
   try {
     return sessionStorage.getItem('hss.visit') ?? '';
@@ -55,7 +64,16 @@ function visitId(): string {
 }
 
 export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
-  const [jobType, setJobType] = useState<JobType>('install');
+  // Arriving from a service page's "Get a quote" button (?job=…&service=…):
+  // open with that job and service chosen. Empty on the server, so the form
+  // is still in the static HTML; the customer's own choice always wins.
+  const query = useSyncExternalStore(noSubscribe, () => window.location.search, () => '');
+  const fromLink = prefill(query);
+  const [chosenJob, setChosenJob] = useState<JobType | null>(null);
+  const [chosenService, setChosenService] = useState<string | null>(null);
+  const jobType = chosenJob ?? fromLink.job;
+  const service = chosenService ?? (jobType === fromLink.job ? fromLink.service : '');
+  const setService = setChosenService;
   const [wants, setWants] = useState<'quote' | 'callback'>('quote');
   const [reach, setReach] = useState<Reach | null>(null);
   const [problems, setProblems] = useState<Problems>({});
@@ -64,6 +82,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
   const [ref, setRef] = useState('');
   const [photos, setPhotos] = useState<File[]>([]);
   const placeRef = useRef<HTMLInputElement>(null);
+
 
   const checkPlace = async (value: string) => {
     if (jobType !== 'repair' || value.trim().length < 2) return setReach(null);
@@ -76,7 +95,8 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
   };
 
   const switchTo = (next: JobType) => {
-    setJobType(next);
+    setChosenJob(next);
+    setChosenService('');
     setWants('quote');
     setProblems({});
     if (next === 'install') setReach(null);
@@ -189,7 +209,14 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
         <label htmlFor="service" className="label">
           What do you need?
         </label>
-        <select id="service" name="service" className="field" defaultValue="" key={jobType} {...aria('service')}>
+        <select
+          id="service"
+          name="service"
+          className="field"
+          value={service}
+          onChange={(e) => setService(e.target.value)}
+          {...aria('service')}
+        >
           <option value="" disabled>
             Choose one
           </option>

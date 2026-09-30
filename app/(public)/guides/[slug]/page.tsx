@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { guideBySlug, guides } from '@/copy/guides';
-import { faqNode, graph, pageMeta, trailNode } from '@/engine/search-meta';
-import { JsonLd, Opening } from '@/ui/blocks';
+import { faqNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
+import { JsonLd, Opening, Reviewed } from '@/ui/blocks';
 import { Paras } from '@/ui/Prose';
 
 export const dynamicParams = false;
@@ -28,7 +28,7 @@ export default async function GuidePage({ params }: PageProps<'/guides/[slug]'>)
   const asQuestions = g.sections.map((s) => ({ q: s.heading, a: s.paras, list: s.steps }));
   return (
     <>
-      <JsonLd data={graph(faqNode(path, asQuestions), trailNode(path, trail))} />
+      <JsonLd data={graph(pageNode({ path, name: g.h1, description: g.description }), faqNode(path, asQuestions), trailNode(path, trail))} />
       <Opening trail={trail} kicker="Guide" h1={g.h1} answer={g.answer} />
       <article className="shell pb-6">
         {g.sections.map((s) => (
@@ -51,6 +51,9 @@ export default async function GuidePage({ params }: PageProps<'/guides/[slug]'>)
             {g.next.label}
           </Link>
         </p>
+        <div className="mt-6">
+          <Reviewed />
+        </div>
       </article>
     </>
   );

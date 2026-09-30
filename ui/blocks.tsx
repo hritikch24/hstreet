@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { profile, radius } from '@/business/profile';
 import type { JobPhoto } from '@/copy/job-photos';
-import type { QA } from '@/copy/services';
+import type { Compare, QA } from '@/copy/services';
 import type { Crumb } from '@/engine/search-meta';
 import { Paras } from '@/ui/Prose';
 
@@ -49,6 +49,7 @@ export function Opening({
   h1,
   answer,
   facts,
+  side,
   children,
 }: {
   trail?: Crumb[];
@@ -56,17 +57,15 @@ export function Opening({
   h1: string;
   answer: string;
   facts?: { label: string; value: string }[];
+  /** Shown beside the answer on wide screens (usually the main photo). */
+  side?: React.ReactNode;
   children?: React.ReactNode;
 }) {
-  return (
-    <header className="shell pt-6 pb-8 sm:pt-8">
-      {trail && <Trail trail={trail} />}
-      {kicker && <p className="kicker mt-5 text-signal">{kicker}</p>}
-      <h1 className="mt-3 text-[2rem] sm:text-[2.75rem]">{h1}</h1>
-      <div className="plate mt-5 p-5 sm:p-6">
+  const plate = (
+    <div className="plate p-5 sm:p-6">
         <p className="text-[1.125rem] leading-relaxed sm:text-[1.2rem]">{answer}</p>
         {facts && facts.length > 0 && (
-          <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-rule pt-4 sm:grid-cols-4">
+          <dl className={`mt-5 grid grid-cols-2 gap-3 border-t border-rule pt-4 ${side ? 'sm:grid-cols-4 lg:grid-cols-2' : 'sm:grid-cols-4'}`}>
             {facts.map((f) => (
               <div key={f.label}>
                 <dt className="text-xs font-bold uppercase tracking-wider text-slate">{f.label}</dt>
@@ -76,17 +75,31 @@ export function Opening({
           </dl>
         )}
       </div>
+  );
+  return (
+    <header className="shell pt-6 pb-8 sm:pt-8">
+      {trail && <Trail trail={trail} />}
+      {kicker && <p className="kicker mt-5 text-signal">{kicker}</p>}
+      <h1 className="mt-3 max-w-[22ch] text-[2rem] sm:text-[2.75rem]">{h1}</h1>
+      {side ? (
+        <div className="mt-5 grid gap-5 lg:grid-cols-[1.15fr_1fr] lg:items-start">
+          {plate}
+          <div>{side}</div>
+        </div>
+      ) : (
+        <div className="mt-5">{plate}</div>
+      )}
       {children}
     </header>
   );
 }
 
 /** Question-shaped sections. The same array feeds the FAQPage JSON-LD. */
-export function Questions({ questions, heading }: { questions: QA[]; heading?: string }) {
+export function Questions({ questions, heading, bare = false }: { questions: QA[]; heading?: string; bare?: boolean }) {
   return (
-    <section className="shell py-8">
+    <section className={bare ? '' : 'shell py-8'}>
       {heading && <h2 className="mb-6 text-[1.6rem] sm:text-[2rem]">{heading}</h2>}
-      <div className="grid gap-8">
+      <div className="grid gap-9">
         {questions.map((qa) => (
           <article key={qa.q} className="border-l-4 border-signal pl-4 sm:pl-6">
             <h2 className="text-[1.35rem] sm:text-[1.6rem]">{qa.q}</h2>
@@ -220,9 +233,81 @@ export function Section({
   return (
     <section className={tone === 'deep' ? 'bg-cream-deep py-10' : 'py-8'}>
       <div className="shell">
-        {heading && <h2 className="mb-5 text-[1.6rem] sm:text-[2rem]">{heading}</h2>}
+        {heading && (
+          <div className="mb-6">
+            <h2 className="text-[1.6rem] sm:text-[2rem]">{heading}</h2>
+            <div className="signrule" aria-hidden="true" />
+          </div>
+        )}
         {children}
       </div>
     </section>
+  );
+}
+
+/** A side-by-side comparison, with its question as the heading. */
+export function CompareTable({ table }: { table: Compare }) {
+  return (
+    <section className="min-w-0 border-l-4 border-signal pl-4 sm:pl-6">
+      <h2 className="text-[1.35rem] sm:text-[1.6rem]">{table.caption}</h2>
+      {/* Phones: one card per option, so no column hides off-screen. */}
+      <div className="mt-4 grid gap-3 sm:hidden">
+        {table.head.slice(1).map((option, col) => (
+          <div key={option} className="overflow-hidden rounded-[8px] border-2 border-navy bg-plate">
+            <p className="bg-navy px-3 py-2 font-bold text-cream">{option}</p>
+            <dl className="divide-y divide-rule">
+              {table.rows.map(([label, ...cells]) => (
+                <div key={label} className="grid grid-cols-[42%_1fr] gap-2 px-3 py-2 text-[0.95rem]">
+                  <dt className="font-bold text-navy">{label}</dt>
+                  <dd>{cells[col]}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 hidden overflow-x-auto rounded-[8px] border-2 border-navy sm:block">
+        <table className="compare min-w-[32rem]">
+          <thead>
+            <tr>
+              {table.head.map((h, i) => (
+                <th key={i} scope="col">
+                  {h || <span className="sr-only">Compared</span>}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map(([label, ...cells]) => (
+              <tr key={label}>
+                <th scope="row">{label}</th>
+                {cells.map((c, i) => (
+                  <td key={i}>{c}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+const longDate = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+/** When the page was last read through, and when prices were last checked (only once real). */
+export function Reviewed() {
+  const prices = profile.pricesCheckedOn.isPlaceholder ? null : profile.pricesCheckedOn.value;
+  return (
+    <p className="text-sm text-slate">
+      Page reviewed <time dateTime={profile.copyReviewedOn}>{longDate(profile.copyReviewedOn)}</time>
+      {prices && (
+        <>
+          {' '}
+          · prices checked <time dateTime={prices}>{longDate(prices)}</time>
+        </>
+      )}
+    </p>
   );
 }

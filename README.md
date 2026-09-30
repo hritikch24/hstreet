@@ -100,7 +100,8 @@ The build refuses `indexable: true` until all of them are real.
 - [ ] IndexNow key, then `npm run indexnow` after launch
 
 **Then**
-- [ ] Set `indexable: true`, build, run every check, deploy
+- [ ] Update `copyReviewedOn` (and set `pricesCheckedOn`) in `business/profile.ts`
+- [ ] Set `indexable: true`, build, run every check, deploy. This also opens robots.txt to AI answer engines, which are kept out until then.
 - [ ] Submit the sitemap in Search Console; run `npm run indexnow`
 
 ## Google Business Profile: draft

@@ -38,7 +38,11 @@ here.
    facts (`known()`).
 4. **Metadata and JSON-LD only in `engine/search-meta.ts`.** Never hand-write
    `<meta>` or canonical tags. `pageMeta()` returns the full object because
-   Next merges metadata shallowly.
+   Next merges metadata shallowly, and adds the brand to a title only when
+   the result fits in 60 characters. Keep page titles keyword-first and
+   descriptions 70 to 160 characters; `check:sanity` enforces both. Every
+   page gets a `pageNode()` (WebPage with `dateModified` from
+   `profile.copyReviewedOn`: update that date when you revise copy).
 5. **Never fabricate.** No ratings, review counts, years trading,
    accreditations, guarantees, project counts or named clients. `sameAs`
    holds only profiles someone has fetched and seen live.
@@ -83,7 +87,7 @@ the photo check. They are dev tools; they don't run on Vercel.
 | `check:contamination` | any other site's brand, domain, phone, postcode, address, email, ads tag, asset path, storage key or IndexNow key appears in this repo |
 | `check:overlap` | built pages share over 0.5% of 8-word sequences with any other repo, or any question heading appears elsewhere (currently 0.00%, 0 headings) |
 | `check:photos` | a `public/work` photo is within 40 bits (dHash) of any image in another repo, or of another photo here |
-| `check:sanity` | dead internal links, not exactly one self-canonical, duplicate titles or descriptions, sitemap ≠ indexable pages, robots.txt letting a crawler into `/hq` or `/api`, placeholder phone in JSON-LD |
+| `check:sanity` | dead internal links, not exactly one self-canonical, duplicate or over-long titles and descriptions, sitemap ≠ indexable pages, robots.txt letting a crawler into `/hq` or `/api` (or letting AI crawlers in before launch), placeholder phone in JSON-LD |
 
 ## Map
 
@@ -92,7 +96,7 @@ the photo check. They are dev tools; they don't run on Vercel.
 | Business facts, prices, lead times, radius, tracking IDs | `business/profile.ts` |
 | Page copy | `copy/services.ts` (8 service pages), `copy/repair-areas.ts`, `copy/install-cities.ts`, `copy/guides.ts`, `copy/pages.ts` (hubs and standing pages) |
 | Job photos and their data | `public/work/*.jpg`, `copy/job-photos.ts`, prepared by `tools/prepare-photos.py` |
-| SEO | `engine/search-meta.ts`, `engine/route-plan.ts` (every public path + `mayIndex`), `engine/go-live.ts`, `app/sitemap.ts`, `app/robots.ts`, `app/llms.txt/route.ts` |
+| SEO / GEO | `engine/search-meta.ts` (metadata, title fitting, every JSON-LD node), `engine/route-plan.ts` (every public path + `mayIndex`), `engine/go-live.ts`, `app/sitemap.ts`, `app/robots.ts`, `app/llms.txt/route.ts`, `app/llms-full.txt/route.ts` |
 | Public pages | `app/(public)/…`: `/`, `[service]` (the 8 flat service URLs), `nationwide`, `nationwide/[city]`, `repairs`, `repairs/[area]`, `our-work`, `prices`, `get-a-quote`, `guides/[slug]`, `the-firm`, `talk-to-us`, `privacy-notice` |
 | Analytics | `ui/Beacon.tsx` → `/api/beacon`, `/api/beacon/tap`; `engine/visit-source.ts`, `engine/request-bits.ts` |
 | Enquiries | `ui/QuoteForm.tsx` → `/api/enquiries` (+ `/api/enquiries/reach`); `engine/enquiry-shape.ts` (shared validation), `engine/coverage.ts` (postcodes.io + radius), `engine/mailer.ts` (Resend over fetch) |
@@ -103,9 +107,9 @@ the photo check. They are dev tools; they don't run on Vercel.
 ## Design system: British shop signage
 
 - **Type:** Alfa Slab One for headings and the fascia wordmark (a
-  signwriter's slab); Atkinson Hyperlegible Next for everything else, chosen
-  for reading at a glance on a phone. Loaded with `next/font` in
-  `app/layout.tsx`.
+  signwriter's slab); Public Sans for everything else: sturdy, very legible,
+  and with a plain zero, so phone numbers and prices read cleanly. Loaded with
+  `next/font` in `app/layout.tsx`.
 - **Colour** (`app/shop.css`, `@theme`): enamel `navy` / `navy-deep` /
   `navy-soft`, `cream` / `cream-deep`, `plate` (off-white), `ink`, `slate`,
   `rule`; `signal` red for actions and emphasis; `wa` green only on WhatsApp
@@ -117,7 +121,14 @@ the photo check. They are dev tools; they don't run on Vercel.
   answer-first block and key figures, `Questions` (question headings with a
   red rule), `PhotoForQuote` (inline WhatsApp-a-photo ask in heroes, service
   pages and the quote page), `UkWide` / `RepairReach` (coverage bands),
-  `WorkPhoto` (photo with a navy caption bar).
+  `WorkPhoto` (photo with a navy caption bar), `InstallCards` (photo cards
+  with typical price), `CompareTable` (a table on wide screens, one card per
+  option on phones), `PriceCard` (sticky "get a price" panel on service
+  pages; its quote link prefills the form), `WorkGallery` (filter chips and a
+  `<dialog>` viewer; every photo stays in the server HTML), `.signrule` under
+  section headings, `Reviewed` (visible "page reviewed" date).
+- **Home hero:** full-bleed job photo (unbranded) behind a navy gradient on
+  desktop, photo above the text on phones.
 - **Not used, on purpose:** floating WhatsApp or chat bubble, exit-intent
   popup, icon-grid "why choose us", "areas we cover" link walls, sticky
   mobile CTA bar.
@@ -134,6 +145,22 @@ the photo check. They are dev tools; they don't run on Vercel.
   `absolute('/')` is the bare origin.
 
 ## Decision log
+
+- **2026-10-01 (second pass, SEO/GEO and UX):**
+  - Body font changed to Public Sans: the previous face slashed its zeros,
+    which made phone numbers look like "Ø121".
+  - Before launch, robots.txt keeps the named AI crawlers out entirely. The
+    noindex tag stops search engines, but answer-engine crawlers may not honour
+    it and would learn placeholder phone numbers and prices. At launch they
+    switch automatically to "public pages allowed, /hq and /api blocked".
+  - Titles rewritten keyword-first to fit 60 characters; brand suffix only when
+    it fits. WebPage, ImageGallery and logo structured data added;
+    `llms-full.txt` publishes every answer as plain text; sitemap has
+    `lastmod`; images served as AVIF/WebP.
+  - Comparison tables (manual/electric, lath types, glass, exit devices,
+    door types) because customers choose between options and answer engines
+    quote tables.
+  - Fewer bordered boxes; numbered runs and ruled lists instead.
 
 - **2026-10-01:** Built from scratch.
   - URL scheme as suggested, plus `/aluminium-doors` (the photos show it) and
