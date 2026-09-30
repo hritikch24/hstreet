@@ -13,6 +13,15 @@ export default async function Dashboard({ searchParams }: PageProps<'/hq'>) {
   const visitors = s.traffic.uniqueSessions;
   const conversion = visitors ? (((s.leads.total + s.callClicks.total) / visitors) * 100).toFixed(1) : '0.0';
   const jobs = Object.fromEntries(s.routing.byJobType.map((r) => [String(r.job_type), Number(r.count)]));
+  // One row per visit, by where that visit started (not per page view).
+  const visitSources = Object.entries(
+    s.sources.landings.reduce<Record<string, number>>((acc, r) => {
+      acc[String(r.source)] = (acc[String(r.source)] ?? 0) + Number(r.sessions ?? 0);
+      return acc;
+    }, {}),
+  )
+    .map(([source, count]) => ({ source, count }))
+    .sort((x, y) => y.count - x.count);
 
   return (
     <div className="grid gap-5">
@@ -37,7 +46,7 @@ export default async function Dashboard({ searchParams }: PageProps<'/hq'>) {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Bars title="Top pages" rows={s.traffic.topPages} label="path" count="views" />
-        <Bars title="Where visitors came from" rows={s.sources.bySource} label="source" />
+        <Bars title="Where visits started" rows={visitSources} label="source" />
         <Bars title="Visitor cities" rows={s.traffic.cities} label="city" />
         <Bars title="Enquiries by service" rows={s.leads.byService.map((r) => ({ ...r, service: serviceLabel(String(r.service)) }))} label="service" />
         <Bars title="Enquiries by source" rows={s.leads.bySource} label="source" />

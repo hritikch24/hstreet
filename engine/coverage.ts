@@ -50,13 +50,16 @@ async function locate(input: string): Promise<Located | null> {
     } | null;
     if (r?.latitude) return { lat: r.latitude, lng: r.longitude, town: r.admin_district, region: r.region, postcode: r.postcode };
   }
-  if (OUTCODE.test(q)) {
-    const r = (await lookup(`https://api.postcodes.io/outcodes/${encodeURIComponent(q)}`)) as {
+  // A full postcode that doesn't exist (a typo, or a brand-new build) still
+  // tells us the district from its first half.
+  const outcode = full ? full[1] : OUTCODE.test(q) ? q : null;
+  if (outcode) {
+    const r = (await lookup(`https://api.postcodes.io/outcodes/${encodeURIComponent(outcode)}`)) as {
       latitude: number;
       longitude: number;
       admin_district?: string[];
     } | null;
-    if (r?.latitude) return { lat: r.latitude, lng: r.longitude, town: r.admin_district?.[0], postcode: q.toUpperCase() };
+    if (r?.latitude) return { lat: r.latitude, lng: r.longitude, town: r.admin_district?.[0], postcode: outcode.toUpperCase() };
   }
   const r = (await lookup(`https://api.postcodes.io/places?limit=1&q=${encodeURIComponent(q)}`)) as {
     latitude: number;
@@ -69,11 +72,20 @@ async function locate(input: string): Promise<Located | null> {
   return null;
 }
 
+/** Outcode lookups carry no region; the nearest full postcode does. */
+async function regionNear(lat: number, lng: number): Promise<string | undefined> {
+  const r = (await lookup(`https://api.postcodes.io/postcodes?lon=${lng}&lat=${lat}&limit=1&radius=2000`).catch(
+    () => null,
+  )) as { region?: string | null }[] | null;
+  return r?.[0]?.region ?? undefined;
+}
+
 export async function reachOf(input: string): Promise<Reach> {
   if (!input || input.trim().length < 2) return { status: 'unknown' };
   try {
     const at = await locate(input);
     if (!at) return { status: 'unknown' };
+    if (!at.region) at.region = await regionNear(at.lat, at.lng);
     const m = Math.round(miles(at.lat, at.lng) * 10) / 10;
     return {
       status: m <= radius() ? 'inside' : 'outside',

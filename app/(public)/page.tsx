@@ -34,13 +34,14 @@ export default function HomePage() {
               <PhotoForQuote tone="navy" />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
+          <div className="grid grid-cols-2 gap-3 lg:self-center">
             {heroPhotos.map((name, i) => (
               <WorkPhoto
                 key={name}
                 photo={photoByName(name)}
                 preload={i === 0}
-                sizes="(min-width: 1024px) 520px, 50vw"
+                sizes="(min-width: 1024px) 540px, 50vw"
+                className={i === 0 ? 'lg:col-span-2' : 'lg:hidden'}
               />
             ))}
           </div>

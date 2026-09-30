@@ -27,7 +27,7 @@ export function Fascia() {
       <div className="shell flex items-center justify-between gap-3 py-3 sm:py-4">
         <Link href="/" className="fascia-lining block rounded-[6px] px-3 py-1.5 text-cream no-underline sm:px-4 sm:py-2">
           <span className="sign block text-[1.2rem] leading-none !text-cream sm:text-[1.6rem]">HIGH STREET</span>
-          <span className="block text-[0.62rem] font-bold uppercase tracking-[0.32em] text-cream/80 sm:text-[0.7rem]">
+          <span className="block whitespace-nowrap text-[0.6rem] font-bold uppercase tracking-[0.18em] text-cream/80 sm:text-[0.7rem] sm:tracking-[0.32em]">
             Shopfronts · Birmingham
           </span>
         </Link>
