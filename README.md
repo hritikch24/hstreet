@@ -8,6 +8,29 @@ the Birmingham area.
 The site is **finished but hidden from search** (noindex) until the real
 business details replace the placeholders. See the launch checklist below.
 
+## Where things stand (paused 1 October 2026)
+
+**Built and deployed, waiting for the owner's business details.** The site is live at https://hstreet.vercel.app but hidden from search engines and AI crawlers until every fact in `business/profile.ts` is real (see the launch checklist below). The owner is happy with the site; he asked for plain English and for prices to read as guides, both done.
+
+Open items, in order:
+
+1. **Rotate the Neon database password.** The connection string was shared in a chat. Reset it in Neon, then update `DATABASE_URL` in Vercel (Production, Sensitive) and in the local `.env.deploy-db`.
+2. **Owner's details** for the launch checklist: phone, WhatsApp, address, hours, languages, prices, VAT, install cities, Google Business Profile, and town/month/summary for job photos.
+3. **Upgrade the `team-rockstar` Vercel team to Pro** before launch. Hobby is for non-commercial use.
+4. **Custom domain:** add `www.highstreetshopfronts.co.uk` in Vercel → Domains, with the bare domain redirecting to www.
+5. **Optional keys:** `RESEND_API_KEY`, `ENQUIRY_EMAIL_FROM`, `ENQUIRY_EMAIL_TO` (enquiry emails) and `ANTHROPIC_API_KEY` (AI-drafted replies in `/hq`).
+6. **Shopfront preview at `/see-it-on-your-shop`:** built, not linked anywhere, noindex. Before launching it, have the owner confirm the colours in `copy/front-options.ts`, then link to it and remove it from `NEVER_INDEX` in `engine/route-plan.ts`.
+7. **Combined metrics dashboard:** High Street was added only in the local `~/Projects/shopfront-metrics` folder (not a git repo), so the deployed dashboard doesn't show it yet. It reads `https://www.highstreetshopfronts.co.uk`, so it also needs the domain from step 4.
+
+Private local files, gitignored and readable only by your Mac user. Don't commit or share them:
+
+- `.env.hq-secrets`: `HQ_KEY` (back-office login: open `/hq?key=<HQ_KEY>`), `HQ_STATS_TOKEN`, `INDEXNOW_KEY`
+- `.env.deploy-db`: the production database URL
+
+Problems noticed in the owner's other sites during this build are listed in `~/Projects/seo-plan/highstreet-handoff.md`, outside this repo, because this repo must never name them.
+
+To pick this up again with Claude Code, open this folder and ask it to read `CLAUDE.md` and this README first.
+
 ## Run it locally
 
 ```bash
