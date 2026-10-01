@@ -1,0 +1,253 @@
+{
+  "_about": "Fingerprint of every site in the portfolio. Every new site must be checked against ALL entries and must add itself here before launch. Read PORTFOLIO-RULES.md first. Values marked TBD are unknown or not yet decided.",
+  "_updated": "2026-10-01",
+  "sites": [
+    {
+      "key": "urban",
+      "brand": "Urban Shopfronts",
+      "domain": "www.urbanshopfronts.co.uk",
+      "repo": "~/Projects/Urban-shopfronts-limited",
+      "status": "live, indexed. Best performer; treat as the portfolio's survivor",
+      "phones": [
+        "07471 043827",
+        "07471043827",
+        "447471043827"
+      ],
+      "address": "Smethwick, B66 3NR",
+      "territory": "UK-wide pages, based West Midlands (Smethwick)",
+      "publicUrlScheme": [
+        "/services/[slug]",
+        "/services/[slug]/[city]",
+        "/areas/[city]",
+        "/blog/*",
+        "/gallery",
+        "/reviews",
+        "/faq",
+        "/cost-guide",
+        "/glossary",
+        "/why-choose-us",
+        "/instant-quote",
+        "/about",
+        "/contact"
+      ],
+      "privatePaths": [
+        "/admin",
+        "/metrics",
+        "/quote/[id]",
+        "/invoice/[id]"
+      ],
+      "apiPaths": [
+        "/api/track",
+        "/api/track-call",
+        "/api/leads",
+        "/api/contact",
+        "/api/instant-quote",
+        "/api/metrics",
+        "/api/chat",
+        "/api/ai/*",
+        "/api/admin/*",
+        "/api/indexnow"
+      ],
+      "dbModels": [
+        "PageView",
+        "Lead",
+        "CallClick",
+        "Customer",
+        "Document"
+      ],
+      "palette": "dark with gold accent",
+      "fonts": [
+        "Outfit",
+        "Plus Jakarta Sans"
+      ],
+      "adsTag": "AW-16801337867 (shared with sigma)",
+      "stack": "Next.js 16, Prisma, Postgres, Vercel"
+    },
+    {
+      "key": "grewal",
+      "brand": "Grewal Shopfront & Shutters",
+      "domain": "www.grewalshopfrontandshutters.co.uk",
+      "repo": "~/Projects/grewal-shopfronts",
+      "status": "live, indexed",
+      "phones": [
+        "07597 630000",
+        "07597630000",
+        "447597630000"
+      ],
+      "address": "Exhall, Coventry, CV7 9FB",
+      "territory": "UK-wide pages, based Coventry",
+      "publicUrlScheme": "same template as urban",
+      "privatePaths": "same as urban",
+      "apiPaths": "same as urban",
+      "dbModels": "same as urban",
+      "palette": "light cream #F9F7F4 with gold #C9A84C",
+      "fonts": [
+        "Inter",
+        "Outfit"
+      ],
+      "adsTag": "AW-18391927258",
+      "stack": "Next.js 16, Prisma, Postgres, Vercel"
+    },
+    {
+      "key": "sigma",
+      "brand": "Sigma Shop Fronts",
+      "domain": "www.sigmashopfronts.com",
+      "repo": "~/Projects/sigmashopfronts",
+      "status": "live; 574-page city x service cross-product delisted by Google 21 Aug 2026",
+      "phones": [
+        "07414 779594",
+        "07414779594",
+        "447397066538",
+        "07397 066 538"
+      ],
+      "address": "TBD",
+      "territory": "UK-wide pages",
+      "publicUrlScheme": "same template as urban",
+      "privatePaths": "same as urban",
+      "apiPaths": "same as urban",
+      "dbModels": "same as urban",
+      "palette": "dark with cyan/violet accent",
+      "fonts": [
+        "Outfit",
+        "Plus Jakarta Sans"
+      ],
+      "adsTag": "AW-16801337867 (shared with urban)",
+      "stack": "Next.js 16, Prisma, Postgres, Vercel"
+    },
+    {
+      "key": "safeandsecure",
+      "brand": "Safe & Secure Shopfront Shutters",
+      "domain": "www.safeandsecureshopfrontshutters.co.uk",
+      "repo": "~/Projects/safe-and-secure-shopfront-shutters",
+      "status": "live but noindex; contact details are placeholders borrowed from grewal",
+      "phones": [
+        "placeholder: grewal's number"
+      ],
+      "address": "placeholder: CV7 9FB (grewal's)",
+      "territory": "Coventry, Warwickshire, Birmingham, Leicestershire",
+      "publicUrlScheme": [
+        "/",
+        "/services",
+        "/services/[slug]",
+        "/about",
+        "/gallery",
+        "/contact"
+      ],
+      "privatePaths": [],
+      "apiPaths": [
+        "/api/contact"
+      ],
+      "dbModels": [],
+      "palette": "paper/stone neutrals, bottle green, brick red",
+      "fonts": [
+        "Newsreader",
+        "Instrument Sans"
+      ],
+      "adsTag": "none",
+      "stack": "Next.js 16, no database, Vercel"
+    },
+    {
+      "key": "highstreet",
+      "brand": "High Street Shopfronts",
+      "domain": "www.highstreetshopfronts.co.uk",
+      "repo": "~/Projects/highstreet-shopfronts",
+      "status": "built 2026-10-01, not deployed; noindex until the owner confirms every fact in business/profile.ts (the build fails otherwise)",
+      "phones": "TBD (owner to supply; must be unique). Placeholders use Ofcom drama ranges: 0121 496 0730, 07700 900418",
+      "address": "TBD (owner's real Birmingham address)",
+      "territory": "installs UK-wide; repairs Birmingham + radius (placeholder 18 miles): Erdington, Sutton Coldfield, Alum Rock, Sparkhill, Small Heath, Handsworth, Solihull, Tamworth, Lichfield. Never Smethwick, the Black Country or Coventry.",
+      "publicUrlScheme": [
+        "/aluminium-shopfronts",
+        "/roller-shutters",
+        "/automatic-doors",
+        "/security-doors",
+        "/aluminium-doors",
+        "/shutter-repairs",
+        "/shopfront-glass",
+        "/lock-and-door-repairs",
+        "/nationwide",
+        "/nationwide/[city]",
+        "/repairs",
+        "/repairs/[area]",
+        "/our-work",
+        "/prices",
+        "/get-a-quote",
+        "/guides/[slug]",
+        "/the-firm",
+        "/talk-to-us",
+        "/privacy-notice"
+      ],
+      "privatePaths": [
+        "/hq",
+        "/hq/enquiries",
+        "/hq/enquiries/[id]",
+        "/hq/clients",
+        "/hq/paperwork",
+        "/hq/paperwork/new",
+        "/hq/paperwork/[id]"
+      ],
+      "apiPaths": [
+        "/api/beacon",
+        "/api/beacon/tap",
+        "/api/enquiries",
+        "/api/enquiries/reach",
+        "/api/hq/stats",
+        "/api/hq/enquiries/[id]",
+        "/api/hq/enquiries/[id]/draft",
+        "/api/hq/enquiries/[id]/client",
+        "/api/hq/photos/[id]",
+        "/api/hq/clients",
+        "/api/hq/paperwork",
+        "/api/hq/paperwork/[id]",
+        "/indexnow-key.txt"
+      ],
+      "dbModels": [
+        "Visit",
+        "PhoneTap",
+        "Enquiry",
+        "EnquiryPhoto",
+        "ReplyDraft",
+        "Client",
+        "Paperwork"
+      ],
+      "palette": "British shop signage: enamel navy #15233F / #0D172C, cream #F6EFDF, signal red #C1272D actions",
+      "fonts": [
+        "Alfa Slab One",
+        "Public Sans"
+      ],
+      "adsTag": "none yet; placeholder in business/profile.ts (tracking.googleAdsTag), must be this site's own",
+      "stack": "Next.js 16.3, Prisma 6, Postgres, Vercel",
+      "photos": "45 of the owner's own job photos in public/work (from ~/Downloads/Highstreet, 30 Sep 2026); checked against every other repo, closest match 78/256 bits",
+      "dbTables": [
+        "visits",
+        "phone_taps",
+        "enquiries",
+        "enquiry_photos",
+        "reply_drafts",
+        "clients",
+        "paperwork"
+      ],
+      "tracking": {
+        "ga4": "placeholder (business/profile.ts tracking.ga4)",
+        "gtm": "placeholder (tracking.gtm)",
+        "googleAdsTag": "placeholder (tracking.googleAdsTag)",
+        "searchConsole": "placeholder (tracking.searchConsoleToken)",
+        "bing": "placeholder (tracking.bingToken)",
+        "indexNow": "own key via INDEXNOW_KEY env, served at /indexnow-key.txt"
+      },
+      "storageKeys": [
+        "hss.visit (sessionStorage)",
+        "hss.count-me-not (localStorage)",
+        "hss_hq_pass (cookie)"
+      ],
+      "jsonLdIds": [
+        "/the-firm#hss-firm",
+        "/the-firm#hss-owner",
+        "/#hss-site",
+        "<page>#hss-service",
+        "<page>#hss-faq",
+        "<page>#hss-trail"
+      ],
+      "metricsEndpoint": "/api/hq/stats, Authorization: Bearer HQ_STATS_TOKEN (same JSON shape as /api/metrics)"
+    }
+  ]
+}
