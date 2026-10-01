@@ -1,5 +1,9 @@
 @AGENTS.md
 
+> **Read `~/Projects/seo-plan/SESSION-HANDOFF.md` first.** It carries the
+> cross-site state as of 1 Oct 2026: the live deploy hold, open actions,
+> and the things already ruled out so they are not re-proposed.
+
 # High Street Shopfronts: agent notes
 
 Site for `highstreetshopfronts.co.uk`, a Birmingham shopfront and shutter
