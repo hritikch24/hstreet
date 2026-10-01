@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import { serviceLabel } from '@/engine/enquiry-shape';
 import { store } from '@/engine/store';
 import { DraftReply } from '@/ui/DraftReply';
-import { Pill, when } from '@/ui/hq-bits';
+import { profile } from '@/business/profile';
+import { Pill, ReviewAsk, when } from '@/ui/hq-bits';
 
 const STATUSES = ['new', 'contacted', 'quoted', 'won', 'lost'];
 
@@ -84,6 +85,14 @@ export default async function EnquiryPage({ params }: PageProps<'/hq/enquiries/[
             <button className="btn btn-plain">Save</button>
           </form>
 
+          {e.status === 'won' && (
+            <div className="plate p-4">
+              <p>Job done? Reviews bring the next customers.</p>
+              <p className="mt-2">
+                <ReviewAsk phone={e.phone} name={e.name} link={profile.googleReviewLink} />
+              </p>
+            </div>
+          )}
           {e.client ? (
             <p className="plate p-4">This enquiry is already on the client list.</p>
           ) : (

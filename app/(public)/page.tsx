@@ -6,6 +6,7 @@ import { photoByName } from '@/copy/job-photos';
 import { repairServices } from '@/copy/services';
 import { faqNode, firmNode, graph, ownerNode, pageMeta, pageNode, siteNode } from '@/engine/search-meta';
 import { JsonLd, PhotoGrid, Questions } from '@/ui/blocks';
+import { CallbackBox } from '@/ui/CallbackBox';
 import { InstallCards } from '@/ui/InstallCards';
 import { PhotoForQuote } from '@/ui/reach';
 
@@ -139,6 +140,19 @@ export default function HomePage() {
           <div className="mt-6">
             <PhotoGrid photos={proof.map(photoByName)} />
           </div>
+        </div>
+      </section>
+
+      <section className="bg-navy py-10 text-cream">
+        <div className="shell grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-center">
+          <div>
+            <h2 className="text-[1.8rem] !text-cream sm:text-[2.2rem]">Not sure what you need?</h2>
+            <p className="mt-3 max-w-[52ch] text-cream/90">
+              Tell us where the shop is and we will ring you to talk it through: a new front, a shutter, a door, or a
+              repair in Birmingham. No obligation, and no hard sell.
+            </p>
+          </div>
+          <CallbackBox job="install" service="not-sure" tone="navy" heading="Ask us to call you" />
         </div>
       </section>
 

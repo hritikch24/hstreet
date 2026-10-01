@@ -14,6 +14,7 @@ import {
   UkWide,
   WorkPhoto,
 } from '@/ui/blocks';
+import { CallbackBox } from '@/ui/CallbackBox';
 import { PhotoForQuote, PriceCard } from '@/ui/reach';
 
 /** The eight service pages live at the top level: /roller-shutters, /shutter-repairs … */
@@ -86,10 +87,14 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
               </Link>
             </p>
           )}
+          <div className="max-w-md lg:hidden">
+            <CallbackBox job={s.kind} service={s.quoteService} />
+          </div>
           <Reviewed />
         </div>
         <aside className="hidden content-start gap-4 lg:sticky lg:top-4 lg:grid lg:self-start">
           <PriceCard what={s.name} job={s.kind} service={s.quoteService} />
+          <CallbackBox job={s.kind} service={s.quoteService} />
           <nav aria-label={s.kind === 'install' ? 'Other installations' : 'Other repairs'} className="px-1">
             <p className="kicker text-slate">{s.kind === 'install' ? 'We also fit' : 'We also repair'}</p>
             <ul className="mt-2 grid gap-1.5">

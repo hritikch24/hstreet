@@ -2,7 +2,7 @@
  * Practical guides for shop owners. Each one answers a question customers
  * actually send us, and links to the page where they can act on it.
  */
-import { priceRange, profile, radius } from '@/business/profile';
+import { guidePrice, profile, radius } from '@/business/profile';
 
 export interface GuideSection {
   heading: string;
@@ -97,7 +97,7 @@ export const guides = (): Guide[] => [
       {
         heading: 'Who can come out?',
         paras: [
-          `In Birmingham and up to about ${radius()} miles out, we can: most repairs cost ${priceRange('shutterRepair')}, and we aim to reach emergencies ${profile.response.value.emergency}. Further away, look for a local shutter engineer, since speed matters more than anything else with a stuck shutter.`,
+          `In Birmingham and up to about ${radius()} miles out, we can: most repairs cost ${guidePrice('shutterRepair')}, and we aim to reach emergencies ${profile.response.value.emergency}. Further away, look for a local shutter engineer, since speed matters more than anything else with a stuck shutter.`,
         ],
       },
     ],
@@ -109,7 +109,7 @@ export const guides = (): Guide[] => [
     h1: 'Manual or electric shutter for a small shop?',
     description:
       'Choosing a manual or electric roller shutter for a takeaway, corner shop or salon: width, how often it opens, cost and what tends to go wrong.',
-    answer: `Under about three metres wide, lifted twice a day by someone who can manage it, a manual shutter is cheaper and simpler: ${priceRange('shutterManual')}. Wider than that, or if it goes up and down more often, an electric shutter at ${priceRange('shutterElectric')} is worth it, and should always have a manual override.`,
+    answer: `Under about three metres wide, lifted twice a day by someone who can manage it, a manual shutter is cheaper and simpler: ${guidePrice('shutterManual')}. Wider than that, or if it goes up and down more often, an electric shutter at ${guidePrice('shutterElectric')} is worth it, and should always have a manual override.`,
     sections: [
       {
         heading: 'How wide is the opening?',

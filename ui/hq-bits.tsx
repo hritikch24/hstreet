@@ -73,3 +73,26 @@ export function Pill({ children, tone = 'navy' }: { children: React.ReactNode; t
   const cls = { navy: 'bg-navy text-cream', signal: 'bg-signal text-white', wa: 'bg-wa text-white', slate: 'bg-cream-deep text-ink' }[tone];
   return <span className={`inline-block rounded px-2 py-0.5 text-xs font-bold ${cls}`}>{children}</span>;
 }
+
+/**
+ * A WhatsApp message asking a customer for a Google review, with the
+ * business's review link. Reviews are what move a local firm up the map.
+ */
+export function ReviewAsk({ phone, name, link }: { phone: string; name: string; link: string }) {
+  if (!link) {
+    return (
+      <span className="text-sm text-slate" title="Add googleReviewLink in business/profile.ts">
+        Review link not set
+      </span>
+    );
+  }
+  const digits = phone.replace(/\D/g, '');
+  const wa = digits.startsWith('0') ? `44${digits.slice(1)}` : digits;
+  const first = name.trim().split(/\s+/)[0] || 'there';
+  const text = `Hi ${first}, thank you for choosing us. If you're happy with the work, a short Google review would really help a small local firm: ${link}`;
+  return (
+    <a href={`https://wa.me/${wa}?text=${encodeURIComponent(text)}`} target="_blank" rel="noopener" className="font-bold text-wa">
+      Ask for a review
+    </a>
+  );
+}

@@ -4,6 +4,7 @@ import { repairAreas } from '@/copy/repair-areas';
 import { repairServices } from '@/copy/services';
 import { firmNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening, Reviewed, Section } from '@/ui/blocks';
+import { CallbackBox } from '@/ui/CallbackBox';
 import { PhotoForQuote } from '@/ui/reach';
 
 const c = repairsHub();
@@ -19,8 +20,9 @@ export default function RepairsPage() {
     <>
       <JsonLd data={graph(pageNode({ path: '/repairs', name: c.h1, description: c.description }), firmNode(), trailNode('/repairs', trail))} />
       <Opening trail={trail} kicker="Birmingham area only" h1={c.h1} answer={c.answer}>
-        <div className="mt-5 max-w-2xl">
+        <div className="mt-5 grid gap-4 md:grid-cols-[1.3fr_1fr]">
           <PhotoForQuote repair />
+          <CallbackBox job="repair" service="shutter-repair" />
         </div>
       </Opening>
 

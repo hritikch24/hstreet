@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { profile, trackingId } from '@/business/profile';
+import { known, profile, trackingId } from '@/business/profile';
 
 /**
  * Third-party tags, each emitted only once its ID in business/profile.ts is
@@ -11,13 +11,15 @@ export function Tags() {
   const ads = trackingId(profile.tracking.googleAdsTag);
   const gtm = trackingId(profile.tracking.gtm);
   const gtagIds = [ga4, ads].filter(Boolean) as string[];
+  const conversions = known(profile.tracking.adsConversions);
+  const sendTo = ads && conversions ? Object.fromEntries(Object.entries(conversions).filter(([, v]) => v)) : {};
   return (
     <>
       {gtagIds.length > 0 && (
         <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtagIds[0]}`} strategy="afterInteractive" />
           <Script id="hss-gtag" strategy="afterInteractive">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());${gtagIds
+            {`window.__hssAds=${JSON.stringify(sendTo)};window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());${gtagIds
               .map((id) => `gtag('config','${id}');`)
               .join('')}`}
           </Script>

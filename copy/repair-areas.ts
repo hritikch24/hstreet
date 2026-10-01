@@ -7,7 +7,7 @@
  *
  * Response times and prices come from business/profile.ts.
  */
-import { priceRange, profile, radius } from '@/business/profile';
+import { guidePrice, profile, radius } from '@/business/profile';
 import type { QA } from '@/copy/services';
 
 export interface RepairArea {
@@ -28,7 +28,7 @@ export interface RepairArea {
 const r = () => profile.response.value;
 
 const opening = (name: string) =>
-  `We repair roller shutters, shop doors, locks and broken shopfront glass in ${name}. We aim to reach an emergency ${r().emergency} and other repairs ${r().standard}; most shutter repairs cost ${priceRange('shutterRepair')}.`;
+  `We repair roller shutters, shop doors, locks and broken shopfront glass in ${name}. We aim to reach an emergency ${r().emergency} and other repairs ${r().standard}; most shutter repairs cost ${guidePrice('shutterRepair')}.`;
 
 export const repairAreas = (): RepairArea[] => [
   {
@@ -45,14 +45,14 @@ export const repairAreas = (): RepairArea[] => [
       { name: 'Slade Road and Kingstanding Road', note: 'long parades of takeaways and convenience stores that trade late' },
     ],
     shops:
-      'Bakers, barbers, phone repair, charity shops and bookmakers on the High Street; takeaways and off-licences on the parades further out. A lot of the shutters here are older manual ones that have been lifted twice a day for years.',
+      'Bakers, barbers, phone repair shops, charity shops and bookmakers on the High Street; takeaways and off-licences on the parades further out. A lot of the shutters here are older manual ones that have been lifted twice a day for years.',
     access:
       'On the High Street itself there is little room to stop, so we park behind on the Sutton New Road side or on a side street and walk the tools in. On the outer parades there is usually a lay-by or service road.',
     questions: [
       {
         q: 'How fast can you fix a stuck shutter in Erdington?',
         a: [
-          `If the shutter is stuck open and the shop cannot be locked, we aim to be there ${r().emergency}. A shutter stuck shut on a morning is also urgent for you, so tell us that when you call. Other repairs are ${r().standard}.`,
+          `If the shutter is stuck open and the shop cannot be locked, we aim to be there ${r().emergency}. A shutter stuck shut in the morning is also urgent for you, so tell us that when you call. Other repairs are ${r().standard}.`,
         ],
       },
       {
@@ -77,7 +77,7 @@ export const repairAreas = (): RepairArea[] => [
       { name: 'Mere Green (Lichfield Road)', note: 'a mix of independents and newer units' },
     ],
     shops:
-      'More salons, cafés, estate agents and independent boutiques than takeaways. Doors and glass come up more than heavy security work here: closers that slam, locks that stick in the cold, a window hit overnight.',
+      'More salons, cafés, estate agents and independent boutiques than takeaways. The usual repairs here are doors and glass rather than heavy security work: closers that slam, locks that stick in the cold, a window hit overnight.',
     access:
       'Boldmere and Mere Green usually have somewhere to stop close by. For units in the shopping centre we check the centre’s contractor rules before we come, since some want work done before opening.',
     questions: [
@@ -102,7 +102,7 @@ export const repairAreas = (): RepairArea[] => [
     council: 'Birmingham City Council',
     title: 'Shutter Repairs on Alum Rock Road, B8',
     description: `Shutter, lock and shopfront glass repairs for shops on Alum Rock Road and around B8. Emergencies ${profile.response.value.emergency}; prices given before we start.`,
-    answer: `${opening('Alum Rock')} Most of our calls here are to shops on Alum Rock Road itself.`,
+    answer: `${opening('Alum Rock')} That includes every shop along Alum Rock Road.`,
     roads: [
       { name: 'Alum Rock Road', note: 'a long, busy road of jewellers, clothes and fabric shops, sweet centres, restaurants and grocers' },
       { name: 'Washwood Heath Road and Belchers Lane', note: 'smaller parades, takeaways and convenience stores' },
@@ -133,20 +133,20 @@ export const repairAreas = (): RepairArea[] => [
     council: 'Birmingham City Council',
     title: 'Shutter & Glass Repairs, Stratford Road B11',
     description: 'Shutters, shop doors, locks and glass repaired for shops on Stratford Road and around Sparkhill, B11. Birmingham repair team; response times and prices stated.',
-    answer: `${opening('Sparkhill')} Most calls are to shops along the Stratford Road.`,
+    answer: `${opening('Sparkhill')} That includes the whole of the Stratford Road.`,
     roads: [
       { name: 'Stratford Road (A34)', note: 'clothes, bridal and fabric shops, jewellers, restaurants and grocers, with bus lanes along much of it' },
       { name: 'Warwick Road and the side streets', note: 'smaller shops, takeaways and cash and carry units' },
     ],
     shops:
-      'Clothes and bridal shops with big display windows, restaurants that trade late, and grocers with wide openings. Glass and wide shutters are the main calls; restaurants often want work done before lunch.',
+      'Clothes and bridal shops with big display windows, restaurants that trade late, and grocers with wide openings. Glass and wide shutters are the usual repairs, and restaurants usually prefer the work done before lunch.',
     access:
       'We plan around the bus lane hours on the Stratford Road and use side streets for the van. Large panes of glass need two people and somewhere to set them down, so we agree where before we come.',
     questions: [
       {
         q: 'How much is it to fix a shutter on Stratford Road?',
         a: [
-          `Most shutter repairs cost ${priceRange('shutterRepair')}, parts included. A wide shutter over a clothes shop can need a heavier spring or motor, and we tell you the price before starting.`,
+          `Most shutter repairs cost ${guidePrice('shutterRepair')}, parts included. A wide shutter over a clothes shop can need a heavier spring or motor, and we tell you the price before starting.`,
         ],
       },
       {
@@ -164,7 +164,7 @@ export const repairAreas = (): RepairArea[] => [
     council: 'Birmingham City Council',
     title: 'Shutter & Door Repairs in Small Heath, B10',
     description: 'Roller shutter, shop door and glass repairs for shops on Coventry Road and around Small Heath, B10. Birmingham-based repair team.',
-    answer: `${opening('Small Heath')} Most of our work here is on the Coventry Road.`,
+    answer: `${opening('Small Heath')} That includes the shops along the Coventry Road.`,
     roads: [
       { name: 'Coventry Road (A45)', note: 'restaurants, grocers, butchers, travel agents and barbers' },
       { name: 'Green Lane and Charles Road', note: 'smaller parades and corner shops' },
@@ -193,7 +193,7 @@ export const repairAreas = (): RepairArea[] => [
     council: 'Birmingham City Council',
     title: 'Shutter Repairs on Soho Road, Handsworth',
     description: 'Shutter, lock, door and shop glass repairs for Soho Road and Handsworth, B21. Response times and prices stated before we come out.',
-    answer: `${opening('Handsworth')} Most calls here are to shops on and around the Soho Road.`,
+    answer: `${opening('Handsworth')} That includes the Soho Road and the streets around it.`,
     roads: [
       { name: 'Soho Road', note: 'sweet centres, jewellers, suit and sari shops, grocers and restaurants' },
       { name: 'Villa Road and Holyhead Road', note: 'takeaways, barbers and convenience stores' },
@@ -244,7 +244,7 @@ export const repairAreas = (): RepairArea[] => [
       {
         q: 'How much is a new closer for my shop door?',
         a: [
-          `Most closer and floor-spring repairs sit within ${priceRange('lockRepair')}, depending on the part. We tell you the price before fitting.`,
+          `Most closer and floor-spring repairs sit within ${guidePrice('lockRepair')}, depending on the part. We tell you the price before fitting.`,
         ],
       },
     ],
@@ -303,7 +303,7 @@ export const repairAreas = (): RepairArea[] => [
         q: 'What is the Lichfield heritage shopfront grant?',
         a: [
           'Lichfield Live reported on 3 August 2026 that Lichfield District Council is offering heritage shopfront grants of up to £30,000 per business for shops in the city-centre conservation area. The council sets the rules, so check eligibility with them directly.',
-          'Two things from experience of schemes like this. Don’t start or order anything before the grant is approved in writing, because work already done is rarely funded. And heritage schemes usually favour traditional timber fronts or restoration over new aluminium, so we will tell you straight if the front itself is not a job for us. Doors, locks, glass and internal shutters often still are.',
+          'Two things to know about schemes like this. First, don’t start or order anything before the grant is approved in writing, because work already done is rarely funded. Second, heritage schemes usually favour traditional timber fronts or restoration over new aluminium, so we will tell you straight if the front itself is not a job for us. Doors, locks, glass and internal shutters often still are.',
         ],
       },
       {

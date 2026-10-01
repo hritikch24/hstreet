@@ -68,7 +68,7 @@ export const installCities = (): InstallCity[] => [
     drive: 'about two hours',
     route: 'the M6',
     survey:
-      'Photos and measurements over WhatsApp for a ballpark price, then a survey visit before anything is ordered. Manchester is close enough that the survey is usually a day trip.',
+      'You send photos and measurements on WhatsApp for a ballpark price, then we survey before anything is ordered. Manchester is close enough that the survey is usually a day trip.',
     onTheGround: [
       'Wilmslow Road through Rusholme is a heavy bus corridor, so we plan unloading and the fit around the bus lane hours and use side streets for the van.',
       'Parts of the city centre, including much of the Northern Quarter, are conservation areas, so check with the council before changing the look of a front there.',
@@ -146,7 +146,7 @@ export const installCities = (): InstallCity[] => [
     drive: 'about an hour and a quarter',
     route: 'the M42, A42 and M1',
     survey:
-      'Photos and measurements first, then a survey. Nottingham is close enough for a same-week survey in most cases.',
+      'You send photos and measurements first, then we survey. Nottingham is close enough for a survey in the same week in most cases.',
     onTheGround: [
       'On streets with tram lines you cannot stop on the track, so we plan where the van goes before the day.',
       'The Lace Market and Hockley are conservation areas with a lot of converted older buildings, so the council may have a view on frontages there.',

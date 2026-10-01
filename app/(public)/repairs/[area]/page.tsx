@@ -5,6 +5,7 @@ import { repairAreas } from '@/copy/repair-areas';
 import { repairServices } from '@/copy/services';
 import { faqNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening, Questions, Reviewed, Section } from '@/ui/blocks';
+import { CallbackBox } from '@/ui/CallbackBox';
 import { PhotoForQuote } from '@/ui/reach';
 
 export const dynamicParams = false;
@@ -41,16 +42,17 @@ export default async function RepairAreaPage({ params }: PageProps<'/repairs/[ar
         facts={[
           { label: 'Emergency', value: profile.response.value.emergency },
           { label: 'Other repairs', value: profile.response.value.standard },
-          { label: 'Shutter repair', value: priceRange('shutterRepair') },
+          { label: 'Shutter repair, guide', value: priceRange('shutterRepair') },
           { label: 'Council', value: a.council.split(' (')[0] },
         ]}
       >
-        <div className="mt-5 max-w-2xl">
+        <div className="mt-5 grid gap-4 md:grid-cols-[1.3fr_1fr]">
           <PhotoForQuote repair />
+          <CallbackBox job="repair" service="shutter-repair" heading={`Shop in ${a.name}? We’ll call you`} />
         </div>
       </Opening>
 
-      <Section heading={`Where in ${a.name} do we get called?`} tone="deep">
+      <Section heading={`Which streets do we cover in ${a.name}?`} tone="deep">
         <dl className="grid gap-4 md:grid-cols-2">
           {a.roads.map((r) => (
             <div key={r.name} className="plate p-4">

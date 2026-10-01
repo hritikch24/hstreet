@@ -1,7 +1,8 @@
 import { connection } from 'next/server';
 import Link from 'next/link';
 import { store } from '@/engine/store';
-import { when } from '@/ui/hq-bits';
+import { profile } from '@/business/profile';
+import { ReviewAsk, when } from '@/ui/hq-bits';
 
 export default async function ClientsPage() {
   await connection();
@@ -47,6 +48,7 @@ export default async function ClientsPage() {
               <th className="py-2 pr-3">Phone</th>
               <th className="py-2 pr-3">Town</th>
               <th className="py-2 pr-3">Paperwork</th>
+              <th className="py-2 pr-3">Review</th>
               <th className="py-2 pr-3">Added</th>
             </tr>
           </thead>
@@ -67,6 +69,9 @@ export default async function ClientsPage() {
                 <td className="py-2 pr-3">
                   <Link href={`/hq/paperwork/new?client=${c.id}`}>New quote or invoice</Link>
                   {c._count.paperwork > 0 && <span className="text-slate"> · {c._count.paperwork} so far</span>}
+                </td>
+                <td className="py-2 pr-3">
+                  <ReviewAsk phone={c.phone} name={c.name} link={profile.googleReviewLink} />
                 </td>
                 <td className="py-2 pr-3 text-slate">{when(c.addedAt)}</td>
               </tr>

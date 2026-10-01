@@ -71,6 +71,17 @@ function campaign() {
   };
 }
 
+/**
+ * Reports a Google Ads conversion (call tap, WhatsApp tap or enquiry) when
+ * this site's own Ads tag and conversion actions are configured. Does
+ * nothing otherwise.
+ */
+export function conversion(kind: 'call' | 'whatsapp' | 'enquiry') {
+  const w = window as unknown as { gtag?: (...a: unknown[]) => void; __hssAds?: Record<string, string> };
+  const sendTo = w.__hssAds?.[kind];
+  if (sendTo && typeof w.gtag === 'function' && !optedOut()) w.gtag('event', 'conversion', { send_to: sendTo });
+}
+
 export function Beacon() {
   const path = usePathname();
 
@@ -90,6 +101,7 @@ export function Beacon() {
     const onClick = (e: MouseEvent) => {
       const a = (e.target as Element | null)?.closest?.('a[data-tap]') as HTMLAnchorElement | null;
       if (!a || optedOut()) return;
+      if (a.dataset.tap === 'call' || a.dataset.tap === 'whatsapp') conversion(a.dataset.tap);
       send('/api/beacon/tap', {
         kind: a.dataset.tap,
         target: a.href,

@@ -12,6 +12,7 @@
  * upload, so a phone photo fits comfortably within the request limit.
  */
 import Link from 'next/link';
+import { conversion } from '@/ui/Beacon';
 import { useRef, useState, useSyncExternalStore } from 'react';
 import {
   checkEnquiry,
@@ -163,6 +164,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
       const res = await fetch('/api/enquiries', { method: 'POST', body: data });
       const body = (await res.json()) as { ok: boolean; ref?: string; problems?: Problems; outside?: boolean; message?: string; miles?: number };
       if (body.ok) {
+        conversion('enquiry');
         try {
           sessionStorage.removeItem(PREVIEW_KEY);
         } catch {

@@ -67,12 +67,16 @@ export interface Profile {
     ga4: Fact<string>;
     gtm: Fact<string>;
     googleAdsTag: Fact<string>;
+    /** Google Ads conversion actions, as "AW-123/AbC" send_to values. */
+    adsConversions: Fact<{ call: string; whatsapp: string; enquiry: string }>;
     searchConsoleToken: Fact<string>;
     bingToken: Fact<string>;
   };
 
   /** Profile URLs that have been fetched and checked live. Empty until they exist. */
   sameAs: string[];
+  /** The "ask for a review" link from the Google Business Profile. Optional. */
+  googleReviewLink: string;
 
   /** When the page copy was last read through (ISO date). Shown on pages and in dateModified. */
   copyReviewedOn: string;
@@ -153,7 +157,7 @@ export const profile: Profile = {
       aluminiumDoor: { from: 900, to: 2200, basis: 'including the frame' },
       shutterRepair: { from: 120, to: 350, basis: 'with parts' },
       emergencyCallout: { from: 150, to: 180, basis: 'before parts' },
-      glassPane: { from: 250, to: 700, basis: 'toughened or laminated, fitted' },
+      glassPane: { from: 250, to: 700, basis: 'toughened or laminated' },
       lockRepair: { from: 90, to: 300, basis: 'depending on the part' },
     },
     'Real price ranges for each line of work',
@@ -165,7 +169,7 @@ export const profile: Profile = {
       autoDoors: '3 to 4 weeks',
       steelDoor: '2 to 3 weeks',
       aluminiumDoor: '2 to 4 weeks',
-      glass: '2 to 5 working days for made-to-measure glass',
+      glass: '2 to 5 working days',
     },
     'Typical lead times, order to fitted',
   ),
@@ -179,11 +183,16 @@ export const profile: Profile = {
     ga4: unconfirmed('', 'A GA4 measurement ID created for this site only'),
     gtm: unconfirmed('', 'A GTM container for this site only'),
     googleAdsTag: unconfirmed('', 'This site’s own Google Ads conversion tag (never one used elsewhere)'),
+    adsConversions: unconfirmed(
+      { call: '', whatsapp: '', enquiry: '' },
+      'Google Ads conversion actions for call taps, WhatsApp taps and enquiries (leave empty if not running Ads)',
+    ),
     searchConsoleToken: unconfirmed('', 'Search Console verification token for this domain'),
     bingToken: unconfirmed('', 'Bing Webmaster verification token'),
   },
 
   sameAs: [],
+  googleReviewLink: '',
 
   copyReviewedOn: '2026-10-01',
   pricesCheckedOn: unconfirmed('', 'The date you last checked the price ranges are right'),
@@ -211,17 +220,30 @@ export function trackingId(fact: Fact<string>): string | undefined {
 const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
 export const pounds = (n: number) => gbp.format(n);
 
+/** A price band for chips and tables, shown under a "Guide price" label. */
 export function priceRange(key: PriceKey): string {
   const band = profile.prices.value[key];
   return `${pounds(band.from)} to ${pounds(band.to)}`;
+}
+
+/**
+ * A price band for sentences. Every price on the site is a guide: the owner
+ * wants them read as tentative, and each job is priced after photos or a
+ * survey.
+ */
+export function guidePrice(key: PriceKey): string {
+  return `about ${priceRange(key)}`;
 }
 
 export function priceBasis(key: PriceKey): string {
   return profile.prices.value[key].basis;
 }
 
-export const vatNote = () =>
-  profile.vatRegistered.value ? 'Prices are plus VAT.' : 'Prices are the full amount you pay.';
+/** Said wherever a price is given: it is a guide, and whether VAT is extra once that is known. */
+export const vatNote = () => {
+  const vat = profile.vatRegistered.isPlaceholder ? '' : profile.vatRegistered.value ? ' Prices are plus VAT.' : ' There is no VAT to add.';
+  return `This is a guide price; we confirm yours in writing before any work starts.${vat}`;
+};
 
 export const radius = () => profile.repairRadiusMiles.value;
 

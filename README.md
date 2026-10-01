@@ -89,7 +89,7 @@ The build refuses `indexable: true` until all of them are real.
 - [ ] Google Business Profile link, once verified; any other profiles for `sameAs`, each opened and checked live
 
 **Numbers the site quotes**
-- [ ] Price ranges for every line of work
+- [ ] Price ranges for every line of work. They are always shown as guide prices ("about £X to £Y", "This is a guide price; we confirm yours in writing"), so rough figures are fine, but they should be honest
 - [ ] Lead times, order to fitted
 - [ ] Emergency and standard repair response times
 - [ ] Which cities the fitting team really travels to (at most six to start)
@@ -103,13 +103,29 @@ The build refuses `indexable: true` until all of them are real.
 **Accounts, each new and for this site only**
 - [ ] Domain, Vercel project, Postgres database (ask before creating)
 - [ ] Search Console and Bing Webmaster tokens
-- [ ] GA4, GTM, Google Ads conversion tag, only if wanted, and never one used by another site
+- [ ] GA4, GTM, Google Ads conversion tag, only if wanted, and never one used by another site. For anything you don't use, write `confirmed('')`: the build accepts that as "none"
+- [ ] If running Google Ads: the conversion actions for call taps, WhatsApp taps and enquiries (`tracking.adsConversions`), so Ads can see which clicks bring calls
+- [ ] `googleReviewLink`: the "ask for a review" link from the Google Business Profile. It turns on the **Ask for a review** WhatsApp button in `/hq`
 - [ ] IndexNow key, then `npm run indexnow` after launch
 
 **Then**
 - [ ] Update `copyReviewedOn` (and set `pricesCheckedOn`) in `business/profile.ts`
 - [ ] Set `indexable: true`, build, run every check, deploy. This also opens robots.txt to AI answer engines, which are kept out until then.
 - [ ] Submit the sitemap in Search Console; run `npm run indexnow`
+
+## Getting calls after launch
+
+The site can't bring traffic while it is hidden. In order of how quickly each one brings calls:
+
+1. **Go live.** Fill in the launch checklist and set `indexable: true`. Until then Google won't show the site at all.
+2. **Google Business Profile.** For "shutter repair near me" searches, the map results get most of the calls. Verify the profile with the same name, address and phone as the site, add the job photos, and post a job every week or two.
+3. **Reviews.** After every finished job, use **Ask for a review** in `/hq`. Ten honest reviews make more difference to calls from the map than any page on the site.
+4. **Google Ads for repairs** (optional, fastest). A small budget on "shutter repair Birmingham" and "shopfront glass Birmingham", limited to the repair radius, with call ads. Add the conversion actions above so you only pay for what brings calls.
+5. **Directories, each with exactly the same name, address and phone:** Bing Places, Apple Business Connect, Yell, Thomson Local, and trade sites such as Checkatrade or TrustATrader if you join them.
+6. **Real job write-ups.** For each job, give its town, month and a line on what was done (`copy/job-photos.ts`). They appear on `/our-work` and are what AI assistants and Google trust most.
+7. **Local links:** suppliers' "find an installer" pages, local business groups and traders' associations on the shopping roads you cover.
+
+Leads arrive by phone, WhatsApp, the quote form and the **Call me back** box. All of them show up in `/hq` (taps are counted; form leads are stored with the town and whether it's an install or a repair).
 
 ## Google Business Profile: draft
 

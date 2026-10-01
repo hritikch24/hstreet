@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { priceBasis, priceRange, profile, vatNote, type PriceKey } from '@/business/profile';
+import { priceBasis, priceRange, profile, type PriceKey } from '@/business/profile';
 import { pricesPage } from '@/copy/pages';
 import { graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening, Reviewed, Section } from '@/ui/blocks';
@@ -32,7 +32,7 @@ function PriceTable({ rows, lead }: { rows: { key: PriceKey; name: string; href:
         <thead>
           <tr className="border-b-2 border-navy text-sm uppercase tracking-wider text-slate">
             <th className="py-2 pr-4">Job</th>
-            <th className="py-2 pr-4">Price range</th>
+            <th className="py-2 pr-4">Guide price</th>
             <th className="py-2 pr-4">{lead}</th>
           </tr>
         </thead>
@@ -63,7 +63,7 @@ export default function PricesPage() {
   return (
     <>
       <JsonLd data={graph(pageNode({ path: '/prices', name: c.h1, description: c.description }), trailNode('/prices', trail))} />
-      <Opening trail={trail} h1={c.h1} answer={`${c.answer} ${vatNote()}`} />
+      <Opening trail={trail} h1={c.h1} answer={c.answer} />
       <Section heading={c.installHeading}>
         <PriceTable rows={installRows} lead="Order to fitted" />
       </Section>

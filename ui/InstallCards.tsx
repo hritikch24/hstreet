@@ -25,7 +25,9 @@ export function InstallCards({ extra }: { extra?: React.ReactNode }) {
               <span className="block p-4">
                 <span className="sign block text-[1.3rem] group-hover:underline">{s.name}</span>
                 <span className="mt-1 block text-ink">{s.summary}</span>
-                <span className="mt-2 block text-sm font-bold text-signal">{s.keyFacts[0].value}</span>
+                <span className="mt-2 block text-sm font-bold text-signal">
+                  {s.keyFacts[0].label.replace(', guide', '')}: {s.keyFacts[0].value} <span className="font-normal text-slate">(guide)</span>
+                </span>
               </span>
             </Link>
           </li>
