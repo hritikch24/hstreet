@@ -161,6 +161,23 @@ the photo check. They are dev tools; they don't run on Vercel.
 
 ## Decision log
 
+- **2026-10-15 (garage doors, drafted, not built):** `/garage-door-repairs`
+  and `/garage-door-installation`, copy in `copy/garage-doors.ts`, served by
+  the `[service]` route. Built only while `garageLive()`: the owner must
+  confirm `garageDoors` in `business/profile.ts` (kept outside `profile` so it
+  cannot hold up launch). `HSS_GARAGE_DRAFT=on` shows drafts on a preview,
+  never production; drafts are never indexable (`route-plan.ts`). Installs
+  default to the repair radius (`installArea: 'radius'`, `local: true`) until
+  the owner says otherwise. Servicing is a question on the repairs page, not a
+  page. No replacement, fitter or "near me" variants. Footer and llms files
+  list the pages only once published (`publishedGaragePages()`); they are kept
+  out of `installServices()` because the install cards assume a guide price.
+  The quote form gains optional "How soon?" and, for garage choices, door type
+  (`timing`, `door_type` columns). Update `copyReviewedOn` when publishing.
+  Pre-existing check failures, not from this work: contamination hits in
+  `docs/portfolio/` and a `${KEY}` false positive in `engine/mailer.ts`; one
+  shared question heading on `/automatic-doors`.
+
 - **2026-10-01 (shopfront preview):** `/see-it-on-your-shop` lets a customer
   mark the four corners of their opening on their own photo and see a new
   shopfront or shutter fitted into it, then send it with a quote request

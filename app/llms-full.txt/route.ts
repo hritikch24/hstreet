@@ -3,7 +3,7 @@ import { guides } from '@/copy/guides';
 import { installCities } from '@/copy/install-cities';
 import { home, nationwide, repairsHub } from '@/copy/pages';
 import { repairAreas } from '@/copy/repair-areas';
-import { services, type QA } from '@/copy/services';
+import { publishedGaragePages, services, type QA } from '@/copy/services';
 import { publishedCitySlugs } from '@/engine/route-plan';
 
 export const dynamic = 'force-static';
@@ -30,7 +30,7 @@ export function GET() {
     '',
     ...qa(home().questions),
   ];
-  for (const s of services()) {
+  for (const s of [...services(), ...publishedGaragePages()]) {
     out.push(`## ${s.name} (${absolute(s.path)})`, s.answer, '');
     for (const t of s.compare ?? []) {
       out.push(`### ${t.caption}`, `| ${t.head.map((h) => h || ' ').join(' | ')} |`, `|${t.head.map(() => ' --- ').join('|')}|`);

@@ -76,6 +76,10 @@ model Enquiry {
   email         String?
   contactBy     String         @default("phone") @map("contact_by")
   message       String?
+  /// Garage enquiries: a DOOR_KINDS value from engine/enquiry-shape.ts.
+  doorType      String?        @map("door_type")
+  /// A TIMINGS value from engine/enquiry-shape.ts.
+  timing        String?
   source        String?
   landingPath   String?        @map("landing_path")
   visitId       String?        @map("visit_id")

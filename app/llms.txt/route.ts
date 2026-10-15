@@ -1,7 +1,7 @@
 import { absolute, known, priceRange, profile, radius } from '@/business/profile';
 import { guides } from '@/copy/guides';
 import { repairAreas } from '@/copy/repair-areas';
-import { installServices, repairServices } from '@/copy/services';
+import { installServices, publishedGaragePages, repairServices } from '@/copy/services';
 
 export const dynamic = 'force-static';
 
@@ -30,11 +30,11 @@ export function GET() {
       : []),
     '',
     '## Installed UK-wide',
-    ...installServices().map((s) => `- [${s.name}](${absolute(s.path)}): ${s.summary}`),
+    ...[...installServices(), ...publishedGaragePages().filter((g) => g.kind === 'install' && !g.local)].map((s) => `- [${s.name}](${absolute(s.path)}): ${s.summary}`),
     `- [How UK-wide installation works](${absolute('/nationwide')})`,
     '',
     '## Repairs in Birmingham',
-    ...repairServices().map((s) => `- [${s.name}](${absolute(s.path)}): ${s.summary}`),
+    ...[...repairServices(), ...publishedGaragePages().filter((g) => g.kind === 'repair' || g.local)].map((s) => `- [${s.name}](${absolute(s.path)}): ${s.summary}`),
     `- [Repairs and emergency callouts](${absolute('/repairs')})`,
     '',
     '## Guides',

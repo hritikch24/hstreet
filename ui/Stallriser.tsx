@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { profile, radius } from '@/business/profile';
 import { guides } from '@/copy/guides';
-import { installServices, repairServices } from '@/copy/services';
+import { installServices, publishedGaragePages, repairServices } from '@/copy/services';
 import { CallLink, WhatsAppLink } from '@/ui/reach';
 
 /** The footer: the business facts, stated once, the same way everywhere. */
@@ -20,7 +20,7 @@ export function Stallriser() {
         <div>
           <p className="kicker text-cream/60">Fitted UK-wide</p>
           <ul className="mt-2 grid gap-1.5">
-            {installServices().map((s) => (
+            {[...installServices(), ...publishedGaragePages().filter((g) => g.kind === 'install' && !g.local)].map((s) => (
               <li key={s.path}>
                 <Link href={s.path} className="text-cream no-underline hover:underline">
                   {s.name}
@@ -37,7 +37,7 @@ export function Stallriser() {
         <div>
           <p className="kicker text-cream/60">Repairs, Birmingham + {radius()} miles</p>
           <ul className="mt-2 grid gap-1.5">
-            {repairServices().map((s) => (
+            {[...repairServices(), ...publishedGaragePages().filter((g) => g.kind === 'repair' || g.local)].map((s) => (
               <li key={s.path}>
                 <Link href={s.path} className="text-cream no-underline hover:underline">
                   {s.name}

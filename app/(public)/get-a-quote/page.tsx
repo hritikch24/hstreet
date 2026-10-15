@@ -1,4 +1,4 @@
-import { profile, radius } from '@/business/profile';
+import { garageLive, profile, radius } from '@/business/profile';
 import { quotePage } from '@/copy/pages';
 import { graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening } from '@/ui/blocks';
@@ -23,7 +23,7 @@ export default function QuotePage() {
             Tell us about the job
           </h2>
           <div className="mt-5">
-            <QuoteForm radiusMiles={radius()} phoneDisplay={profile.phone.value.display} />
+            <QuoteForm radiusMiles={radius()} phoneDisplay={profile.phone.value.display} garage={garageLive()} />
           </div>
         </section>
         <aside className="grid gap-4 lg:sticky lg:top-4">

@@ -165,7 +165,7 @@ export function serviceNode(s: ServicePage): Node {
     description: s.answer,
     url: absolute(s.path),
     provider: { '@id': FIRM_ID },
-    areaServed: s.kind === 'install' ? unitedKingdom : repairAreaServed(),
+    areaServed: s.kind === 'install' && !s.local ? unitedKingdom : repairAreaServed(),
     offers: band
       ? {
           '@type': 'Offer',

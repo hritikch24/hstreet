@@ -8,7 +8,8 @@ import { profile } from '@/business/profile';
 import { guides } from '@/copy/guides';
 import { installCities } from '@/copy/install-cities';
 import { repairAreas } from '@/copy/repair-areas';
-import { services } from '@/copy/services';
+import { servicePages } from '@/copy/services';
+import { GARAGE_PATHS, garagePublished } from '@/copy/garage-doors';
 import { siteIsLive } from '@/engine/go-live';
 
 /**
@@ -27,6 +28,8 @@ export function publishedCitySlugs(): string[] {
 export function mayIndex(path: string): boolean {
   if (!siteIsLive()) return false;
   if (NEVER_INDEX.has(path)) return false;
+  // A garage draft shown on a preview is never indexable.
+  if (GARAGE_PATHS.has(path) && !garagePublished()) return false;
   if (path.startsWith('/nationwide/') && profile.installCities.isPlaceholder) return false;
   return true;
 }
@@ -34,7 +37,7 @@ export function mayIndex(path: string): boolean {
 export function publicPaths(): string[] {
   return [
     '/',
-    ...services().map((s) => s.path),
+    ...servicePages().map((s) => s.path),
     '/nationwide',
     ...publishedCitySlugs().map((s) => `/nationwide/${s}`),
     '/repairs',

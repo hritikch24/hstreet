@@ -262,3 +262,43 @@ export function outstandingFacts(): { path: string; ask: string }[] {
   visit(profile, '');
   return found;
 }
+
+/**
+ * Garage doors: two pages drafted 15 Oct 2026 (/garage-door-repairs,
+ * /garage-door-installation) that are NOT built until the owner confirms
+ * this line of work. Kept outside `profile` on purpose: an unanswered garage
+ * question must not hold back the launch of the rest of the site.
+ *
+ * To publish: get every answer in `asks`, strike door types the firm does not
+ * handle, set `installArea`, then swap `unconfirmed(` for `confirmed(`.
+ */
+export type GarageDoorKind = 'roller' | 'sectional' | 'up-and-over' | 'side-hinged';
+
+export const garageDoors = unconfirmed(
+  {
+    repairs: ['roller', 'sectional', 'up-and-over', 'side-hinged'] as GarageDoorKind[],
+    installs: ['roller', 'sectional', 'up-and-over', 'side-hinged'] as GarageDoorKind[],
+    /** 'radius' = new garage doors fitted only within the repair radius; 'uk' = anywhere. */
+    installArea: 'radius' as 'radius' | 'uk',
+    /** Fitting a motor to a door that is opened by hand today. */
+    motorises: true,
+  },
+  [
+    'Does the firm repair garage doors, fit new ones, or both?',
+    'Which door types: roller, sectional, up-and-over, side-hinged?',
+    'Who does the work: the firm’s own fitters, or another firm it passes the job to?',
+    'Garage door installs: Birmingham area only, or anywhere in the UK?',
+    'Do the repair response times on the shutter page also apply to garage doors?',
+    'Does the firm fit motors to existing manual garage doors?',
+    'Guide prices: spring, cable, motor repairs; a new single and a new double door fitted',
+    'Who makes the doors you fit (name a maker only if you buy from them direct)?',
+    'Is servicing a separate paid job? What is checked, and the price?',
+    'Photos of garage doors the firm has repaired or fitted, with town and month',
+  ].join(' | '),
+);
+
+/** Garage pages exist when confirmed, or as a draft on a preview deployment (never production). */
+export function garageLive(): boolean {
+  if (!garageDoors.isPlaceholder) return true;
+  return process.env.HSS_GARAGE_DRAFT === 'on' && process.env.VERCEL_ENV !== 'production';
+}

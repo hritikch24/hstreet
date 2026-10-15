@@ -9,6 +9,8 @@
  */
 import { priceBasis, guidePrice, priceRange, profile, radius, vatNote } from '@/business/profile';
 import type { WorkLine } from '@/copy/job-photos';
+import { garageDoors, garageLive } from '@/business/profile';
+import { garageServices } from '@/copy/garage-doors';
 
 export interface QA {
   q: string;
@@ -26,6 +28,8 @@ export interface Compare {
 export interface ServicePage {
   path: string;
   kind: 'install' | 'repair';
+  /** An install line fitted only inside the repair radius, not UK-wide. */
+  local?: boolean;
   /** Short name for menus and lists. */
   name: string;
   /** Name used for the schema.org Service. */
@@ -524,6 +528,16 @@ export const services = (): ServicePage[] => [
     ],
   },
 ];
+
+/**
+ * Every page the [service] route builds: the eight above, plus the garage door
+ * pages while `garageLive()`. Hubs, footer and llms.txt keep using
+ * `services()` and add garage links only once published.
+ */
+export const servicePages = (): ServicePage[] => [...services(), ...(garageLive() ? garageServices() : [])];
+
+/** Garage pages once published (never drafts), for the footer and llms.txt. */
+export const publishedGaragePages = (): ServicePage[] => (garageDoors.isPlaceholder ? [] : garageServices());
 
 export const installServices = () => services().filter((s) => s.kind === 'install');
 export const repairServices = () => services().filter((s) => s.kind === 'repair');

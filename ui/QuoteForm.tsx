@@ -16,8 +16,11 @@ import { conversion } from '@/ui/Beacon';
 import { useRef, useState, useSyncExternalStore } from 'react';
 import {
   checkEnquiry,
+  DOOR_KINDS,
+  isGarageService,
   MAX_PHOTOS,
   SERVICE_CHOICES,
+  TIMINGS,
   type JobType,
   type Problems,
 } from '@/engine/enquiry-shape';
@@ -25,6 +28,8 @@ import {
 interface Props {
   radiusMiles: number;
   phoneDisplay: string;
+  /** Offer the garage door choices. The page passes `garageLive()`. */
+  garage?: boolean;
 }
 
 type Reach = { status: 'inside' | 'outside' | 'unknown'; miles?: number; town?: string };
@@ -80,7 +85,7 @@ function visitId(): string {
   }
 }
 
-export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
+export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) {
   // Arriving from a service page's "Get a quote" button (?job=…&service=…):
   // open with that job and service chosen. Empty on the server, so the form
   // is still in the static HTML; the customer's own choice always wins.
@@ -260,7 +265,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
           <option value="" disabled>
             Choose one
           </option>
-          {SERVICE_CHOICES[jobType].map((c) => (
+          {SERVICE_CHOICES[jobType].filter((c) => garage || !c.garage || c.value === service).map((c) => (
             <option key={c.value} value={c.value}>
               {c.label}
             </option>
@@ -268,6 +273,22 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
         </select>
         {err('service')}
       </div>
+
+      {isGarageService(service) && (
+        <div>
+          <label htmlFor="doorType" className="label">
+            Which kind of garage door? <span className="font-normal text-slate">(optional)</span>
+          </label>
+          <select id="doorType" name="doorType" className="field" defaultValue="">
+            <option value="">Choose one</option>
+            {DOOR_KINDS.map((d) => (
+              <option key={d.value} value={d.value}>
+                {d.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div>
         <label htmlFor="place" className="label">
@@ -357,6 +378,20 @@ export function QuoteForm({ radiusMiles, phoneDisplay }: Props) {
           ))}
         </div>
       </fieldset>
+
+      <div>
+        <label htmlFor="timing" className="label">
+          How soon? <span className="font-normal text-slate">(optional)</span>
+        </label>
+        <select id="timing" name="timing" className="field" defaultValue="">
+          <option value="">Choose one</option>
+          {TIMINGS.map((t) => (
+            <option key={t.value} value={t.value}>
+              {t.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div>
         <label htmlFor="message" className="label">

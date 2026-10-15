@@ -1,6 +1,6 @@
 import { profile, radius } from '@/business/profile';
 import { reachOf } from '@/engine/coverage';
-import { checkEnquiry, MAX_PHOTO_BYTES, MAX_PHOTOS, PHOTO_TYPES, serviceLabel } from '@/engine/enquiry-shape';
+import { checkEnquiry, doorLabel, MAX_PHOTO_BYTES, MAX_PHOTOS, PHOTO_TYPES, serviceLabel, timingLabel } from '@/engine/enquiry-shape';
 import { notifyOwner } from '@/engine/mailer';
 import { store } from '@/engine/store';
 import { sourceOf } from '@/engine/visit-source';
@@ -77,6 +77,8 @@ export async function POST(request: Request) {
         email: e.email ?? null,
         contactBy: e.contactBy,
         message: e.message ?? null,
+        doorType: e.doorType ?? null,
+        timing: e.timing ?? null,
         source: first ? sourceOf(first) : null,
         landingPath: first?.path ?? null,
         visitId,
@@ -106,6 +108,8 @@ export async function POST(request: Request) {
     ['Phone', e.phone],
     ['Email', e.email],
     ['Contact by', e.contactBy],
+    ['Door type', doorLabel(e.doorType) ?? null],
+    ['When', timingLabel(e.timing) ?? null],
     ['Message', e.message],
     ['Photos', files.length ? `${files.length} attached (see /hq)` : null],
     ['Came from', first ? `${sourceOf(first)}, landed on ${first.path}` : null],

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { photoByName, photosFor } from '@/copy/job-photos';
-import { services } from '@/copy/services';
+import { servicePages as services } from '@/copy/services';
 import { faqNode, graph, pageMeta, pageNode, serviceNode, trailNode } from '@/engine/search-meta';
 import {
   CompareTable,
@@ -16,6 +16,9 @@ import {
 } from '@/ui/blocks';
 import { CallbackBox } from '@/ui/CallbackBox';
 import { PhotoForQuote, PriceCard } from '@/ui/reach';
+import { GARAGE_PATHS, garagePublished } from '@/copy/garage-doors';
+
+const garageServicePublished = (path: string) => !GARAGE_PATHS.has(path) || garagePublished();
 
 /** The eight service pages live at the top level: /roller-shutters, /shutter-repairs … */
 export const dynamicParams = false;
@@ -40,11 +43,13 @@ export async function generateMetadata({ params }: PageProps<'/[service]'>) {
 export default async function ServicePage({ params }: PageProps<'/[service]'>) {
   const s = find((await params).service);
   if (!s) notFound();
-  const hub =
-    s.kind === 'install'
-      ? { name: 'UK-wide installs', path: '/nationwide' }
+  const ukWide = s.kind === 'install' && !s.local;
+  const hub = ukWide
+    ? { name: 'UK-wide installs', path: '/nationwide' }
+    : s.kind === 'install'
+      ? null
       : { name: 'Birmingham repairs', path: '/repairs' };
-  const trail = [{ name: 'Home', path: '/' }, hub, { name: s.name, path: s.path }];
+  const trail = [{ name: 'Home', path: '/' }, ...(hub ? [hub] : []), { name: s.name, path: s.path }];
   const hero = s.photos ? photoByName(s.photos.hero) : null;
   const photos = s.photos ? photosFor(s.photos.line).filter((p) => p.file !== hero?.file) : [];
   const others = services().filter((x) => x.kind === s.kind && x.path !== s.path);
@@ -63,12 +68,17 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
       />
       <Opening
         trail={trail}
-        kicker={s.kind === 'install' ? 'Fitted anywhere in the UK' : 'Birmingham repairs'}
+        kicker={ukWide ? 'Fitted anywhere in the UK' : s.kind === 'install' ? 'Fitted in the Birmingham area' : 'Birmingham repairs'}
         h1={s.h1}
         answer={s.answer}
         facts={s.keyFacts}
         side={hero ? <WorkPhoto photo={hero} preload sizes="(min-width: 1024px) 500px, 100vw" /> : undefined}
       >
+        {!garageServicePublished(s.path) && (
+          <p className="mt-4 rounded-[8px] border-2 border-signal bg-white p-3 font-bold text-navy" role="note">
+            Not live yet: waiting on the owner to confirm these details.
+          </p>
+        )}
         <div className="mt-5 lg:hidden">
           <PhotoForQuote repair={s.kind === 'repair'} />
         </div>
@@ -108,7 +118,8 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
         </aside>
       </div>
 
-      {s.kind === 'install' ? <UkWide what={s.name.toLowerCase()} /> : <RepairReach />}
+      {/* The repair band is written for shops and says installs are UK-wide; garage pages state their own area. */}
+      {ukWide ? <UkWide what={s.name.toLowerCase()} /> : GARAGE_PATHS.has(s.path) ? null : <RepairReach />}
 
       {photos.length > 0 && (
         <section className="shell py-10">
