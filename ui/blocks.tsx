@@ -182,11 +182,11 @@ export function RepairReach() {
   return (
     <section className="shell py-8">
       <div className="rounded-[10px] border-2 border-dashed border-navy-soft p-5">
-        <h2 className="text-[1.35rem] sm:text-[1.6rem]">Only in the Birmingham area</h2>
+        <h2 className="text-[1.35rem] sm:text-[1.6rem]">Birmingham and up to {radius()} miles</h2>
         <p className="mt-2 max-w-[68ch]">
-          Repairs and emergency callouts are for shops in Birmingham and up to {radius()} miles from it. We don’t
-          send the repair van further, because we couldn’t reach you fast enough. New installations are different:
-          those we <Link href="/nationwide">fit anywhere in the UK</Link>.
+          Repairs and emergency callouts are for shops in Birmingham and up to {radius()} miles from it. Further out
+          we don’t take repairs. New installations are different: those we{' '}
+          <Link href="/nationwide">fit anywhere in the UK</Link>.
         </p>
       </div>
     </section>
@@ -211,7 +211,7 @@ export function TwoAreas() {
         <p className="kicker text-signal">Repairs and emergencies</p>
         <h3 className="sign mt-1 text-[1.5rem]">Birmingham, up to {radius()} miles</h3>
         <p className="mt-2">
-          Shutters, doors, locks and broken glass. Emergencies {profile.response.value.emergency}. Nowhere else.
+          Shutters, doors, locks and broken glass. The emergency line is answered day and night.
         </p>
         <Link href="/repairs" className="mt-3 inline-block font-bold">
           Repairs in Birmingham

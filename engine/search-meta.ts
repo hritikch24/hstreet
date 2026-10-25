@@ -10,7 +10,7 @@
  * <origin>/#hss-site, and <page url>#hss-service / #hss-faq / #hss-trail.
  */
 import type { Metadata } from 'next';
-import { absolute, known, origin, profile, trackingId } from '@/business/profile';
+import { absolute, hasStreetAddress, known, origin, profile, radius, trackingId } from '@/business/profile';
 import { repairAreas } from '@/copy/repair-areas';
 import type { QA, ServicePage } from '@/copy/services';
 import { mayIndex } from '@/engine/route-plan';
@@ -90,11 +90,38 @@ const drop = (n: Node): Node =>
 
 const unitedKingdom = { '@type': 'Country', name: 'United Kingdom' };
 
+const METRES_PER_MILE = 1609.344;
+
+/** Repairs: a circle of `radius()` miles round the base, plus the areas that have their own pages. */
 export function repairAreaServed(): Node[] {
+  const base = known(profile.base);
   return [
+    ...(base
+      ? [
+          {
+            '@type': 'GeoCircle',
+            geoMidpoint: { '@type': 'GeoCoordinates', latitude: base.lat, longitude: base.lng },
+            geoRadius: Math.round(radius() * METRES_PER_MILE),
+          },
+        ]
+      : []),
     { '@type': 'City', name: 'Birmingham' },
     ...repairAreas().map((a) => ({ '@type': 'Place', name: a.name })),
   ];
+}
+
+const WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+/** "Every day", "Monday to Friday" or a single day name, as schema.org day names. */
+function daysOf(label: string): string[] {
+  if (/^every day$/i.test(label)) return WEEK;
+  const range = label.match(/^(\w+) to (\w+)$/i);
+  if (range) {
+    const from = WEEK.findIndex((d) => d.toLowerCase() === range[1].toLowerCase());
+    const to = WEEK.findIndex((d) => d.toLowerCase() === range[2].toLowerCase());
+    if (from >= 0 && to >= from) return WEEK.slice(from, to + 1);
+  }
+  return WEEK.filter((d) => d.toLowerCase() === label.toLowerCase());
 }
 
 export function firmNode(): Node {
@@ -103,10 +130,15 @@ export function firmNode(): Node {
   const base = known(profile.base);
   const hours = known(profile.hours);
   const owner = known(profile.owner);
+  const companyNumber = known(profile.companyNumber);
   return drop({
     '@type': 'HomeAndConstructionBusiness',
     '@id': FIRM_ID,
     name: profile.name,
+    legalName: profile.legalName,
+    identifier: companyNumber
+      ? { '@type': 'PropertyValue', propertyID: 'Companies House company number', value: companyNumber }
+      : undefined,
     url: absolute('/'),
     description: profile.oneLiner,
     image: absolute(DEFAULT_IMAGE),
@@ -114,17 +146,25 @@ export function firmNode(): Node {
     telephone: phone?.e164,
     priceRange: known(profile.prices) ? priceSpan() : undefined,
     email: known(profile.email),
+    // A service-area business publishes the city only: no street, postcode or geo point.
     address: address
-      ? {
+      ? drop({
           '@type': 'PostalAddress',
-          streetAddress: address.street,
-          addressLocality: address.city,
-          postalCode: address.postcode,
+          streetAddress: address.street || undefined,
+          addressLocality: address.locality || address.city,
+          postalCode: address.postcode || undefined,
           addressCountry: 'GB',
-        }
+        })
       : undefined,
-    geo: base ? { '@type': 'GeoCoordinates', latitude: base.lat, longitude: base.lng } : undefined,
-    openingHours: hours?.map((h) => `${h.days} ${h.open}-${h.close}`),
+    geo: base && hasStreetAddress() ? { '@type': 'GeoCoordinates', latitude: base.lat, longitude: base.lng } : undefined,
+    openingHoursSpecification: hours?.map((h) =>
+      drop({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: daysOf(h.days),
+        opens: h.open,
+        closes: h.close === '24:00' ? '23:59' : h.close,
+      }),
+    ),
     knowsLanguage: known(profile.languages),
     areaServed: [unitedKingdom, ...repairAreaServed()],
     founder: owner ? { '@id': OWNER_ID } : undefined,

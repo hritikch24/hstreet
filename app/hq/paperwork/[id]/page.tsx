@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { profile } from '@/business/profile';
+import { addressLine, profile } from '@/business/profile';
 import type { Line } from '@/engine/paperwork';
 import { store } from '@/engine/store';
 import { gbp } from '@/ui/hq-bits';
@@ -13,7 +13,6 @@ export default async function PaperworkDoc({ params }: PageProps<'/hq/paperwork/
   const d = await store.paperwork.findUnique({ where: { id } });
   if (!d) notFound();
   const lines = d.lines as unknown as Line[];
-  const a = profile.address.value;
 
   return (
     <div className="grid gap-4">
@@ -35,7 +34,7 @@ export default async function PaperworkDoc({ params }: PageProps<'/hq/paperwork/
           <div>
             <p className="sign text-[1.6rem]">{profile.name}</p>
             <p className="text-sm text-slate">
-              {[a.street, a.locality, a.city, a.postcode].filter(Boolean).join(', ')}
+              {addressLine()}
               <br />
               {profile.phone.value.display} · {profile.email.value}
               {!profile.companyNumber.isPlaceholder && <><br />Company no. {profile.companyNumber.value}</>}

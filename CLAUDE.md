@@ -8,7 +8,7 @@
 # High Street Shopfronts: agent notes
 
 Site for `highstreetshopfronts.co.uk`, a Birmingham shopfront and shutter
-installer. **Installs are UK-wide; repairs are Birmingham-only.** Next.js 16
+installer. **Installs are UK-wide; repairs cover Birmingham and up to `profile.repairRadiusMiles` (70) miles from it.** Next.js 16
 (App Router), TypeScript, Tailwind v4, Prisma 6 + Postgres, Vercel.
 
 Human setup, env vars and the launch checklist are in `README.md`.
@@ -161,6 +161,25 @@ the photo check. They are dev tools; they don't run on Vercel.
 
 ## Decision log
 
+- **2026-10-26 (go live: owner's facts, service-area business):** Phone and
+  WhatsApp are one number, `07376 440039`; email `support@highstreetshopfronts.co.uk`;
+  open and emergency line 24 hours, every day; English only; repair radius 70
+  miles from Birmingham city centre (was a placeholder 18, then 100; 70 chosen
+  to sit between the sibling sites' planned areas); installation lead
+  time "about a week". No street address is published: `address` holds the city
+  only, and JSON-LD omits street, postcode and geo, using a `GeoCircle` for the
+  repair area. No arrival time is promised (`response`): the owner gave none.
+  Company: HIGHSTREETSHOPFRONTS LIMITED, no. 17529805 (checked on Companies
+  House 26 Oct 2026, incorporated 19 Oct 2026). The firm is presented as a
+  company, with no named owner. The registered office (West Bromwich) appears
+  only as a legal line in the footer, /the-firm and the privacy notice, a
+  disclosure the law requires; it is not a place of business and is kept out
+  of JSON-LD and copy. Guide prices are mid-market and set by the owner's
+  instruction. Not a VAT-registered company; no Business Profile yet (create it after
+  launch, address hidden); no GA4, GTM or Bing tags; Search Console is verified
+  by DNS. `indexable` set to true. Google Ads IDs (`tracking.googleAdsTag`,
+  `adsConversions`) are `confirmed('')` for now and are added in the next deploy.
+
 - **2026-10-15 (garage doors, drafted, not built):** `/garage-door-repairs`
   and `/garage-door-installation`, copy in `copy/garage-doors.ts`, served by
   the `[service]` route. Built only while `garageLive()`: the owner must
@@ -175,8 +194,8 @@ the photo check. They are dev tools; they don't run on Vercel.
   The quote form gains optional "How soon?" and, for garage choices, door type
   (`timing`, `door_type` columns). Update `copyReviewedOn` when publishing.
   Pre-existing check failures, not from this work: contamination hits in
-  `docs/portfolio/` and a `${KEY}` false positive in `engine/mailer.ts`; one
-  shared question heading on `/automatic-doors`.
+  `docs/portfolio/` and a `${KEY}` false positive in `engine/mailer.ts`.
+  (The shared `/automatic-doors` question heading was reworded on 2026-10-26.)
 
 - **2026-10-01 (shopfront preview):** `/see-it-on-your-shop` lets a customer
   mark the four corners of their opening on their own photo and see a new

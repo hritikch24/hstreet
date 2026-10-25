@@ -83,15 +83,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Repairs: Birmingham only, said plainly. */}
+      {/* Repairs: the radius, said plainly. */}
       <section className="bg-signal text-white">
         <div className="shell grid gap-6 py-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div>
             <p className="kicker text-white/80">Repairs and emergencies</p>
             <h2 className="mt-2 text-[1.8rem] !text-white sm:text-[2.2rem]">Birmingham and up to {radius()} miles</h2>
             <p className="mt-3 max-w-[52ch] text-white/95">
-              Stuck shutters, broken glass, doors that won’t lock. We aim to reach an emergency{' '}
-              {profile.response.value.emergency}. We don’t do repairs anywhere else.
+              Stuck shutters, broken glass, doors that won’t lock. The emergency line is answered day and night, and
+              we aim to reach you {profile.response.value.emergency}. Further out than that we don’t take repairs.
             </p>
           </div>
           <ul className="grid gap-3 sm:grid-cols-3">

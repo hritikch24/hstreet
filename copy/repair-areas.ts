@@ -37,7 +37,7 @@ export const repairAreas = (): RepairArea[] => [
     postcodes: 'B23 and B24',
     council: 'Birmingham City Council',
     title: 'Shutter & Shopfront Repairs in Erdington',
-    description: `Stuck shutters, jammed shop doors and broken shop glass repaired in Erdington, B23 and B24. Emergency response ${profile.response.value.emergency}.`,
+    description: `Stuck shutters, jammed shop doors and broken shop glass repaired in Erdington, B23 and B24. Emergency line answered ${profile.emergencyHours.value.toLowerCase()}.`,
     answer: `${opening('Erdington')} Erdington is well inside our Birmingham repair area.`,
     roads: [
       { name: 'Erdington High Street', note: 'the main run of shops, from Six Ways towards the station end; busy with buses all day' },
@@ -270,7 +270,7 @@ export const repairAreas = (): RepairArea[] => [
       {
         q: 'Is Tamworth inside your repair area?',
         a: [
-          `Yes. Our repairs cover about ${radius()} miles from Birmingham, and Tamworth is inside that. If you are further out, towards Atherstone or Polesworth, check with us first.`,
+          `Yes. Our repairs cover about ${radius()} miles from Birmingham, and Tamworth, Atherstone and Polesworth are all well inside that.`,
         ],
       },
       {

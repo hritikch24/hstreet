@@ -13,7 +13,7 @@ export const home = () => ({
   description: profile.oneLiner,
   kicker: 'Birmingham fitters',
   h1: 'New shopfronts, shutters and doors, fitted across the UK',
-  answer: `We make and fit aluminium shopfronts, roller shutters, automatic doors and steel and aluminium doors for independent shops, and we fit them anywhere in the UK. Repairs are different: we only do those in Birmingham and up to ${radius()} miles out, because a stuck shutter needs someone there within hours.`,
+  answer: `We make and fit aluminium shopfronts, roller shutters, automatic doors and steel and aluminium doors for independent shops, and we fit them anywhere in the UK. Repairs are separate: we cover Birmingham and up to ${radius()} miles from it, and the emergency line is answered day and night.`,
   ask: 'Send us a photo of your shopfront on WhatsApp and we will come back with a price.',
   linesHeading: 'What we fit',
   proofHeading: 'Recent work',
@@ -33,9 +33,9 @@ export const home = () => ({
       ],
     },
     {
-      q: 'Do you do shutter repairs outside Birmingham?',
+      q: 'How far will you travel for a shutter repair?',
       a: [
-        `No. Repairs and emergency callouts are only for Birmingham and up to ${radius()} miles out. Further away, a local repairer will reach you faster than we could.`,
+        `Birmingham and up to ${radius()} miles from it, at any hour. Further out than that we don’t take repairs, but we still fit new shutters anywhere in the UK.`,
       ],
     },
     {
@@ -49,7 +49,7 @@ export const nationwide = () => ({
   title: 'UK-Wide Shopfront Installation: How It Works',
   description: `How our Birmingham team prices, surveys, makes and fits shopfronts, shutters and doors anywhere in the UK. Shopfronts typically ${guidePrice('shopfront')}.`,
   h1: 'Installing anywhere in the UK: how it works',
-  answer: `We fit new shopfronts, roller shutters, automatic doors and shop doors anywhere in the UK. You send photos and measurements, we give you a price, survey, draw, make it and then drive out to fit it; a typical shopfront costs ${guidePrice('shopfront')} and is fitted ${lead().shopfront}. Repairs are not part of this: they are Birmingham-only.`,
+  answer: `We fit new shopfronts, roller shutters, automatic doors and shop doors anywhere in the UK. You send photos and measurements, we give you a price, survey, draw, make it and then drive out to fit it; a typical shopfront costs ${guidePrice('shopfront')} and is fitted ${lead().shopfront}. Repairs are separate: they cover Birmingham and up to ${radius()} miles from it.`,
   stepsHeading: 'From first message to fitted',
   steps: [
     {
@@ -114,9 +114,9 @@ export const nationwide = () => ({
 
 export const repairsHub = () => ({
   title: 'Shopfront & Shutter Repairs in Birmingham',
-  description: `Shutter, door, lock and shop glass repairs and emergency callouts across Birmingham, up to ${radius()} miles out. Emergencies ${resp().emergency}. Birmingham area only.`,
+  description: `Shutter, door, lock and shop glass repairs and emergency callouts across Birmingham and up to ${radius()} miles out. Emergency line answered ${profile.emergencyHours.value.toLowerCase()}.`,
   h1: 'Repairs and emergency callouts in Birmingham',
-  answer: `We repair shop shutters, doors, locks and broken shopfront glass in Birmingham and up to ${radius()} miles from it. We aim to reach an emergency ${resp().emergency} and other repairs ${resp().standard}; most shutter repairs cost ${guidePrice('shutterRepair')}. We do not do repairs or emergency callouts anywhere else.`,
+  answer: `We repair shop shutters, doors, locks and broken shopfront glass in Birmingham and up to ${radius()} miles from it. We aim to reach an emergency ${resp().emergency} and other repairs ${resp().standard}; most shutter repairs cost ${guidePrice('shutterRepair')}. Further out than that we don’t take repairs.`,
   emergencyHeading: 'What counts as an emergency?',
   emergency: [
     'Your shop can’t be locked: a shutter stuck up, a door that won’t lock, a broken pane.',
@@ -127,17 +127,16 @@ export const repairsHub = () => ({
     `The emergency line is answered ${profile.emergencyHours.value.toLowerCase()}. An emergency callout is ${guidePrice('emergencyCallout')} before parts, and you are told that before we set off.`,
   areasHeading: 'Where the repair van goes',
   areasIntro: `Anywhere within about ${radius()} miles of Birmingham. These are the areas we cover most closely, with the main shopping roads and anything that affects how we get to you:`,
-  outsideHeading: 'Outside the Birmingham area?',
-  outside:
-    'We won’t send a repair van further than we can reach quickly, so outside our area a local repairer is the better call. New installations are different: those we fit anywhere in the UK.',
+  outsideHeading: `More than ${radius()} miles from Birmingham?`,
+  outside: `Beyond ${radius()} miles we don’t take repairs, so a local repairer is the better call. New installations are different: those we fit anywhere in the UK.`,
 });
 
 export const pricesPage = () => ({
   title: 'Shopfront & Shutter Guide Prices',
-  description: `Guide prices for aluminium shopfronts, roller shutters, automatic doors, steel doors and Birmingham repairs. Your actual price is confirmed in writing.`,
+  description: `Guide prices for aluminium shopfronts, roller shutters, automatic doors, steel doors and repairs. Your actual price is confirmed in writing.`,
   h1: 'Guide prices',
   answer:
-    'These are guide prices to help you plan, not fixed quotes. Your price depends on the size of the opening and what you choose. Send us a photo and we will give you a real price, in writing, before anything is ordered or started.',
+    'These figures are only to give you an idea of cost, not fixed quotes. Your final price depends on the size of the opening and what you choose, and we confirm it in writing, from a photo or a survey, before anything is ordered or started.',
   installHeading: 'New installations, anywhere in the UK',
   repairHeading: `Repairs, Birmingham and up to ${radius()} miles`,
   movesHeading: 'What moves a price up or down?',
@@ -169,18 +168,17 @@ export const firmPage = () => ({
   description: 'Who runs High Street Shopfronts, how we price and fit, where the Birmingham repair area stops, and what we don’t do.',
   h1: 'The firm',
   answer: profile.oneLiner,
-  ownerHeading: 'Who you deal with',
-  ownerPending: 'Introductions to the owner and the fitting team will go here.',
+  ownerHeading: 'The company',
   howHeading: 'How we work',
   how: [
     'You get a price in writing before anything is ordered, and a repair price before the work starts.',
     'We fit what we draw. If the survey changes something, you see the new drawing before it is made.',
     'We clean up and take away the old front, packaging and offcuts.',
-    'Installations go anywhere in the UK. Repairs stay in the Birmingham area, because that is where we can get to quickly.',
+    `Installations go anywhere in the UK. Repairs cover Birmingham and up to ${radius()} miles from it, day and night.`,
   ],
   notHeading: 'What we don’t do',
   not: [
-    'Repairs or emergency callouts outside the Birmingham area',
+    `Repairs or emergency callouts more than ${radius()} miles from Birmingham`,
     'Timber heritage shopfronts: we will say so if that is what your building needs',
     'Signage and electrics beyond connecting shutters and doors to a supply that is already there',
   ],
@@ -190,12 +188,12 @@ export const contactPage = () => ({
   title: 'Contact: Phone, WhatsApp & Hours',
   description: `Call, WhatsApp or email High Street Shopfronts in Birmingham. Installations UK-wide; repairs and emergencies within ${radius()} miles of Birmingham.`,
   h1: 'Talk to us',
-  answer: `The quickest way to a price is a WhatsApp message with a photo of your shopfront. For a repair in Birmingham, call. For anything that can wait, the quote form reaches the same people.`,
+  answer: `The quickest way to a price is a WhatsApp message with a photo of your shopfront. For a repair, call. For anything that can wait, the quote form reaches the same people.`,
 });
 
 export const quotePage = () => ({
   title: 'Get a Shopfront or Shutter Quote',
-  description: `Get a price for a new shopfront, shutter or shop door anywhere in the UK, or a repair in Birmingham. WhatsApp a photo or fill in the form.`,
+  description: `Get a price for a new shopfront, shutter or shop door anywhere in the UK, or a repair within ${radius()} miles of Birmingham. WhatsApp a photo or fill in the form.`,
   h1: 'Get a quote',
   answer: `Tell us whether it is a new installation (anywhere in the UK) or a repair (Birmingham and up to ${radius()} miles), where the shop is and what you need. A photo helps more than anything.`,
 });

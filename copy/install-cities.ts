@@ -84,7 +84,7 @@ export const installCities = (): InstallCity[] => [
       {
         q: 'Can you repair shutters in Manchester?',
         a: [
-          'No. Repairs are Birmingham-only, because we cannot get to a stuck shutter two hours away quickly enough. We fit new shutters in Manchester, and we will tell you honestly if a repair makes more sense than a new one.',
+          'It depends on where in Manchester. The city sits right at the edge of the area our repairs cover, so call or WhatsApp with the postcode and we will tell you straight away. It is about two hours by road, so we say when we can be there before you decide. We also fit new shutters in Manchester, and we will say honestly if a repair makes more sense than a new one.',
         ],
       },
     ],

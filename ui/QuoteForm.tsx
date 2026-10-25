@@ -317,8 +317,8 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
               {reach.miles ? ` (about ${Math.round(reach.miles)} miles away)` : ''}.
             </p>
             <p className="mt-1">
-              We only do repairs within {radiusMiles} miles of Birmingham, because we couldn’t get to you quickly
-              enough. A local repairer will be faster. We can still help in two ways:
+              We only do repairs within {radiusMiles} miles of Birmingham, and that is further out than we go. A
+              local repairer will be faster. We can still help in two ways:
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <button type="button" className="btn btn-plain" onClick={() => switchTo('install')}>

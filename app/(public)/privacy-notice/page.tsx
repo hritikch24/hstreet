@@ -14,7 +14,16 @@ export default function PrivacyPage() {
         h1={c.h1}
         answer={`${profile.name} records how the site is used, and what you tell us in an enquiry, so we can price and do the job. We don’t sell it, and we don’t use advertising cookies unless we add them later and ask you first.`}
       />
-      <Section heading="When you visit">
+      <Section heading="Who is responsible for your information">
+        <div className="prose-shop max-w-[68ch]">
+          <p>
+            {profile.legalName}, company number {profile.companyNumber.value}, registered in England and Wales.
+            Registered office: {profile.registeredOffice}. You can reach us at{' '}
+            <a href={`mailto:${profile.email.value}`}>{profile.email.value}</a>.
+          </p>
+        </div>
+      </Section>
+      <Section heading="When you visit" tone="deep">
         <div className="prose-shop max-w-[68ch]">
           <p>
             Each page view is counted on our own server: the page, where you came from, campaign tags in the link,
@@ -28,17 +37,17 @@ export default function PrivacyPage() {
           <CountingSwitch />
         </div>
       </Section>
-      <Section heading="When you send an enquiry" tone="deep">
+      <Section heading="When you send an enquiry">
         <div className="prose-shop max-w-[68ch]">
           <p>
             We keep your name, phone number, email if you give one, the town or postcode of the job, what you need,
             your message and any photos you attach. We use them to reply, price and do the work, and we keep them
-            for as long as we might need them for the job, its paperwork and any guarantee claim.
+            for as long as we might need them for the job, its paperwork and any later question about the work.
           </p>
           <p>An email copy of each enquiry goes to us through our email provider.</p>
         </div>
       </Section>
-      <Section heading="Your rights">
+      <Section heading="Your rights" tone="deep">
         <div className="prose-shop max-w-[68ch]">
           <p>
             You can ask what we hold about you, ask us to correct it, or ask us to delete it. Email{' '}

@@ -1,6 +1,6 @@
 /**
  * Copy for the eight service pages. Install lines are fitted UK-wide; repair
- * lines are Birmingham-only. Every price, lead time, radius and response time
+ * lines cover Birmingham and the repair radius. Every price, lead time, radius and response time
  * comes from business/profile.ts, so the owner changes a number once.
  *
  * Each `questions` entry is rendered as a visible heading and answer, and the
@@ -56,7 +56,7 @@ const lead = () => profile.leadTimes.value;
 const resp = () => profile.response.value;
 
 const ukWide = 'Fitted anywhere in the UK';
-const brumOnly = () => `Birmingham and within ${radius()} miles`;
+const repairReach = () => `Birmingham and within ${radius()} miles`;
 
 export const services = (): ServicePage[] => [
   {
@@ -144,7 +144,7 @@ export const services = (): ServicePage[] => [
     title: 'Roller Shutters for Shops, Fitted UK-Wide',
     description: `Manual and electric roller shutters for shops, fitted UK-wide. Manual from ${guidePrice('shutterManual')}, electric ${guidePrice('shutterElectric')}; ${lead().shutter}.`,
     h1: 'Roller shutters for shops, fitted anywhere in the UK',
-    answer: `We supply and fit steel and aluminium roller shutters over shop windows, doors and back entrances. A manual shutter over a standard window costs ${guidePrice('shutterManual')}; an electric one with a manual override costs ${guidePrice('shutterElectric')}, and most are fitted ${lead().shutter} after you order. Installation is UK-wide; repairs are Birmingham-only.`,
+    answer: `We supply and fit steel and aluminium roller shutters over shop windows, doors and back entrances. A manual shutter over a standard window costs ${guidePrice('shutterManual')}; an electric one with a manual override costs ${guidePrice('shutterElectric')}, and most are fitted ${lead().shutter} after you order. Installation is UK-wide; repairs cover Birmingham and up to ${radius()} miles from it.`,
     keyFacts: [
       { label: 'Manual, guide', value: priceRange('shutterManual') },
       { label: 'Electric, guide', value: priceRange('shutterElectric') },
@@ -209,7 +209,7 @@ export const services = (): ServicePage[] => [
       {
         q: 'Do you fit shutters outside Birmingham?',
         a: [
-          'Yes, new shutters are fitted UK-wide. What we don’t do is repair shutters outside the Birmingham area, because we cannot get to a stuck shutter in another city fast enough to be useful.',
+          `Yes, new shutters are fitted UK-wide. Repairs are separate: we repair shutters in Birmingham and up to ${radius()} miles from it.`,
         ],
       },
       {
@@ -280,7 +280,7 @@ export const services = (): ServicePage[] => [
         ],
       },
       {
-        q: 'Do automatic doors need servicing?',
+        q: 'How often should a shop’s automatic doors be serviced?',
         a: [
           'Yes. Powered doors should be checked by someone competent, at least once a year and more often on a busy store. The sensors and the safety settings are what matter. We can service the doors we fit if you are in the Birmingham area; further afield we will point you to a local engineer.',
         ],
@@ -396,11 +396,11 @@ export const services = (): ServicePage[] => [
     title: 'Roller Shutter Repairs in Birmingham',
     description: `Stuck, jammed or damaged roller shutters repaired across Birmingham, Sutton Coldfield, Solihull, Tamworth and Lichfield. Most repairs ${guidePrice('shutterRepair')}.`,
     h1: 'Roller shutter repairs in Birmingham',
-    answer: `We repair stuck, noisy and damaged roller shutters on shops in Birmingham and up to ${radius()} miles out, including Sutton Coldfield, Solihull, Tamworth and Lichfield. Most repairs cost ${guidePrice('shutterRepair')} with parts; we aim to reach emergencies ${resp().emergency} and other repairs ${resp().standard}. We do not repair shutters outside the Birmingham area.`,
+    answer: `We repair stuck, noisy and damaged roller shutters on shops in Birmingham and up to ${radius()} miles out, including Sutton Coldfield, Solihull, Tamworth and Lichfield. Most repairs cost ${guidePrice('shutterRepair')} with parts; we aim to reach emergencies ${resp().emergency} and other repairs ${resp().standard}. Further than ${radius()} miles from Birmingham we don’t take repairs.`,
     keyFacts: [
       { label: 'Most repairs, guide', value: priceRange('shutterRepair') },
       { label: 'Emergency response', value: resp().emergency },
-      { label: 'Where', value: brumOnly() },
+      { label: 'Where', value: repairReach() },
     ],
     summary: 'Stuck, dropped, noisy or bent shutters, any make, Birmingham area only.',
     quoteService: 'shutter-repair',
@@ -438,7 +438,7 @@ export const services = (): ServicePage[] => [
       {
         q: 'Is my shop inside your repair area?',
         a: [
-          `Repairs are Birmingham only: anywhere within about ${radius()} miles, which takes in Erdington, Sutton Coldfield, Alum Rock, Sparkhill, Small Heath, Handsworth, Solihull, Tamworth and Lichfield. If you are further out, we are not the right firm for a repair, but we can still quote for a new shutter.`,
+          `Repairs cover Birmingham and anywhere within about ${radius()} miles of it, which takes in Erdington, Sutton Coldfield, Alum Rock, Sparkhill, Small Heath, Handsworth, Solihull, Tamworth and Lichfield, and the towns and cities beyond. If you are further out, we are not the right firm for a repair, but we can still quote for a new shutter.`,
         ],
       },
     ],
@@ -455,7 +455,7 @@ export const services = (): ServicePage[] => [
     keyFacts: [
       { label: 'Per pane, guide', value: priceRange('glassPane') },
       { label: 'New glass in', value: lead().glass },
-      { label: 'Where', value: brumOnly() },
+      { label: 'Where', value: repairReach() },
     ],
     summary: 'Boarded up on the same visit, then new safety glass made to measure.',
     quoteService: 'glass',
@@ -494,11 +494,11 @@ export const services = (): ServicePage[] => [
     title: 'Shop Door & Lock Repairs, Birmingham',
     description: `Shop doors that drag, won’t lock or slam: closers, floor springs, locks and push bars repaired across Birmingham. Most repairs ${guidePrice('lockRepair')}.`,
     h1: 'Shop door and lock repairs in Birmingham',
-    answer: `We fix shop doors that drag, won’t lock, slam or swing open: locks, closers, floor springs, hinges and fire-exit push bars. Most repairs cost ${guidePrice('lockRepair')}, and we aim to be with you ${resp().standard}, or ${resp().emergency} if the shop cannot be locked. This is Birmingham-area only, up to ${radius()} miles out.`,
+    answer: `We fix shop doors that drag, won’t lock, slam or swing open: locks, closers, floor springs, hinges and fire-exit push bars. Most repairs cost ${guidePrice('lockRepair')}, and we aim to be with you ${resp().standard}, or ${resp().emergency} if the shop cannot be locked. We cover Birmingham and up to ${radius()} miles out.`,
     keyFacts: [
       { label: 'Most repairs, guide', value: priceRange('lockRepair') },
       { label: 'Can’t lock up', value: resp().emergency },
-      { label: 'Where', value: brumOnly() },
+      { label: 'Where', value: repairReach() },
     ],
     summary: 'Locks, closers, floor springs and push bars, sorted before closing time.',
     quoteService: 'door-or-lock',

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { radius } from '@/business/profile';
 import { repairsHub } from '@/copy/pages';
 import { repairAreas } from '@/copy/repair-areas';
 import { repairServices } from '@/copy/services';
@@ -19,7 +20,7 @@ export default function RepairsPage() {
   return (
     <>
       <JsonLd data={graph(pageNode({ path: '/repairs', name: c.h1, description: c.description }), firmNode(), trailNode('/repairs', trail))} />
-      <Opening trail={trail} kicker="Birmingham area only" h1={c.h1} answer={c.answer}>
+      <Opening trail={trail} kicker={`Birmingham and up to ${radius()} miles`} h1={c.h1} answer={c.answer}>
         <div className="mt-5 grid gap-4 md:grid-cols-[1.3fr_1fr]">
           <PhotoForQuote repair />
           <CallbackBox job="repair" service="shutter-repair" />

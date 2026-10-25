@@ -39,7 +39,8 @@ export interface Profile {
   /** Search engines may index the site. Leave false until every placeholder is gone. */
   indexable: boolean;
 
-  owner: Fact<{ name: string; trade: string }>;
+  /** A named person, or null when the firm is presented as a company only. */
+  owner: Fact<{ name: string; trade: string } | null>;
   team: Fact<string[]>;
   phone: Fact<{ display: string; e164: string }>;
   whatsapp: Fact<{ display: string; e164: string }>;
@@ -51,6 +52,10 @@ export interface Profile {
   emergencyHours: Fact<string>;
   languages: Fact<string[]>;
   googleBusinessProfile: Fact<string>;
+  /** Registered name, exactly as on Companies House. */
+  legalName: string;
+  /** The registered office, as on Companies House. Shown as a legal line only, never as a place of business. */
+  registeredOffice: string;
   companyNumber: Fact<string>;
   vatRegistered: Fact<boolean>;
 
@@ -110,43 +115,40 @@ export const profile: Profile = {
   domain: 'highstreetshopfronts.co.uk',
   host: 'www.highstreetshopfronts.co.uk',
   oneLiner:
-    'Birmingham fitters of aluminium shopfronts, roller shutters and shop doors: new installations anywhere in the UK, repairs across Birmingham.',
-  indexable: false,
+    'Birmingham fitters of aluminium shopfronts, roller shutters and shop doors: new installs anywhere in the UK, repairs within 70 miles.',
+  indexable: true,
 
-  owner: unconfirmed(
-    { name: 'The owner', trade: 'Shopfront and shutter fitter' },
-    'Full name, years on the tools and what they did before starting the firm',
-  ),
-  team: unconfirmed([], 'Names and roles of the fitters, if they are happy to be named'),
+  // The firm is presented as a company, not a named person.
+  owner: confirmed(null),
+  team: confirmed([]),
 
-  phone: unconfirmed({ display: '0121 496 0730', e164: '+441214960730' }, 'Main business phone'),
-  whatsapp: unconfirmed({ display: '07700 900418', e164: '447700900418' }, 'WhatsApp business number'),
-  email: unconfirmed('quotes@highstreetshopfronts.co.uk', 'Confirm this mailbox exists, or give the real address'),
-  address: unconfirmed(
-    { street: '', locality: '', city: 'Birmingham', postcode: '' },
-    'Full Birmingham address, exactly as it will appear on the Google Business Profile',
-  ),
-  base: unconfirmed({ lat: 52.4797, lng: -1.9026 }, 'Measured from the yard or unit once the address is known'),
-  hours: unconfirmed(
-    [
-      { days: 'Monday to Friday', open: '08:00', close: '18:00' },
-      { days: 'Saturday', open: '09:00', close: '14:00' },
-    ],
-    'Office and phone hours',
-  ),
-  emergencyHours: unconfirmed('Every day, 7am to 11pm', 'When the emergency repair line is answered'),
-  languages: unconfirmed(['English'], 'Every language the team speaks with customers, e.g. Urdu, Punjabi, Bengali'),
-  googleBusinessProfile: unconfirmed('', 'Link to the Google Business Profile once it is verified'),
-  companyNumber: unconfirmed('', 'Companies House number, if trading as a limited company'),
-  vatRegistered: unconfirmed(false, 'Whether prices are quoted plus VAT'),
+  // One mobile number serves calls and WhatsApp.
+  phone: confirmed({ display: '07376 440039', e164: '+447376440039' }),
+  whatsapp: confirmed({ display: '07376 440039', e164: '447376440039' }),
+  email: confirmed('support@highstreetshopfronts.co.uk'),
+  // A service-area business: no street address is published. Only the city is
+  // stated, and JSON-LD leaves the street, postcode and geo point out.
+  address: confirmed({ street: '', locality: '', city: 'Birmingham', postcode: '' }),
+  // Repair distances are measured straight-line from Birmingham city centre.
+  base: confirmed({ lat: 52.4797, lng: -1.9026 }),
+  hours: confirmed([{ days: 'Every day', open: '00:00', close: '24:00' }]),
+  emergencyHours: confirmed('24 hours a day, every day'),
+  languages: confirmed(['English']),
+  // None yet: the profile is created after launch, as a service-area business with the address hidden.
+  googleBusinessProfile: confirmed(''),
+  legalName: 'HIGHSTREETSHOPFRONTS LIMITED',
+  registeredOffice: '18 Sydney Close, West Bromwich, England, B70 0SR',
+  // Checked on Companies House on 26 Oct 2026: active, incorporated 19 Oct 2026.
+  companyNumber: confirmed('17529805'),
+  vatRegistered: confirmed(false),
 
-  repairRadiusMiles: unconfirmed(18, 'How far from the base the repair van will go'),
-  response: unconfirmed(
-    { emergency: 'within 2 hours', standard: 'the same or next working day' },
-    'Honest response times for repair callouts',
-  ),
+  repairRadiusMiles: confirmed(70), // keep in step with oneLiner above
+  // No promised arrival time: the owner has not given one, and none is invented.
+  response: confirmed({ emergency: 'as soon as we can', standard: 'on a day we agree with you' }),
 
-  prices: unconfirmed(
+  // Mid-market guide prices, set by the owner's instruction on 26 Oct 2026: an idea of cost only.
+  // Every price is shown as a guide and confirmed in writing by the firm.
+  prices: confirmed(
     {
       shopfront: { from: 3500, to: 7500, basis: 'for a typical single-door frontage up to about 5 metres wide' },
       shutterManual: { from: 900, to: 1600, basis: 'over a standard shop window' },
@@ -160,42 +162,36 @@ export const profile: Profile = {
       glassPane: { from: 250, to: 700, basis: 'toughened or laminated' },
       lockRepair: { from: 90, to: 300, basis: 'depending on the part' },
     },
-    'Real price ranges for each line of work',
   ),
-  leadTimes: unconfirmed(
-    {
-      shopfront: '3 to 5 weeks from signed drawings',
-      shutter: '7 to 14 working days',
-      autoDoors: '3 to 4 weeks',
-      steelDoor: '2 to 3 weeks',
-      aluminiumDoor: '2 to 4 weeks',
-      glass: '2 to 5 working days',
-    },
-    'Typical lead times, order to fitted',
-  ),
+  leadTimes: confirmed({
+    shopfront: 'about a week from signed drawings',
+    shutter: 'about a week',
+    autoDoors: 'about a week',
+    steelDoor: 'about a week',
+    aluminiumDoor: 'about a week',
+    glass: 'about a week',
+  }),
 
-  installCities: unconfirmed(
+  installCities: confirmed(
     ['london', 'manchester', 'bristol', 'leicester', 'nottingham', 'sheffield'],
-    'Which cities the fitting team actually travels to; add a city when a job there is done',
   ),
 
   tracking: {
-    ga4: unconfirmed('', 'A GA4 measurement ID created for this site only'),
-    gtm: unconfirmed('', 'A GTM container for this site only'),
-    googleAdsTag: unconfirmed('', 'This site’s own Google Ads conversion tag (never one used elsewhere)'),
-    adsConversions: unconfirmed(
-      { call: '', whatsapp: '', enquiry: '' },
-      'Google Ads conversion actions for call taps, WhatsApp taps and enquiries (leave empty if not running Ads)',
-    ),
-    searchConsoleToken: unconfirmed('', 'Search Console verification token for this domain'),
-    bingToken: unconfirmed('', 'Bing Webmaster verification token'),
+    ga4: confirmed(''),
+    gtm: confirmed(''),
+    // Google Ads IDs are added in the next deploy, once the conversion actions exist.
+    googleAdsTag: confirmed(''),
+    adsConversions: confirmed({ call: '', whatsapp: '', enquiry: '' }),
+    // Search Console is verified as a Domain property through DNS, so no tag is needed.
+    searchConsoleToken: confirmed(''),
+    bingToken: confirmed(''),
   },
 
   sameAs: [],
   googleReviewLink: '',
 
-  copyReviewedOn: '2026-10-01',
-  pricesCheckedOn: unconfirmed('', 'The date you last checked the price ranges are right'),
+  copyReviewedOn: '2026-10-26',
+  pricesCheckedOn: confirmed('2026-10-26'),
 };
 
 /** Canonical origin, no trailing slash. */
@@ -246,6 +242,19 @@ export const vatNote = () => {
 };
 
 export const radius = () => profile.repairRadiusMiles.value;
+
+/** True once a street address is published. Until then only the city is shown. */
+export const hasStreetAddress = () => Boolean(profile.address.value.street);
+
+/** The address as a line of text: the full address if there is one, otherwise just the city. */
+export function addressLine(): string {
+  const a = profile.address.value;
+  return [a.street, a.locality, a.city, a.postcode].filter(Boolean).join(', ');
+}
+
+/** "Open 24 hours" for round-the-clock days, otherwise "08:00 to 18:00". */
+export const hoursText = (h: { open: string; close: string }) =>
+  h.open === '00:00' && h.close === '24:00' ? 'Open 24 hours' : `${h.open} to ${h.close}`;
 
 /** Every placeholder still in the profile, with what the owner needs to supply. */
 export function outstandingFacts(): { path: string; ask: string }[] {

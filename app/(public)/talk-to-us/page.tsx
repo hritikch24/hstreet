@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { profile, radius } from '@/business/profile';
+import { addressLine, hasStreetAddress, hoursText, profile, radius } from '@/business/profile';
 import { contactPage } from '@/copy/pages';
 import { firmNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { JsonLd, Opening, Section } from '@/ui/blocks';
@@ -13,7 +13,6 @@ export default function TalkToUsPage() {
     { name: 'Home', path: '/' },
     { name: 'Talk to us', path: '/talk-to-us' },
   ];
-  const a = profile.address.value;
   return (
     <>
       <JsonLd data={graph(pageNode({ path: '/talk-to-us', name: c.h1, description: c.description, type: 'ContactPage' }), firmNode(), trailNode('/talk-to-us', trail))} />
@@ -29,7 +28,7 @@ export default function TalkToUsPage() {
           </div>
           <div className="plate p-5">
             <h2 className="text-[1.3rem]">Phone</h2>
-            <p className="mt-2">Best for a repair in Birmingham, or anything urgent.</p>
+            <p className="mt-2">Best for a repair, or anything urgent. We answer day and night.</p>
             <CallLink className="btn btn-signal mt-3">
               <PhoneGlyph /> {profile.phone.value.display}
             </CallLink>
@@ -48,9 +47,7 @@ export default function TalkToUsPage() {
           {profile.hours.value.map((h) => (
             <li key={h.days} className="flex justify-between gap-4 border-b border-rule py-2">
               <span>{h.days}</span>
-              <span className="font-bold">
-                {h.open} to {h.close}
-              </span>
+              <span className="font-bold">{hoursText(h)}</span>
             </li>
           ))}
           <li className="flex justify-between gap-4 py-2">
@@ -59,10 +56,11 @@ export default function TalkToUsPage() {
           </li>
         </ul>
       </Section>
-      <Section heading="Where are you?">
+      <Section heading={hasStreetAddress() ? 'Where are you?' : 'Where we work'}>
         <p className="max-w-[68ch]">
-          {[a.street, a.locality, a.city, a.postcode].filter(Boolean).join(', ')}. Installations go anywhere in the
-          UK; repairs cover up to {radius()} miles from here. We speak {profile.languages.value.join(', ')}.
+          {hasStreetAddress() ? `${addressLine()}. ` : 'We are based in Birmingham and come to you. '}Installations go
+          anywhere in the UK; repairs cover Birmingham and up to {radius()} miles from it. We speak{' '}
+          {profile.languages.value.join(', ')}.
         </p>
         <p className="mt-4">
           <Link href="/get-a-quote" className="btn btn-signal">

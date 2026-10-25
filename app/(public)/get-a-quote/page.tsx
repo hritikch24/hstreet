@@ -29,9 +29,9 @@ export default function QuotePage() {
         <aside className="grid gap-4 lg:sticky lg:top-4">
           <PhotoForQuote />
           <div className="rounded-[10px] border-2 border-dashed border-navy-soft p-4 text-[0.98rem]">
-            <p className="font-bold text-navy">Repairs are Birmingham-only</p>
+            <p className="font-bold text-navy">Repairs: Birmingham and up to {radius()} miles</p>
             <p className="mt-1">
-              Within {radius()} miles of Birmingham. New installations go anywhere in the UK.
+              New installations go anywhere in the UK.
             </p>
           </div>
         </aside>

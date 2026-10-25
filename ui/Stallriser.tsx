@@ -1,13 +1,11 @@
 import Link from 'next/link';
-import { profile, radius } from '@/business/profile';
+import { addressLine, hoursText, profile, radius } from '@/business/profile';
 import { guides } from '@/copy/guides';
 import { installServices, publishedGaragePages, repairServices } from '@/copy/services';
 import { CallLink, WhatsAppLink } from '@/ui/reach';
 
 /** The footer: the business facts, stated once, the same way everywhere. */
 export function Stallriser() {
-  const address = profile.address.value;
-  const addressLine = [address.street, address.locality, address.city, address.postcode].filter(Boolean).join(', ');
   return (
     <footer className="stallriser no-print mt-12">
       <div className="stallriser-tiles" aria-hidden="true" />
@@ -15,7 +13,7 @@ export function Stallriser() {
         <div>
           <p className="sign text-[1.4rem] !text-cream">{profile.name}</p>
           <p className="mt-2 text-[0.95rem] text-cream/85">{profile.oneLiner}</p>
-          <p className="mt-3 text-[0.95rem] text-cream/85">{addressLine}</p>
+          <p className="mt-3 text-[0.95rem] text-cream/85">{addressLine()}</p>
         </div>
         <div>
           <p className="kicker text-cream/60">Fitted UK-wide</p>
@@ -77,7 +75,7 @@ export function Stallriser() {
             </li>
             {profile.hours.value.map((h) => (
               <li key={h.days} className="text-cream/85">
-                {h.days}: {h.open} to {h.close}
+                {h.days}: {hoursText(h)}
               </li>
             ))}
           </ul>
@@ -103,7 +101,9 @@ export function Stallriser() {
       <div className="border-t border-cream/10">
         <p className="shell py-4 text-[0.85rem] text-cream/60">
           © {new Date().getFullYear()} {profile.name}
-          {profile.companyNumber.isPlaceholder ? '' : ` · Company no. ${profile.companyNumber.value}`}
+          {profile.companyNumber.isPlaceholder
+            ? ''
+            : ` · ${profile.legalName}, registered in England and Wales, company no. ${profile.companyNumber.value}. Registered office: ${profile.registeredOffice}`}
         </p>
       </div>
     </footer>

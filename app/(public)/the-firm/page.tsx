@@ -33,7 +33,10 @@ export default function FirmPage() {
             )}
           </div>
         ) : (
-          <p className="max-w-[68ch] text-slate">{c.ownerPending}</p>
+          <p className="max-w-[68ch]">
+            This website is run by {profile.legalName}, a private limited company registered in England and Wales,
+            company number {profile.companyNumber.value}. Registered office: {profile.registeredOffice}.
+          </p>
         )}
       </Section>
 
