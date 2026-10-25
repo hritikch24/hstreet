@@ -25,7 +25,7 @@ const waHref = (text: string) =>
   `https://wa.me/${profile.whatsapp.value.e164}?text=${encodeURIComponent(text)}`;
 
 export const QUOTE_MESSAGE = 'Hello, I would like a price. Here is a photo of my shopfront:';
-export const REPAIR_MESSAGE = 'Hello, I need a repair in Birmingham. The problem is:';
+export const REPAIR_MESSAGE = 'Hello, I need a repair at my shop. The problem is:';
 
 export function CallLink({ className = '', children }: { className?: string; children?: React.ReactNode }) {
   return (
@@ -55,20 +55,20 @@ export function WhatsAppLink({
  * The inline "send us a photo" ask. Used in the home hero, on every service
  * page and on the quote page. Deliberately not a floating button.
  */
-export function PhotoForQuote({ tone = 'plate', repair = false }: { tone?: 'plate' | 'navy'; repair?: boolean }) {
-  const navy = tone === 'navy';
+export function PhotoForQuote({ tone = 'panel', repair = false }: { tone?: 'panel' | 'ink'; repair?: boolean }) {
+  const ink = tone === 'ink';
   return (
     <div
       className={
-        navy
-          ? 'rounded-[10px] border border-cream/30 bg-navy-deep/60 p-4 sm:p-5'
-          : 'plate p-4 sm:p-5'
+        ink
+          ? 'rounded-[2px] border border-stone/30 bg-ink-deep/60 p-4 sm:p-5'
+          : 'panel p-4 sm:p-5'
       }
     >
-      <p className={`font-bold ${navy ? 'text-cream' : 'text-navy'}`}>
+      <p className={`font-bold ${ink ? 'text-stone' : 'text-ink'}`}>
         {repair ? 'WhatsApp us a photo of the problem' : 'WhatsApp us a photo of your shopfront for a quote'}
       </p>
-      <p className={`mt-1 text-[0.95rem] ${navy ? 'text-cream/85' : 'text-slate'}`}>
+      <p className={`mt-1 text-[0.95rem] ${ink ? 'text-stone/85' : 'text-slate'}`}>
         {repair
           ? 'A photo of the shutter, door or glass tells us which parts to bring.'
           : 'One photo from across the road and the rough width of the opening is enough for a first price.'}
@@ -77,7 +77,7 @@ export function PhotoForQuote({ tone = 'plate', repair = false }: { tone?: 'plat
         <WhatsAppLink text={repair ? REPAIR_MESSAGE : QUOTE_MESSAGE} className="btn btn-wa">
           <ChatGlyph /> WhatsApp {profile.whatsapp.value.display}
         </WhatsAppLink>
-        <CallLink className={navy ? 'btn border-2 border-cream/60 text-cream hover:bg-navy-soft' : 'btn btn-plain'}>
+        <CallLink className={ink ? 'btn border border-stone/60 text-stone hover:bg-ink-soft' : 'btn btn-plain'}>
           <PhoneGlyph /> {profile.phone.value.display}
         </CallLink>
       </div>
@@ -100,7 +100,7 @@ export function PriceCard({
 }) {
   const href = `/get-a-quote?job=${job}&service=${encodeURIComponent(service)}`;
   return (
-    <div className="plate p-5">
+    <div className="panel p-5">
       <p className="sign text-[1.3rem]">{job === 'repair' ? 'Need it fixed?' : `A price for ${what.toLowerCase()}`}</p>
       <p className="mt-1 text-[0.95rem] text-slate">
         {job === 'repair'
@@ -108,7 +108,7 @@ export function PriceCard({
           : 'A photo from across the road and the rough width is enough to start.'}
       </p>
       <div className="mt-4 grid gap-2">
-        <Link href={href} className="btn btn-signal w-full">
+        <Link href={href} className="btn btn-accent w-full">
           {job === 'repair' ? 'Book a repair' : 'Get a quote'}
         </Link>
         <WhatsAppLink text={job === 'repair' ? REPAIR_MESSAGE : QUOTE_MESSAGE} className="btn btn-wa w-full">

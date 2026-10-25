@@ -9,9 +9,9 @@ export const when = (d: Date | string) =>
 
 export function Kpi({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="plate p-4">
+    <div className="panel p-4">
       <p className="text-xs font-bold uppercase tracking-wider text-slate">{label}</p>
-      <p className="mt-1 text-[1.9rem] font-bold tabular-nums text-navy">{value}</p>
+      <p className="mt-1 text-[1.9rem] font-bold tabular-nums text-ink">{value}</p>
       {hint && <p className="text-sm text-slate">{hint}</p>}
     </div>
   );
@@ -20,7 +20,7 @@ export function Kpi({ label, value, hint }: { label: string; value: string; hint
 export function Bars({ title, rows, label, count = 'count' }: { title: string; rows: Record<string, unknown>[]; label: string; count?: string }) {
   const max = Math.max(1, ...rows.map((r) => Number(r[count] ?? 0)));
   return (
-    <section className="plate p-4">
+    <section className="panel p-4">
       <h2 className="text-[1.1rem]">{title}</h2>
       {rows.length === 0 ? (
         <p className="mt-2 text-slate">Nothing yet in this period.</p>
@@ -33,8 +33,8 @@ export function Bars({ title, rows, label, count = 'count' }: { title: string; r
                   {String(r[label] ?? '—')}
                 </td>
                 <td className="w-2/5 py-1">
-                  <div className="h-2.5 rounded bg-cream-deep">
-                    <div className="h-2.5 rounded bg-navy" style={{ width: `${(Number(r[count] ?? 0) / max) * 100}%` }} />
+                  <div className="h-2.5 rounded bg-stone-deep">
+                    <div className="h-2.5 rounded bg-ink" style={{ width: `${(Number(r[count] ?? 0) / max) * 100}%` }} />
                   </div>
                 </td>
                 <td className="w-14 py-1 text-right tabular-nums text-slate">{num(r[count])}</td>
@@ -60,7 +60,7 @@ export function Periods({ hours, base }: { hours: number; base: string }) {
         <Link
           key={h}
           href={`${base}?hours=${h}`}
-          className={`rounded border-2 px-3 py-1 text-sm font-bold no-underline ${h === hours ? 'border-navy bg-navy text-cream' : 'border-rule text-navy'}`}
+          className={`rounded border px-3 py-1 text-sm font-bold no-underline ${h === hours ? 'border-ink bg-ink text-stone' : 'border-rule text-ink'}`}
         >
           {label}
         </Link>
@@ -69,8 +69,8 @@ export function Periods({ hours, base }: { hours: number; base: string }) {
   );
 }
 
-export function Pill({ children, tone = 'navy' }: { children: React.ReactNode; tone?: 'navy' | 'signal' | 'wa' | 'slate' }) {
-  const cls = { navy: 'bg-navy text-cream', signal: 'bg-signal text-white', wa: 'bg-wa text-white', slate: 'bg-cream-deep text-ink' }[tone];
+export function Pill({ children, tone = 'ink' }: { children: React.ReactNode; tone?: 'ink' | 'accent' | 'wa' | 'slate' }) {
+  const cls = { ink: 'bg-ink text-stone', accent: 'bg-accent text-white', wa: 'bg-wa text-white', slate: 'bg-stone-deep text-ink' }[tone];
   return <span className={`inline-block rounded px-2 py-0.5 text-xs font-bold ${cls}`}>{children}</span>;
 }
 

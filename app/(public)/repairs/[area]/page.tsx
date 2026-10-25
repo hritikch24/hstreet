@@ -55,8 +55,8 @@ export default async function RepairAreaPage({ params }: PageProps<'/repairs/[ar
       <Section heading={`Which streets do we cover in ${a.name}?`} tone="deep">
         <dl className="grid gap-4 md:grid-cols-2">
           {a.roads.map((r) => (
-            <div key={r.name} className="plate p-4">
-              <dt className="font-bold text-navy">{r.name}</dt>
+            <div key={r.name} className="panel p-4">
+              <dt className="font-bold text-ink">{r.name}</dt>
               <dd className="mt-1">{r.note}</dd>
             </div>
           ))}

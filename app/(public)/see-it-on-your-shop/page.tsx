@@ -31,10 +31,10 @@ export default function SeeItOnYourShopPage() {
             ['Corners', 'Drag the red corners onto the corners of the opening.'],
             ['Choose', 'Try colours and styles, then send it for a price.'],
           ].map(([h, t], i) => (
-            <li key={h} className="flex gap-3 border-t-4 border-navy pt-3">
-              <span className="sign text-[1.8rem] leading-none text-signal">{i + 1}</span>
+            <li key={h} className="flex gap-3 border-t border-ink pt-3">
+              <span className="sign text-[1.8rem] leading-none text-accent">{i + 1}</span>
               <span>
-                <strong className="block text-navy">{h}</strong>
+                <strong className="block text-ink">{h}</strong>
                 {t}
               </span>
             </li>

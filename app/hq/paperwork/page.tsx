@@ -10,12 +10,12 @@ export default async function PaperworkPage() {
     <div className="grid gap-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-[1.8rem]">Quotes & invoices</h1>
-        <Link href="/hq/paperwork/new" className="btn btn-signal">New quote or invoice</Link>
+        <Link href="/hq/paperwork/new" className="btn btn-accent">New quote or invoice</Link>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[36rem] border-collapse text-left text-[0.95rem]">
           <thead>
-            <tr className="border-b-2 border-navy text-xs uppercase tracking-wider text-slate">
+            <tr className="border-b-2 border-ink text-xs uppercase tracking-wider text-slate">
               <th className="py-2 pr-3">Ref</th>
               <th className="py-2 pr-3">For</th>
               <th className="py-2 pr-3">Total</th>
@@ -28,7 +28,7 @@ export default async function PaperworkPage() {
               <tr key={d.id} className="border-b border-rule">
                 <td className="py-2 pr-3">
                   <Link href={`/hq/paperwork/${d.id}`} className="font-bold">{d.ref}</Link>{' '}
-                  <Pill tone={d.kind === 'invoice' ? 'signal' : 'navy'}>{d.kind}</Pill>
+                  <Pill tone={d.kind === 'invoice' ? 'accent' : 'ink'}>{d.kind}</Pill>
                 </td>
                 <td className="py-2 pr-3">{d.billTo}</td>
                 <td className="py-2 pr-3 tabular-nums">{gbp(d.totalPence)}</td>

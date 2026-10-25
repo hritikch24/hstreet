@@ -10,7 +10,7 @@ import { conversion } from '@/ui/Beacon';
 interface Props {
   job: 'install' | 'repair';
   service: string;
-  tone?: 'plate' | 'navy';
+  tone?: 'panel' | 'ink';
   heading?: string;
 }
 
@@ -22,10 +22,10 @@ function visitId(): string {
   }
 }
 
-export function CallbackBox({ job, service, tone = 'plate', heading = 'Rather we called you?' }: Props) {
+export function CallbackBox({ job, service, tone = 'panel', heading = 'Rather we called you?' }: Props) {
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'failed'>('idle');
   const [message, setMessage] = useState('');
-  const navy = tone === 'navy';
+  const ink = tone === 'ink';
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,13 +54,13 @@ export function CallbackBox({ job, service, tone = 'plate', heading = 'Rather we
     }
   }
 
-  const box = navy ? 'rounded-[10px] border border-cream/30 bg-navy-deep/60 p-4 text-cream' : 'plate p-4';
+  const box = ink ? 'rounded-[2px] border border-stone/30 bg-ink-deep/60 p-4 text-stone' : 'panel p-4';
 
   if (state === 'done') {
     return (
       <div className={box} role="status">
-        <p className={`font-bold ${navy ? 'text-cream' : 'text-navy'}`}>Thanks. We’ll call you back.</p>
-        <p className={`mt-1 text-[0.95rem] ${navy ? 'text-cream/85' : 'text-slate'}`}>
+        <p className={`font-bold ${ink ? 'text-stone' : 'text-ink'}`}>Thanks. We’ll call you back.</p>
+        <p className={`mt-1 text-[0.95rem] ${ink ? 'text-stone/85' : 'text-slate'}`}>
           If it’s an emergency, please ring us now rather than wait.
         </p>
       </div>
@@ -69,8 +69,8 @@ export function CallbackBox({ job, service, tone = 'plate', heading = 'Rather we
 
   return (
     <form onSubmit={submit} className={box}>
-      <p className={`font-bold ${navy ? 'text-cream' : 'text-navy'}`}>{heading}</p>
-      <p className={`mt-0.5 text-[0.95rem] ${navy ? 'text-cream/85' : 'text-slate'}`}>
+      <p className={`font-bold ${ink ? 'text-stone' : 'text-ink'}`}>{heading}</p>
+      <p className={`mt-0.5 text-[0.95rem] ${ink ? 'text-stone/85' : 'text-slate'}`}>
         Leave your number and we’ll ring you, usually the same working day.
       </p>
       <div className="mt-3 grid gap-2">
@@ -87,12 +87,12 @@ export function CallbackBox({ job, service, tone = 'plate', heading = 'Rather we
         </label>
         <input id={`cb-place-${service}`} name="place" required minLength={2} placeholder="Town or postcode of the shop" autoComplete="postal-code" className="field min-h-11" />
         <input name="shop_website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-        <button type="submit" disabled={state === 'sending'} className="btn btn-signal w-full">
+        <button type="submit" disabled={state === 'sending'} className="btn btn-accent w-full">
           {state === 'sending' ? 'Sending…' : 'Call me back'}
         </button>
       </div>
       {state === 'failed' && (
-        <p className={`mt-2 text-[0.95rem] font-bold ${navy ? 'text-cream' : 'text-signal'}`} role="alert">
+        <p className={`mt-2 text-[0.95rem] font-bold ${ink ? 'text-stone' : 'text-accent'}`} role="alert">
           {message}
         </p>
       )}

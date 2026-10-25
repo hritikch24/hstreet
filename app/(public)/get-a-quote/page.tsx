@@ -18,7 +18,7 @@ export default function QuotePage() {
       <JsonLd data={graph(pageNode({ path: '/get-a-quote', name: c.h1, description: c.description }), trailNode('/get-a-quote', trail))} />
       <Opening trail={trail} h1={c.h1} answer={c.answer} />
       <div className="shell grid gap-8 pb-8 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-        <section aria-labelledby="form-heading" className="plate p-5 sm:p-6">
+        <section aria-labelledby="form-heading" className="panel p-5 sm:p-6">
           <h2 id="form-heading" className="text-[1.4rem] sm:text-[1.6rem]">
             Tell us about the job
           </h2>
@@ -28,8 +28,8 @@ export default function QuotePage() {
         </section>
         <aside className="grid gap-4 lg:sticky lg:top-4">
           <PhotoForQuote />
-          <div className="rounded-[10px] border-2 border-dashed border-navy-soft p-4 text-[0.98rem]">
-            <p className="font-bold text-navy">Repairs: Birmingham and up to {radius()} miles</p>
+          <div className="rounded-[2px] border border-dashed border-ink-soft p-4 text-[0.98rem]">
+            <p className="font-bold text-ink">Repairs: Birmingham and up to {radius()} miles</p>
             <p className="mt-1">
               New installations go anywhere in the UK.
             </p>

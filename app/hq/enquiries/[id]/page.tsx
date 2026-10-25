@@ -37,12 +37,12 @@ export default async function EnquiryPage({ params }: PageProps<'/hq/enquiries/[
     <div className="grid gap-5">
       <div className="flex flex-wrap items-center gap-3">
         <h1 className="text-[1.8rem]">{e.name}</h1>
-        <Pill tone={e.jobType === 'repair' ? 'signal' : 'navy'}>{e.jobType}</Pill>
-        {e.jobType === 'repair' && e.inRepairArea === false && <Pill tone="signal">outside repair radius</Pill>}
+        <Pill tone={e.jobType === 'repair' ? 'accent' : 'ink'}>{e.jobType}</Pill>
+        {e.jobType === 'repair' && e.inRepairArea === false && <Pill tone="accent">outside repair radius</Pill>}
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
-        <section className="plate p-4">
+        <section className="panel p-4">
           <dl className="grid gap-x-4 gap-y-2 sm:grid-cols-[10rem_1fr]">
             {rows
               .filter(([, v]) => v)
@@ -73,7 +73,7 @@ export default async function EnquiryPage({ params }: PageProps<'/hq/enquiries/[
         </section>
 
         <div className="grid content-start gap-5">
-          <form method="post" action={`/api/hq/enquiries/${e.id}`} className="plate grid gap-3 p-4">
+          <form method="post" action={`/api/hq/enquiries/${e.id}`} className="panel grid gap-3 p-4">
             <label className="label" htmlFor="status">Status</label>
             <select id="status" name="status" defaultValue={e.status} className="field">
               {STATUSES.map((s) => (
@@ -86,7 +86,7 @@ export default async function EnquiryPage({ params }: PageProps<'/hq/enquiries/[
           </form>
 
           {e.status === 'won' && (
-            <div className="plate p-4">
+            <div className="panel p-4">
               <p>Job done? Reviews bring the next customers.</p>
               <p className="mt-2">
                 <ReviewAsk phone={e.phone} name={e.name} link={profile.googleReviewLink} />
@@ -94,9 +94,9 @@ export default async function EnquiryPage({ params }: PageProps<'/hq/enquiries/[
             </div>
           )}
           {e.client ? (
-            <p className="plate p-4">This enquiry is already on the client list.</p>
+            <p className="panel p-4">This enquiry is already on the client list.</p>
           ) : (
-            <form method="post" action={`/api/hq/enquiries/${e.id}/client`} className="plate p-4">
+            <form method="post" action={`/api/hq/enquiries/${e.id}/client`} className="panel p-4">
               <p>Won the job, or quoting properly? Add them to the client list.</p>
               <button className="btn btn-plain mt-3">Add as client</button>
             </form>

@@ -19,7 +19,7 @@ export default async function EnquiriesPage({ searchParams }: PageProps<'/hq/enq
   ]);
 
   const tab = (t?: string) =>
-    `rounded border-2 px-3 py-1 text-sm font-bold no-underline ${t === type ? 'border-navy bg-navy text-cream' : 'border-rule text-navy'}`;
+    `rounded border px-3 py-1 text-sm font-bold no-underline ${t === type ? 'border-ink bg-ink text-stone' : 'border-rule text-ink'}`;
 
   return (
     <div className="grid gap-5">
@@ -30,7 +30,7 @@ export default async function EnquiriesPage({ searchParams }: PageProps<'/hq/enq
         <Link href="/hq/enquiries?type=repair" className={tab('repair')}>Repairs (Birmingham)</Link>
       </div>
 
-      <section className="plate p-4">
+      <section className="panel p-4">
         <h2 className="text-[1.1rem]">By region</h2>
         <div className="mt-2 grid gap-4 sm:grid-cols-2">
           {TYPES.map((t) => (
@@ -57,7 +57,7 @@ export default async function EnquiriesPage({ searchParams }: PageProps<'/hq/enq
       <div className="overflow-x-auto">
         <table className="w-full min-w-[46rem] border-collapse text-left text-[0.95rem]">
           <thead>
-            <tr className="border-b-2 border-navy text-xs uppercase tracking-wider text-slate">
+            <tr className="border-b-2 border-ink text-xs uppercase tracking-wider text-slate">
               <th className="py-2 pr-3">Received</th>
               <th className="py-2 pr-3">Type</th>
               <th className="py-2 pr-3">Name</th>
@@ -71,7 +71,7 @@ export default async function EnquiriesPage({ searchParams }: PageProps<'/hq/enq
               <tr key={e.id} className="border-b border-rule align-top">
                 <td className="py-2 pr-3 whitespace-nowrap text-slate">{when(e.receivedAt)}</td>
                 <td className="py-2 pr-3">
-                  <Pill tone={e.jobType === 'repair' ? 'signal' : 'navy'}>{e.jobType}</Pill>
+                  <Pill tone={e.jobType === 'repair' ? 'accent' : 'ink'}>{e.jobType}</Pill>
                   {e.wants === 'callback' && <> <Pill tone="slate">callback</Pill></>}
                 </td>
                 <td className="py-2 pr-3">
@@ -82,7 +82,7 @@ export default async function EnquiriesPage({ searchParams }: PageProps<'/hq/enq
                 <td className="py-2 pr-3">
                   {e.town ?? e.place}
                   {e.region && <span className="text-slate"> · {e.region}</span>}
-                  {e.jobType === 'repair' && e.inRepairArea === false && <> <Pill tone="signal">outside radius</Pill></>}
+                  {e.jobType === 'repair' && e.inRepairArea === false && <> <Pill tone="accent">outside radius</Pill></>}
                   {e.inRepairArea === null && e.jobType === 'repair' && <> <Pill tone="slate">check distance</Pill></>}
                 </td>
                 <td className="py-2 pr-3">{e.status}</td>

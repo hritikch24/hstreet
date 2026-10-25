@@ -104,7 +104,8 @@ export async function statsPayload(hours: number) {
     q(`WITH v AS (
          SELECT visit_id, COUNT(*) AS views,
            bool_or(path IN ('/aluminium-shopfronts','/roller-shutters','/automatic-doors','/security-doors','/aluminium-doors',
-                            '/shutter-repairs','/shopfront-glass','/lock-and-door-repairs','/nationwide','/repairs')
+                            '/shutter-repairs','/shopfront-glass','/lock-and-door-repairs','/security-grilles','/curtain-walling','/glass-doors',
+                            '/canopies-and-awnings','/automatic-door-repairs','/shopfront-servicing','/emergency-board-up','/nationwide','/repairs')
                    OR path LIKE '/repairs/%' OR path LIKE '/nationwide/%') AS saw_offer,
            bool_or(path IN ('/get-a-quote','/talk-to-us')) AS reached_convert
          FROM visits WHERE seen_at >= $1 GROUP BY visit_id),

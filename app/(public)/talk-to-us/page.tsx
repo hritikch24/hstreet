@@ -19,21 +19,21 @@ export default function TalkToUsPage() {
       <Opening trail={trail} h1={c.h1} answer={c.answer} />
       <Section>
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="plate p-5">
+          <div className="panel p-5">
             <h2 className="text-[1.3rem]">WhatsApp</h2>
             <p className="mt-2">Best for a quote: send a photo of your shopfront.</p>
             <WhatsAppLink className="btn btn-wa mt-3">
               <ChatGlyph /> {profile.whatsapp.value.display}
             </WhatsAppLink>
           </div>
-          <div className="plate p-5">
+          <div className="panel p-5">
             <h2 className="text-[1.3rem]">Phone</h2>
             <p className="mt-2">Best for a repair, or anything urgent. We answer day and night.</p>
-            <CallLink className="btn btn-signal mt-3">
+            <CallLink className="btn btn-accent mt-3">
               <PhoneGlyph /> {profile.phone.value.display}
             </CallLink>
           </div>
-          <div className="plate p-5">
+          <div className="panel p-5">
             <h2 className="text-[1.3rem]">Email</h2>
             <p className="mt-2">For drawings, landlord letters and paperwork.</p>
             <a href={`mailto:${profile.email.value}`} className="mt-3 inline-block font-bold break-all">
@@ -63,7 +63,7 @@ export default function TalkToUsPage() {
           {profile.languages.value.join(', ')}.
         </p>
         <p className="mt-4">
-          <Link href="/get-a-quote" className="btn btn-signal">
+          <Link href="/get-a-quote" className="btn btn-accent">
             Get a quote
           </Link>
         </p>

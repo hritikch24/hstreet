@@ -27,7 +27,7 @@ export default function RepairsPage() {
         </div>
       </Opening>
 
-      <section id="emergency" className="bg-signal py-10 text-white">
+      <section id="emergency" className="bg-accent py-10 text-white">
         <div className="shell">
           <h2 className="text-[1.6rem] !text-white sm:text-[2rem]">{c.emergencyHeading}</h2>
           <ul className="mt-4 grid gap-2 text-[1.05rem]">
@@ -42,7 +42,7 @@ export default function RepairsPage() {
       <Section heading="What we repair">
         <ul className="grid gap-3 md:grid-cols-3">
           {repairServices().map((s) => (
-            <li key={s.path} className="plate p-4">
+            <li key={s.path} className="panel p-4">
               <Link href={s.path} className="sign text-[1.2rem] no-underline hover:underline">
                 {s.name}
               </Link>
@@ -54,7 +54,7 @@ export default function RepairsPage() {
 
       <Section heading={c.areasHeading} tone="deep">
         <p className="max-w-[68ch]">{c.areasIntro}</p>
-        <dl className="mt-6 grid border-t-2 border-navy md:grid-cols-2 md:gap-x-10">
+        <dl className="mt-6 grid border-t-2 border-ink md:grid-cols-2 md:gap-x-10">
           {areas.map((a) => (
             <div key={a.slug} className="border-b border-rule py-4">
               <dt className="text-[1.15rem] font-bold">

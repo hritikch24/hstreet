@@ -195,7 +195,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
 
   if (state === 'done') {
     return (
-      <div className="plate p-6" role="status">
+      <div className="panel p-6" role="status">
         <p className="sign text-[1.5rem]">Thank you, that’s with us</p>
         <p className="mt-2">
           Your reference is <strong>{ref}</strong>. We’ll get back to you by the method you chose. If it’s urgent,
@@ -207,7 +207,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
 
   const err = (k: keyof Problems) =>
     problems[k] ? (
-      <p id={`${k}-problem`} className="mt-1 text-[0.95rem] font-bold text-signal">
+      <p id={`${k}-problem`} className="mt-1 text-[0.95rem] font-bold text-accent">
         {problems[k]}
       </p>
     ) : null;
@@ -229,8 +229,8 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
           ).map(([value, label, hint]) => (
             <label
               key={value}
-              className={`flex cursor-pointer items-start gap-3 rounded-[8px] border-2 p-3 ${
-                jobType === value ? 'border-navy bg-plate' : 'border-rule bg-white'
+              className={`flex cursor-pointer items-start gap-3 rounded-[2px] border p-3 ${
+                jobType === value ? 'border-ink bg-paper' : 'border-rule bg-white'
               }`}
             >
               <input
@@ -239,10 +239,10 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
                 value={value}
                 checked={jobType === value}
                 onChange={() => switchTo(value)}
-                className="mt-1 h-5 w-5 accent-[var(--color-signal)]"
+                className="mt-1 h-5 w-5 accent-[var(--color-accent)]"
               />
               <span>
-                <span className="block font-bold text-navy">{label}</span>
+                <span className="block font-bold text-ink">{label}</span>
                 <span className="block text-[0.95rem] text-slate">{hint}</span>
               </span>
             </label>
@@ -311,8 +311,8 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
           </p>
         )}
         {jobType === 'repair' && reach?.status === 'outside' && (
-          <div className="mt-3 rounded-[8px] border-2 border-signal bg-white p-4" role="alert">
-            <p className="font-bold text-navy">
+          <div className="mt-3 rounded-[2px] border border-accent bg-white p-4" role="alert">
+            <p className="font-bold text-ink">
               Sorry, {reach.town ?? 'that'} is outside our repair area
               {reach.miles ? ` (about ${Math.round(reach.miles)} miles away)` : ''}.
             </p>
@@ -326,7 +326,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
               </button>
               <button
                 type="button"
-                className={`btn ${wants === 'callback' ? 'btn-signal' : 'btn-plain'}`}
+                className={`btn ${wants === 'callback' ? 'btn-accent' : 'btn-plain'}`}
                 onClick={() => setWants('callback')}
               >
                 {wants === 'callback' ? 'Callback chosen' : 'Ask for a callback'}
@@ -372,7 +372,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
             ] as const
           ).map(([value, label], i) => (
             <label key={value} className="flex items-center gap-2">
-              <input type="radio" name="contactBy" value={value} defaultChecked={i === 0} className="h-5 w-5 accent-[var(--color-signal)]" />
+              <input type="radio" name="contactBy" value={value} defaultChecked={i === 0} className="h-5 w-5 accent-[var(--color-accent)]" />
               {label}
             </label>
           ))}
@@ -410,14 +410,14 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
 
       <div>
         {preview && (
-          <div className="mb-4 flex gap-3 rounded-[8px] border-2 border-navy bg-white p-3">
+          <div className="mb-4 flex gap-3 rounded-[2px] border border-ink bg-white p-3">
             {/* A local preview image held in the browser; next/image can't optimise it. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={preview.image} alt="Your preview of the new front" className="h-20 w-28 flex-none rounded object-cover" />
             <div className="min-w-0 text-[0.95rem]">
-              <p className="font-bold text-navy">Your preview is attached, with your original photo</p>
+              <p className="font-bold text-ink">Your preview is attached, with your original photo</p>
               <p className="mt-0.5 text-slate">{preview.summary}</p>
-              <button type="button" className="mt-1 font-bold text-signal underline" onClick={() => setDropPreview(true)}>
+              <button type="button" className="mt-1 font-bold text-accent underline" onClick={() => setDropPreview(true)}>
                 Don’t send the preview
               </button>
             </div>
@@ -445,13 +445,13 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
       </div>
 
       {state === 'failed' && message && (
-        <p className="font-bold text-signal" role="alert">
+        <p className="font-bold text-accent" role="alert">
           {message}
         </p>
       )}
 
       <div>
-        <button type="submit" className="btn btn-signal w-full sm:w-auto" disabled={state === 'sending' || outside}>
+        <button type="submit" className="btn btn-accent w-full sm:w-auto" disabled={state === 'sending' || outside}>
           {state === 'sending'
             ? 'Sending…'
             : wants === 'callback'

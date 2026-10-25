@@ -28,8 +28,8 @@ export default function NationwidePage() {
       <Section heading={c.stepsHeading} tone="deep">
         <ol className="grid gap-x-8 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
           {c.steps.map((s, i) => (
-            <li key={s.title} className="border-t-4 border-navy pt-4">
-              <span className="sign text-[2.2rem] leading-none text-signal">{i + 1}</span>
+            <li key={s.title} className="border-t border-ink pt-4">
+              <span className="sign text-[2.2rem] leading-none text-accent">{i + 1}</span>
               <h3 className="mt-2 text-[1.15rem]">{s.title}</h3>
               <p className="mt-1">{s.text}</p>
             </li>

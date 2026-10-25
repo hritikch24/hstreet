@@ -108,10 +108,10 @@ the photo check. They are dev tools; they don't run on Vercel.
 | Area | Files |
 |---|---|
 | Business facts, prices, lead times, radius, tracking IDs | `business/profile.ts` |
-| Page copy | `copy/services.ts` (8 service pages), `copy/repair-areas.ts`, `copy/install-cities.ts`, `copy/guides.ts`, `copy/pages.ts` (hubs and standing pages) |
+| Page copy | `copy/services.ts` (8 original service pages), `copy/more-services.ts` (7 added: glass doors, curtain walling, security grilles, canopies, automatic door repairs, servicing, emergency board-up), `copy/repair-areas.ts`, `copy/install-cities.ts`, `copy/guides.ts`, `copy/pages.ts` (hubs and standing pages) |
 | Job photos and their data | `public/work/*.jpg`, `copy/job-photos.ts`, prepared by `tools/prepare-photos.py` |
 | SEO / GEO | `engine/search-meta.ts` (metadata, title fitting, every JSON-LD node), `engine/route-plan.ts` (every public path + `mayIndex`), `engine/go-live.ts`, `app/sitemap.ts`, `app/robots.ts`, `app/llms.txt/route.ts`, `app/llms-full.txt/route.ts` |
-| Public pages | `app/(public)/…`: `/`, `[service]` (the 8 flat service URLs), `nationwide`, `nationwide/[city]`, `repairs`, `repairs/[area]`, `our-work`, `prices`, `get-a-quote`, `guides/[slug]`, `the-firm`, `talk-to-us`, `privacy-notice` |
+| Public pages | `app/(public)/…`: `/`, `[service]` (the 15 flat service URLs), `nationwide`, `nationwide/[city]`, `repairs`, `repairs/[area]`, `our-work`, `prices`, `get-a-quote`, `guides/[slug]`, `the-firm`, `talk-to-us`, `privacy-notice` |
 | Analytics | `ui/Beacon.tsx` → `/api/beacon`, `/api/beacon/tap`; `engine/visit-source.ts`, `engine/request-bits.ts` |
 | Enquiries | `ui/QuoteForm.tsx` → `/api/enquiries` (+ `/api/enquiries/reach`); `engine/enquiry-shape.ts` (shared validation), `engine/coverage.ts` (postcodes.io + radius), `engine/mailer.ts` (Resend over fetch) |
 | Back office | `app/hq/*`, `app/api/hq/*`; `proxy.ts` + `engine/hq-gate.ts` (key → cookie, 404 otherwise), `engine/hq-session.ts` (second check in every handler), `engine/stats.ts` (metrics JSON), `engine/reply-writer.ts` (Claude over fetch), `engine/paperwork.ts` |
@@ -119,34 +119,38 @@ the photo check. They are dev tools; they don't run on Vercel.
 | Shopfront preview (`/see-it-on-your-shop`) | `ui/visualiser/Visualiser.tsx` (photo, corner handles, loupe, controls, send), `ui/visualiser/draw-front.ts` (draws the shopfront or shutter flat), `ui/visualiser/warp.ts` (homography + WebGL2 shader), `copy/front-options.ts` (colours and options the firm supplies; TODO owner confirms). Hands off to the quote form through `sessionStorage['hss.preview']`. |
 | Checks and tools | `tools/check-*.{mjs,py}`, `tools/portfolio.mjs` (reads the registry), `tools/indexnow.mjs`, `tools/prepare-photos.py` |
 
-## Design system: British shop signage
+## Design system: architectural editorial
 
-- **Type:** Alfa Slab One for headings and the fascia wordmark (a
-  signwriter's slab); Public Sans for everything else: sturdy, very legible,
-  and with a plain zero, so phone numbers and prices read cleanly. Loaded with
-  `next/font` in `app/layout.tsx`.
-- **Colour** (`app/shop.css`, `@theme`): enamel `navy` / `navy-deep` /
-  `navy-soft`, `cream` / `cream-deep`, `plate` (off-white), `ink`, `slate`,
-  `rule`; `signal` red for actions and emphasis; `wa` green only on WhatsApp
-  buttons. Taken by other sites and never used here: dark with gold, cyan,
-  violet, amber, bottle green with brick.
-- **Pieces:** `Fascia` (header painted like a fascia board with lining, native
-  `<details>` menu on mobile), `Stallriser` (footer on a tiled plinth),
-  `.plate` (enamel-sign panel with inner line) used by `Opening` for the
-  answer-first block and key figures, `Questions` (question headings with a
-  red rule), `PhotoForQuote` (inline WhatsApp-a-photo ask in heroes, service
-  pages and the quote page), `UkWide` / `RepairReach` (coverage bands),
-  `WorkPhoto` (photo with a navy caption bar), `InstallCards` (photo cards
-  with typical price), `CompareTable` (a table on wide screens, one card per
-  option on phones), `PriceCard` (sticky "get a price" panel on service
-  pages; its quote link prefills the form), `WorkGallery` (filter chips and a
-  `<dialog>` viewer; every photo stays in the server HTML), `.signrule` under
-  section headings, `Reviewed` (visible "page reviewed" date).
-- **Home hero:** full-bleed job photo (unbranded) behind a navy gradient on
-  desktop, photo above the text on phones.
+Chosen on 2026-10-26 from three mockups (editorial, refined signage, graphite).
+The look is type, hairline rules, white space and the firm's own photographs.
+No gradients, glows, glass or drop-shadow cards.
+
+- **Type:** Newsreader (a text serif) for headings and the wordmark, Hanken
+  Grotesk for everything else. Both through `next/font/google` in
+  `app/layout.tsx`. Headings are weight 400 with tight tracking; figures are
+  lining so prices and phone numbers read cleanly.
+- **Colour** (`app/shop.css`, `@theme`): `stone` (warm paper) / `stone-deep`,
+  `paper` (cards), `ink` / `ink-deep` / `ink-soft`, `slate` (muted text),
+  `rule` (hairlines), one deep ultramarine `accent` / `accent-deep` /
+  `accent-soft` (on dark), `wa` green only on WhatsApp buttons. Taken by other
+  sites and never used here: dark with gold, cyan, violet, amber, bottle green
+  with brick. Red is not used.
+- **Pieces:** `SiteHeader` (quiet bar, a Services panel as a `Disclosure`,
+  native `<details>` menu on phones), `SiteFooter` (ink, four ruled columns, the
+  company line and registered office), `Disclosure` (closes on navigation,
+  Escape and outside click), `Opening` (large heading, plain lede, ruled key
+  facts, optional photo), `.panel` (hairline box), `Questions` (ink rule above
+  each question heading), `InstallCards` (photo cards for lines that have real
+  photographs, a ruled "Also fitted" list for the rest) and `RepairList`,
+  `WorkPhoto` / `PhotoGrid` (photo with caption below, slow zoom on hover),
+  `CompareTable` (a table on wide screens, one card per option on phones),
+  `PriceCard`, `PhotoForQuote`, `WorkGallery`, `.signrule`, `Reviewed`.
+- **Photographs:** only real job photos, and a page without a photograph that
+  truly shows its work gets none (no stand-in pictures). Prefer clean shots; a
+  person visible in a reflection is a reason to pick another.
 - **Not used, on purpose:** floating WhatsApp or chat bubble, exit-intent
-  popup, icon-grid "why choose us", "areas we cover" link walls, sticky
-  mobile CTA bar.
+  popup, icon-grid "why choose us", "areas we cover" link walls, sticky mobile
+  CTA bar, client logo strips (we do not name clients).
 
 ## Next.js 16 notes (checked in `node_modules/next/dist/docs`)
 
@@ -161,6 +165,20 @@ the photo check. They are dev tools; they don't run on Vercel.
 
 ## Decision log
 
+- **2026-10-26 (redesign and wider services):** Whole-site visual redesign to
+  the editorial direction above (tokens renamed: navy→ink, cream→stone,
+  signal→accent, plate→paper/panel; `Fascia`→`SiteHeader`,
+  `Stallriser`→`SiteFooter`). Seven service pages added after checking what
+  comparable installers list: `/glass-doors`, `/curtain-walling`,
+  `/security-grilles`, `/canopies-and-awnings` (UK-wide) and
+  `/automatic-door-repairs`, `/shopfront-servicing`, `/emergency-board-up`
+  (within the repair radius). Their guide prices (profile `prices`) are
+  mid-market figures set on the owner's instruction. No page text, URL pattern
+  or JSON-LD id changed for the existing pages; the shutter-repair card and a
+  servicing answer that still said Birmingham-only now state the radius. Sibling
+  sites also mention curtain walling, grilles, board-up and maintenance, so
+  keep wording distinct (the overlap check passes at 0.00%) and keep each
+  page's angle its own.
 - **2026-10-26 (go live: owner's facts, service-area business):** Phone and
   WhatsApp are one number, `07376 440039`; email `support@highstreetshopfronts.co.uk`;
   open and emergency line 24 hours, every day; English only; repair radius 70

@@ -53,7 +53,7 @@ export default async function Dashboard({ searchParams }: PageProps<'/hq'>) {
         <Bars title="Taps by page" rows={s.callClicks.byPage} label="page" />
       </div>
 
-      <section className="plate p-4">
+      <section className="panel p-4">
         <div className="flex items-baseline justify-between">
           <h2 className="text-[1.1rem]">Recent enquiries</h2>
           <Link href="/hq/enquiries" className="text-sm font-bold">
@@ -66,7 +66,7 @@ export default async function Dashboard({ searchParams }: PageProps<'/hq'>) {
           <ul className="mt-2 divide-y divide-rule">
             {s.leads.recent.map((e) => (
               <li key={e.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2">
-                <Pill tone={e.jobType === 'repair' ? 'signal' : 'navy'}>{e.jobType}</Pill>
+                <Pill tone={e.jobType === 'repair' ? 'accent' : 'ink'}>{e.jobType}</Pill>
                 <Link href={`/hq/enquiries/${e.id}`} className="font-bold">
                   {e.name}
                 </Link>

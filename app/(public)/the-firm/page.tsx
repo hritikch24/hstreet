@@ -21,7 +21,7 @@ export default function FirmPage() {
 
       <Section heading={c.ownerHeading}>
         {owner ? (
-          <div className="plate max-w-2xl p-5">
+          <div className="panel max-w-2xl p-5">
             <p className="sign text-[1.4rem]">{owner.name}</p>
             <p className="mt-1">{owner.trade}</p>
             {team.length > 0 && (

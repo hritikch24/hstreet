@@ -11,6 +11,7 @@ import { priceBasis, guidePrice, priceRange, profile, radius, vatNote } from '@/
 import type { WorkLine } from '@/copy/job-photos';
 import { garageDoors, garageLive } from '@/business/profile';
 import { garageServices } from '@/copy/garage-doors';
+import { moreServices } from '@/copy/more-services';
 
 export interface QA {
   q: string;
@@ -40,7 +41,8 @@ export interface ServicePage {
   /** Two or three sentences: what, who for, price, lead or response time, where. */
   answer: string;
   keyFacts: { label: string; value: string }[];
-  photos?: { line: WorkLine; hero: string };
+  /** `gallery: false` shows the hero only, for lines that have no gallery of their own. */
+  photos?: { line: WorkLine; hero: string; gallery?: false };
   questions: QA[];
   /** Plain one-line pitch for lists on other pages. */
   summary: string;
@@ -58,7 +60,7 @@ const resp = () => profile.response.value;
 const ukWide = 'Fitted anywhere in the UK';
 const repairReach = () => `Birmingham and within ${radius()} miles`;
 
-export const services = (): ServicePage[] => [
+const coreServices = (): ServicePage[] => [
   {
     path: '/aluminium-shopfronts',
     kind: 'install',
@@ -282,7 +284,7 @@ export const services = (): ServicePage[] => [
       {
         q: 'How often should a shop’s automatic doors be serviced?',
         a: [
-          'Yes. Powered doors should be checked by someone competent, at least once a year and more often on a busy store. The sensors and the safety settings are what matter. We can service the doors we fit if you are in the Birmingham area; further afield we will point you to a local engineer.',
+          `Yes. Powered doors should be checked by someone competent, at least once a year and more often on a busy store. The sensors and the safety settings are what matter. We service automatic doors within ${radius()} miles of Birmingham; further afield we will point you to a local engineer.`,
         ],
       },
     ],
@@ -402,7 +404,7 @@ export const services = (): ServicePage[] => [
       { label: 'Emergency response', value: resp().emergency },
       { label: 'Where', value: repairReach() },
     ],
-    summary: 'Stuck, dropped, noisy or bent shutters, any make, Birmingham area only.',
+    summary: `Stuck, dropped, noisy or bent shutters, any make, within ${radius()} miles of Birmingham.`,
     quoteService: 'shutter-repair',
     guide: { href: '/guides/shutter-stuck-what-to-check', label: 'Shutter stuck? What to check safely' },
     questions: [
@@ -528,6 +530,9 @@ export const services = (): ServicePage[] => [
     ],
   },
 ];
+
+/** Every always-published service page: the original eight, then the seven added later. */
+export const services = (): ServicePage[] => [...coreServices(), ...moreServices()];
 
 /**
  * Every page the [service] route builds: the eight above, plus the garage door

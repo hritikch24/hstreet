@@ -68,7 +68,7 @@ export function PaperworkForm({ clients, preselect, defaultVat }: { clients: Cli
   }
 
   return (
-    <div className="plate grid gap-4 p-4">
+    <div className="panel grid gap-4 p-4">
       <div className="flex gap-4">
         {(['quote', 'invoice'] as const).map((k) => (
           <label key={k} className="flex items-center gap-2 font-bold">
@@ -134,15 +134,15 @@ export function PaperworkForm({ clients, preselect, defaultVat }: { clients: Cli
         <div className="self-end text-right">
           <p>Subtotal {money(subtotal)}</p>
           <p>VAT {money(vatPence)}</p>
-          <p className="text-[1.3rem] font-bold text-navy">Total {money(subtotal + vatPence)}</p>
+          <p className="text-[1.3rem] font-bold text-ink">Total {money(subtotal + vatPence)}</p>
         </div>
       </div>
       <div>
         <label className="label" htmlFor="pw-terms">Terms and notes</label>
         <textarea id="pw-terms" rows={3} className="field" value={terms} onChange={(e) => setTerms(e.target.value)} />
       </div>
-      {error && <p className="font-bold text-signal">{error}</p>}
-      <button type="button" onClick={save} disabled={busy} className="btn btn-signal justify-self-start">
+      {error && <p className="font-bold text-accent">{error}</p>}
+      <button type="button" onClick={save} disabled={busy} className="btn btn-accent justify-self-start">
         {busy ? 'Saving…' : `Save ${kind}`}
       </button>
     </div>

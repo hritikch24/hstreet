@@ -192,6 +192,13 @@ const PRICE_KEY: Record<string, keyof typeof profile.prices.value> = {
   '/shutter-repairs': 'shutterRepair',
   '/shopfront-glass': 'glassPane',
   '/lock-and-door-repairs': 'lockRepair',
+  '/security-grilles': 'securityGrille',
+  '/curtain-walling': 'curtainWalling',
+  '/glass-doors': 'glassDoor',
+  '/canopies-and-awnings': 'canopy',
+  '/automatic-door-repairs': 'autoDoorRepair',
+  '/shopfront-servicing': 'servicingVisit',
+  '/emergency-board-up': 'boardUp',
 };
 
 export function serviceNode(s: ServicePage): Node {

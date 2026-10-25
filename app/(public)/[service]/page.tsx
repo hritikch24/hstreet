@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { radius } from '@/business/profile';
 import { photoByName, photosFor } from '@/copy/job-photos';
 import { servicePages as services } from '@/copy/services';
 import { faqNode, graph, pageMeta, pageNode, serviceNode, trailNode } from '@/engine/search-meta';
@@ -51,7 +52,7 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
       : { name: 'Birmingham repairs', path: '/repairs' };
   const trail = [{ name: 'Home', path: '/' }, ...(hub ? [hub] : []), { name: s.name, path: s.path }];
   const hero = s.photos ? photoByName(s.photos.hero) : null;
-  const photos = s.photos ? photosFor(s.photos.line).filter((p) => p.file !== hero?.file) : [];
+  const photos = s.photos && s.photos.gallery !== false ? photosFor(s.photos.line).filter((p) => p.file !== hero?.file) : [];
   const others = services().filter((x) => x.kind === s.kind && x.path !== s.path);
   const first = s.questions.slice(0, 2);
   const rest = s.questions.slice(2);
@@ -68,14 +69,14 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
       />
       <Opening
         trail={trail}
-        kicker={ukWide ? 'Fitted anywhere in the UK' : s.kind === 'install' ? 'Fitted in the Birmingham area' : 'Birmingham repairs'}
+        kicker={ukWide ? 'Fitted anywhere in the UK' : s.kind === 'install' ? 'Fitted in the Birmingham area' : `Repairs, Birmingham and ${radius()} miles`}
         h1={s.h1}
         answer={s.answer}
         facts={s.keyFacts}
         side={hero ? <WorkPhoto photo={hero} preload sizes="(min-width: 1024px) 500px, 100vw" /> : undefined}
       >
         {!garageServicePublished(s.path) && (
-          <p className="mt-4 rounded-[8px] border-2 border-signal bg-white p-3 font-bold text-navy" role="note">
+          <p className="mt-4 rounded-[2px] border border-accent bg-white p-3 font-bold text-ink" role="note">
             Not live yet: waiting on the owner to confirm these details.
           </p>
         )}
@@ -90,8 +91,8 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
           {s.compare?.map((t) => <CompareTable key={t.caption} table={t} />)}
           {rest.length > 0 && <Questions bare questions={rest} />}
           {s.guide && (
-            <p className="rounded-[8px] bg-cream-deep p-4">
-              <span className="kicker block text-signal">Guide</span>
+            <p className="rounded-[2px] bg-stone-deep p-4">
+              <span className="kicker block text-accent">Guide</span>
               <Link href={s.guide.href} className="mt-1 inline-block text-[1.1rem] font-bold">
                 {s.guide.label}
               </Link>

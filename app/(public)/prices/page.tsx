@@ -16,6 +16,10 @@ const installRows: { key: PriceKey; name: string; href: string; lead: string }[]
   { key: 'steelDoor', name: 'Steel security door', href: '/security-doors', lead: profile.leadTimes.value.steelDoor },
   { key: 'fireExitPair', name: 'Double fire-exit doors', href: '/security-doors', lead: profile.leadTimes.value.steelDoor },
   { key: 'aluminiumDoor', name: 'Aluminium door', href: '/aluminium-doors', lead: profile.leadTimes.value.aluminiumDoor },
+  { key: 'glassDoor', name: 'Frameless glass door', href: '/glass-doors', lead: profile.leadTimes.value.glass },
+  { key: 'securityGrille', name: 'Security grille', href: '/security-grilles', lead: profile.leadTimes.value.shutter },
+  { key: 'canopy', name: 'Canopy or awning', href: '/canopies-and-awnings', lead: profile.leadTimes.value.shutter },
+  { key: 'curtainWalling', name: 'Curtain walling, per m²', href: '/curtain-walling', lead: profile.leadTimes.value.shopfront },
 ];
 
 const repairRows: { key: PriceKey; name: string; href: string }[] = [
@@ -23,6 +27,9 @@ const repairRows: { key: PriceKey; name: string; href: string }[] = [
   { key: 'emergencyCallout', name: 'Emergency callout', href: '/repairs' },
   { key: 'glassPane', name: 'Replacement glass', href: '/shopfront-glass' },
   { key: 'lockRepair', name: 'Door, lock and closer repair', href: '/lock-and-door-repairs' },
+  { key: 'autoDoorRepair', name: 'Automatic door repair', href: '/automatic-door-repairs' },
+  { key: 'boardUp', name: 'Emergency board-up', href: '/emergency-board-up' },
+  { key: 'servicingVisit', name: 'Planned servicing, per visit', href: '/shopfront-servicing' },
 ];
 
 function PriceTable({ rows, lead }: { rows: { key: PriceKey; name: string; href: string; lead?: string }[]; lead: string }) {
@@ -30,7 +37,7 @@ function PriceTable({ rows, lead }: { rows: { key: PriceKey; name: string; href:
     <div className="overflow-x-auto">
       <table className="w-full min-w-[34rem] border-collapse text-left">
         <thead>
-          <tr className="border-b-2 border-navy text-sm uppercase tracking-wider text-slate">
+          <tr className="border-b-2 border-ink text-sm uppercase tracking-wider text-slate">
             <th className="py-2 pr-4">Job</th>
             <th className="py-2 pr-4">Guide price</th>
             <th className="py-2 pr-4">{lead}</th>
@@ -45,7 +52,7 @@ function PriceTable({ rows, lead }: { rows: { key: PriceKey; name: string; href:
                 </Link>
                 <span className="block text-sm text-slate">{priceBasis(r.key)}</span>
               </td>
-              <td className="py-3 pr-4 font-bold whitespace-nowrap text-navy">{priceRange(r.key)}</td>
+              <td className="py-3 pr-4 font-bold whitespace-nowrap text-ink">{priceRange(r.key)}</td>
               <td className="py-3 pr-4">{r.lead ?? profile.response.value.standard}</td>
             </tr>
           ))}

@@ -45,7 +45,7 @@ export function DraftReply({ enquiryId, preferred, phone, email, earlier }: Prop
   }
 
   return (
-    <section className="plate grid gap-3 p-4">
+    <section className="panel grid gap-3 p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-[1.2rem]">Reply</h2>
         <div className="flex gap-3">
@@ -58,7 +58,7 @@ export function DraftReply({ enquiryId, preferred, phone, email, earlier }: Prop
         </div>
       </div>
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={8} className="field" placeholder="Write a reply, or ask for a draft." />
-      {error && <p className="font-bold text-signal">{error}</p>}
+      {error && <p className="font-bold text-accent">{error}</p>}
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={draft} disabled={busy} className="btn btn-plain">
           {busy ? 'Drafting…' : text ? 'Draft again' : 'Draft a reply'}
@@ -69,7 +69,7 @@ export function DraftReply({ enquiryId, preferred, phone, email, earlier }: Prop
           </a>
         )}
         {text && channel === 'email' && email && (
-          <a className="btn btn-signal" href={`mailto:${email}?subject=${encodeURIComponent('Your enquiry')}&body=${encodeURIComponent(text)}`}>
+          <a className="btn btn-accent" href={`mailto:${email}?subject=${encodeURIComponent('Your enquiry')}&body=${encodeURIComponent(text)}`}>
             Open in email
           </a>
         )}

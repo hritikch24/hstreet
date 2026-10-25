@@ -214,8 +214,8 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
 
   if (!supported) {
     return (
-      <div className="plate p-5">
-        <p className="font-bold text-navy">This browser can’t draw the preview.</p>
+      <div className="panel p-5">
+        <p className="font-bold text-ink">This browser can’t draw the preview.</p>
         <p className="mt-1">Send us a photo of your shop on WhatsApp instead and we’ll talk you through the options.</p>
       </div>
     );
@@ -224,10 +224,10 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
   if (!photo || !quad) {
     return (
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="lift flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed border-navy bg-plate p-8 text-center">
+        <label className="lift flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed border-ink bg-paper p-8 text-center">
           <span className="sign text-[1.35rem]">Use a photo of your shop</span>
           <span className="text-[0.95rem] text-slate">Stand across the road and take it straight on. It stays on your phone.</span>
-          <span className="btn btn-signal mt-2">Choose or take a photo</span>
+          <span className="btn btn-accent mt-2">Choose or take a photo</span>
           <input
             type="file"
             accept="image/*"
@@ -241,14 +241,14 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
         <button
           type="button"
           onClick={openExample}
-          className="lift flex flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-navy bg-navy p-8 text-center text-cream"
+          className="lift flex flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-ink bg-ink p-8 text-center text-stone"
         >
-          <span className="sign text-[1.35rem] !text-cream">Try it on our example</span>
-          <span className="text-[0.95rem] text-cream/85">A shopfront we fitted, with the opening already marked.</span>
-          <span className="btn mt-2 border-2 border-cream/60">Show me</span>
+          <span className="sign text-[1.35rem] !text-stone">Try it on our example</span>
+          <span className="text-[0.95rem] text-stone/85">A shopfront we fitted, with the opening already marked.</span>
+          <span className="btn mt-2 border-2 border-stone/60">Show me</span>
         </button>
         {status && (
-          <p className="font-bold text-signal sm:col-span-2" role="alert">
+          <p className="font-bold text-accent sm:col-span-2" role="alert">
             {status}
           </p>
         )}
@@ -263,7 +263,7 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-start">
       <div className="min-w-0">
         <div
-          className="relative overflow-hidden rounded-[10px] border-2 border-navy bg-navy-deep"
+          className="relative overflow-hidden rounded-[10px] border-2 border-ink bg-ink-deep"
           style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
         >
           <canvas
@@ -332,23 +332,23 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
               width={140}
               height={140}
               aria-hidden="true"
-              className="pointer-events-none absolute top-2 left-2 h-[120px] w-[120px] rounded-full border-4 border-plate shadow-lg"
+              className="pointer-events-none absolute top-2 left-2 h-[120px] w-[120px] rounded-full border-4 border-paper shadow-lg"
             />
           )}
         </div>
 
         {editing ? (
-          <div className="mt-3 rounded-[8px] bg-cream-deep p-3 text-[0.98rem]">
+          <div className="mt-3 rounded-[8px] bg-stone-deep p-3 text-[0.98rem]">
             <p>
               <strong>Drag the four red corners</strong> onto the corners of your shop’s opening: where the new front
               would go, from the underside of the sign to the pavement.
             </p>
             {!sensible && (
-              <p className="mt-1 font-bold text-signal" role="alert">
+              <p className="mt-1 font-bold text-accent" role="alert">
                 The corners have crossed over. Put them back in order: top left, top right, bottom right, bottom left.
               </p>
             )}
-            <button type="button" className="btn btn-signal mt-3" disabled={!sensible} onClick={() => setEditing(false)}>
+            <button type="button" className="btn btn-accent mt-3" disabled={!sensible} onClick={() => setEditing(false)}>
               Corners look right
             </button>
           </div>
@@ -387,9 +387,9 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
 
       <div className="grid gap-5">
         <Designer design={design} set={set} />
-        <div className="plate grid gap-2 p-4">
+        <div className="panel grid gap-2 p-4">
           <p className="text-[0.95rem]">{summary}</p>
-          <button type="button" className="btn btn-signal w-full" disabled={busy || editing || !sensible} onClick={sendForPrice}>
+          <button type="button" className="btn btn-accent w-full" disabled={busy || editing || !sensible} onClick={sendForPrice}>
             {busy ? 'Preparing…' : 'Send me a price for this'}
           </button>
           <div className="grid grid-cols-2 gap-2">
@@ -401,7 +401,7 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
             </button>
           </div>
           {status && (
-            <p className="text-[0.95rem] font-bold text-signal" role="alert">
+            <p className="text-[0.95rem] font-bold text-accent" role="alert">
               {status}
             </p>
           )}
@@ -429,8 +429,8 @@ function Choice<T extends string>({
         {options.map((o) => (
           <label
             key={o.value}
-            className={`cursor-pointer rounded-full border-2 px-3 py-1.5 text-[0.95rem] font-bold has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-signal ${
-              value === o.value ? 'border-navy bg-navy text-cream' : 'border-navy/35 bg-white text-navy'
+            className={`cursor-pointer rounded-full border-2 px-3 py-1.5 text-[0.95rem] font-bold has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent ${
+              value === o.value ? 'border-ink bg-ink text-stone' : 'border-ink/35 bg-white text-ink'
             }`}
           >
             <input type="radio" className="sr-only" checked={value === o.value} onChange={() => onChange(o.value)} />
@@ -454,8 +454,8 @@ function Swatches({ legend, list, value, onChange }: { legend: string; list: Swa
           <label
             key={s.id}
             title={s.ral ? `${s.name} (${s.ral})` : s.name}
-            className={`grid h-11 w-11 cursor-pointer place-items-center rounded-full border-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-signal ${
-              value === s.id ? 'border-signal' : 'border-navy/30'
+            className={`grid h-11 w-11 cursor-pointer place-items-center rounded-full border-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent ${
+              value === s.id ? 'border-accent' : 'border-ink/30'
             }`}
           >
             <input type="radio" className="sr-only" checked={value === s.id} onChange={() => onChange(s.id)} aria-label={s.name} />
@@ -470,7 +470,7 @@ function Swatches({ legend, list, value, onChange }: { legend: string; list: Swa
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
     <label className="flex cursor-pointer items-center gap-2">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="h-5 w-5 accent-[var(--color-signal)]" />
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="h-5 w-5 accent-[var(--color-accent)]" />
       {label}
     </label>
   );
@@ -478,7 +478,7 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
 
 function Designer({ design, set }: { design: Design; set: <K extends keyof Design>(k: K, v: Design[K]) => void }) {
   return (
-    <div className="plate grid gap-4 p-4">
+    <div className="panel grid gap-4 p-4">
       <Choice
         legend="What do you want to see?"
         value={design.mode}
@@ -503,7 +503,7 @@ function Designer({ design, set }: { design: Design; set: <K extends keyof Desig
                 max={7}
                 value={design.bays}
                 onChange={(e) => set('bays', Number(e.target.value))}
-                className="flex-1 accent-[var(--color-signal)]"
+                className="flex-1 accent-[var(--color-accent)]"
                 aria-label="Number of window bays"
               />
               <button type="button" className="btn btn-plain h-11 min-h-0 w-11 p-0" onClick={() => set('bays', Math.min(7, design.bays + 1))} aria-label="More bays">

@@ -43,8 +43,8 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
               type="button"
               aria-pressed={active}
               onClick={() => setOnly(g.id)}
-              className={`rounded-full border-2 px-4 py-2 text-[0.95rem] font-bold ${
-                active ? 'border-navy bg-navy text-cream' : 'border-navy/40 bg-plate text-navy hover:border-navy'
+              className={`rounded-full border px-4 py-2 text-[0.95rem] font-bold ${
+                active ? 'border-ink bg-ink text-stone' : 'border-ink/40 bg-paper text-ink hover:border-ink'
               }`}
             >
               {g.heading}
@@ -58,24 +58,26 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
         <section key={g.id} id={g.id} className="mt-10 scroll-mt-4">
           <h2 className="text-[1.6rem] sm:text-[2rem]">{g.heading}</h2>
           <div className="signrule" aria-hidden="true" />
-          <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+          <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {g.photos.map((p) => (
               <li key={p.file}>
                 <button
                   type="button"
                   onClick={() => view(p)}
-                  className="lift block w-full overflow-hidden border-2 border-navy bg-navy text-left"
+                  className="group block w-full text-left"
                   aria-label={`View larger: ${p.caption}`}
                 >
-                  <Image
-                    src={p.file}
-                    alt={p.alt}
-                    width={p.width}
-                    height={p.height}
-                    sizes="(min-width: 1024px) 380px, 50vw"
-                    className="aspect-[4/3] h-auto w-full object-cover"
-                  />
-                  <span className="block px-3 py-2 text-[0.85rem] text-cream">{p.caption}</span>
+                  <span className="zoom block">
+                    <Image
+                      src={p.file}
+                      alt={p.alt}
+                      width={p.width}
+                      height={p.height}
+                      sizes="(min-width: 1024px) 380px, 50vw"
+                      className="aspect-[4/3] h-auto w-full object-cover"
+                    />
+                  </span>
+                  <span className="block pt-3 text-[0.85rem] text-slate">{p.caption}</span>
                 </button>
               </li>
             ))}
@@ -97,7 +99,7 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
         aria-label={open?.caption ?? 'Photo'}
       >
         {open && (
-          <figure className="overflow-hidden rounded-[10px] bg-navy-deep">
+          <figure className="overflow-hidden rounded-[2px] bg-ink-deep">
             <Image
               src={open.file}
               alt={open.alt}
@@ -106,18 +108,18 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
               sizes="96vw"
               className="max-h-[78vh] w-auto object-contain"
             />
-            <figcaption className="flex flex-wrap items-center justify-between gap-3 p-3 text-cream">
+            <figcaption className="flex flex-wrap items-center justify-between gap-3 p-3 text-stone">
               <span>
-                <strong>{open.caption}.</strong> <span className="text-cream/80">{open.alt}</span>
+                <strong>{open.caption}.</strong> <span className="text-stone/80">{open.alt}</span>
               </span>
               <span className="flex gap-2">
-                <button type="button" className="btn min-h-0 border-2 border-cream/50 px-3 py-1.5" onClick={() => step(-1)}>
+                <button type="button" className="btn min-h-0 border border-stone/50 px-3 py-1.5" onClick={() => step(-1)}>
                   ‹ Previous
                 </button>
-                <button type="button" className="btn min-h-0 border-2 border-cream/50 px-3 py-1.5" onClick={() => step(1)}>
+                <button type="button" className="btn min-h-0 border border-stone/50 px-3 py-1.5" onClick={() => step(1)}>
                   Next ›
                 </button>
-                <button type="button" className="btn btn-signal min-h-0 px-3 py-1.5" onClick={() => dialog.current?.close()}>
+                <button type="button" className="btn btn-accent min-h-0 px-3 py-1.5" onClick={() => dialog.current?.close()}>
                   Close
                 </button>
               </span>

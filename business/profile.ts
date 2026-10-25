@@ -100,7 +100,14 @@ export type PriceKey =
   | 'shutterRepair'
   | 'emergencyCallout'
   | 'glassPane'
-  | 'lockRepair';
+  | 'lockRepair'
+  | 'securityGrille'
+  | 'curtainWalling'
+  | 'glassDoor'
+  | 'canopy'
+  | 'autoDoorRepair'
+  | 'servicingVisit'
+  | 'boardUp';
 
 export type LeadKey =
   | 'shopfront'
@@ -161,6 +168,13 @@ export const profile: Profile = {
       emergencyCallout: { from: 150, to: 180, basis: 'before parts' },
       glassPane: { from: 250, to: 700, basis: 'toughened or laminated' },
       lockRepair: { from: 90, to: 300, basis: 'depending on the part' },
+      securityGrille: { from: 800, to: 1800, basis: 'for a standard shop window or door opening' },
+      curtainWalling: { from: 400, to: 800, basis: 'per square metre of glazed screen, glass and fitting included' },
+      glassDoor: { from: 1200, to: 2800, basis: 'for a single frameless door with fittings and lock' },
+      canopy: { from: 900, to: 2600, basis: 'for a fixed or folding-arm canopy over one shopfront' },
+      autoDoorRepair: { from: 150, to: 450, basis: 'per callout, with common parts' },
+      servicingVisit: { from: 90, to: 220, basis: 'per planned visit to one shutter or door set, before parts' },
+      boardUp: { from: 180, to: 450, basis: 'including the callout and boards for a standard shopfront' },
     },
   ),
   leadTimes: confirmed({

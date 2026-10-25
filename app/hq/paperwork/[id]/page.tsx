@@ -29,8 +29,8 @@ export default async function PaperworkDoc({ params }: PageProps<'/hq/paperwork/
         </form>
       </div>
 
-      <article className="mx-auto w-full max-w-3xl border-2 border-navy bg-white p-6 sm:p-10">
-        <header className="flex flex-wrap justify-between gap-4 border-b-4 border-navy pb-4">
+      <article className="mx-auto w-full max-w-3xl border border-ink bg-white p-6 sm:p-10">
+        <header className="flex flex-wrap justify-between gap-4 border-b-4 border-ink pb-4">
           <div>
             <p className="sign text-[1.6rem]">{profile.name}</p>
             <p className="text-sm text-slate">
@@ -54,7 +54,7 @@ export default async function PaperworkDoc({ params }: PageProps<'/hq/paperwork/
         </section>
         <table className="mt-6 w-full border-collapse text-left">
           <thead>
-            <tr className="border-b-2 border-navy text-sm uppercase tracking-wider text-slate">
+            <tr className="border-b-2 border-ink text-sm uppercase tracking-wider text-slate">
               <th className="py-2 pr-2">Description</th>
               <th className="py-2 pr-2 text-right">Qty</th>
               <th className="py-2 pr-2 text-right">Unit</th>
@@ -77,7 +77,7 @@ export default async function PaperworkDoc({ params }: PageProps<'/hq/paperwork/
           {d.vatPercent > 0 && (
             <p className="flex justify-between"><span>VAT {d.vatPercent}%</span><span className="tabular-nums">{gbp(d.vatPence)}</span></p>
           )}
-          <p className="mt-1 flex justify-between border-t-2 border-navy pt-1 text-[1.2rem] font-bold">
+          <p className="mt-1 flex justify-between border-t-2 border-ink pt-1 text-[1.2rem] font-bold">
             <span>Total</span>
             <span className="tabular-nums">{gbp(d.totalPence)}</span>
           </p>

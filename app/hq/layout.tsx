@@ -18,15 +18,15 @@ const nav = [
 export default async function HqLayout({ children }: LayoutProps<'/hq'>) {
   await requireHqPage();
   return (
-    <div className="min-h-dvh bg-cream">
-      <header className="no-print bg-navy text-cream">
+    <div className="min-h-dvh bg-stone">
+      <header className="no-print bg-ink text-stone">
         <div className="shell flex flex-wrap items-center justify-between gap-3 py-3">
-          <p className="sign text-[1.15rem] !text-cream">HQ · {profile.name}</p>
+          <p className="sign text-[1.15rem] !text-stone">HQ · {profile.name}</p>
           <nav aria-label="Back office">
             <ul className="flex flex-wrap gap-1">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <Link href={n.href} className="rounded px-3 py-1.5 text-cream no-underline hover:bg-navy-soft">
+                  <Link href={n.href} className="rounded px-3 py-1.5 text-stone no-underline hover:bg-ink-soft">
                     {n.label}
                   </Link>
                 </li>

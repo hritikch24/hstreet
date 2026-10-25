@@ -15,8 +15,8 @@ export default async function ClientsPage() {
     <div className="grid gap-5">
       <h1 className="text-[1.8rem]">Clients</h1>
 
-      <details className="plate p-4">
-        <summary className="cursor-pointer font-bold text-navy">Add a client by hand</summary>
+      <details className="panel p-4">
+        <summary className="cursor-pointer font-bold text-ink">Add a client by hand</summary>
         <form method="post" action="/api/hq/clients" className="mt-4 grid gap-3 sm:grid-cols-2">
           {[
             ['name', 'Name', true],
@@ -35,14 +35,14 @@ export default async function ClientsPage() {
             <label className="label" htmlFor="c-notes">Notes</label>
             <textarea id="c-notes" name="notes" rows={2} className="field" />
           </div>
-          <button className="btn btn-signal sm:col-span-2 sm:justify-self-start">Save client</button>
+          <button className="btn btn-accent sm:col-span-2 sm:justify-self-start">Save client</button>
         </form>
       </details>
 
       <div className="overflow-x-auto">
         <table className="w-full min-w-[40rem] border-collapse text-left text-[0.95rem]">
           <thead>
-            <tr className="border-b-2 border-navy text-xs uppercase tracking-wider text-slate">
+            <tr className="border-b-2 border-ink text-xs uppercase tracking-wider text-slate">
               <th className="py-2 pr-3">Name</th>
               <th className="py-2 pr-3">Shop</th>
               <th className="py-2 pr-3">Phone</th>
