@@ -13,6 +13,7 @@ import type { Metadata } from 'next';
 import { absolute, hasStreetAddress, known, origin, profile, radius, trackingId } from '@/business/profile';
 import { repairAreas } from '@/copy/repair-areas';
 import type { QA, ServicePage } from '@/copy/services';
+import type { Guide } from '@/copy/guides';
 import { mayIndex } from '@/engine/route-plan';
 
 export const FIRM_ID = `${origin}/the-firm#hss-firm`;
@@ -27,6 +28,7 @@ export interface PageMetaInput {
   title: string;
   description: string;
   image?: string;
+  article?: boolean;
 }
 
 const SUFFIX = ` · ${profile.name}`;
@@ -39,7 +41,7 @@ export function fullTitle(path: string, title: string): string {
   return title.length + SUFFIX.length <= TITLE_MAX ? `${title}${SUFFIX}` : title;
 }
 
-export function pageMeta({ path, title, description, image }: PageMetaInput): Metadata {
+export function pageMeta({ path, title, description, image, article }: PageMetaInput): Metadata {
   const url = absolute(path);
   const index = mayIndex(path);
   return {
@@ -47,18 +49,18 @@ export function pageMeta({ path, title, description, image }: PageMetaInput): Me
     description,
     alternates: { canonical: url },
     robots: index
-      ? { index: true, follow: true }
+      ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } }
       : { index: false, follow: true, googleBot: { index: false, follow: true } },
     openGraph: {
-      type: 'website',
+      ...(article ? { type: 'article' as const, authors: [absolute('/the-firm')] } : { type: 'website' as const }),
       locale: 'en_GB',
       siteName: profile.name,
       url,
       title,
       description,
-      images: [{ url: absolute(image ?? DEFAULT_IMAGE) }],
+      images: [{ url: absolute(image ?? DEFAULT_IMAGE), alt: title }],
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: [absolute(image ?? DEFAULT_IMAGE)] },
   };
 }
 
@@ -273,6 +275,7 @@ export function pageNode(opts: {
   description: string;
   image?: string;
   about?: string;
+  modified?: string;
   type?: 'WebPage' | 'CollectionPage' | 'ContactPage' | 'AboutPage' | 'FAQPage';
 }): Node {
   const url = absolute(opts.path);
@@ -286,9 +289,26 @@ export function pageNode(opts: {
     isPartOf: { '@id': SITE_ID },
     about: { '@id': opts.about ?? FIRM_ID },
     primaryImageOfPage: opts.image ? { '@type': 'ImageObject', url: absolute(opts.image) } : undefined,
-    dateModified: profile.copyReviewedOn,
+    dateModified: opts.modified ?? profile.copyReviewedOn,
     breadcrumb: opts.path === '/' ? undefined : { '@id': `${url}#hss-trail` },
   });
+}
+
+/** An existing practical guide, credited to the firm that publishes it. */
+export function articleNode(guide: Guide): Node {
+  const url = absolute(`/guides/${guide.slug}`);
+  return {
+    '@type': 'Article',
+    '@id': `${url}#hss-article`,
+    url,
+    headline: guide.h1,
+    description: guide.description,
+    inLanguage: 'en-GB',
+    mainEntityOfPage: { '@id': `${url}#hss-page` },
+    author: { '@id': FIRM_ID },
+    publisher: { '@id': FIRM_ID },
+    dateModified: profile.copyReviewedOn,
+  };
 }
 
 /** Photos of the firm's own work, for /our-work. Locations only once confirmed. */

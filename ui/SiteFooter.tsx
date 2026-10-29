@@ -76,6 +76,7 @@ export function SiteFooter() {
         <div>
           <p className="kicker text-stone/55">Guides</p>
           <ul className="mt-4 grid gap-2 text-[0.95rem]">
+            <li><Link href="/guides" className={quiet}>All shopfront and shutter guides</Link></li>
             {guides().map((g) => (
               <li key={g.slug}>
                 <Link href={`/guides/${g.slug}`} className={quiet}>

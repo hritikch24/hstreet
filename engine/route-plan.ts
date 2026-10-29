@@ -46,6 +46,7 @@ export function publicPaths(): string[] {
     '/see-it-on-your-shop',
     '/prices',
     '/get-a-quote',
+    '/guides',
     ...guides().map((g) => `/guides/${g.slug}`),
     '/the-firm',
     '/talk-to-us',

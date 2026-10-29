@@ -20,4 +20,6 @@ export function assertReadyForSearch(): void {
 }
 
 /** Whether the whole site may be indexed right now. */
-export const siteIsLive = () => profile.indexable && outstandingFacts().length === 0;
+export const siteIsLive = () =>
+  process.env.VERCEL_ENV !== 'preview' && process.env.VERCEL_ENV !== 'development' &&
+  profile.indexable && outstandingFacts().length === 0;
