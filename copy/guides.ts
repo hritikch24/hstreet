@@ -3,6 +3,7 @@
  * actually send us, and links to the page where they can act on it.
  */
 import { guidePrice, profile, radius } from '@/business/profile';
+import { moreGuides } from '@/copy/more-guides';
 
 export interface GuideSection {
   heading: string;
@@ -140,4 +141,11 @@ export const guides = (): Guide[] => [
   },
 ];
 
-export const guideBySlug = (slug: string) => guides().find((g) => g.slug === slug);
+/**
+ * Every guide, for the guides index, the guide pages, the sitemap and the
+ * llms files. `guides()` stays the three original guides: the footer lists
+ * those and its layout is deliberately unchanged.
+ */
+export const allGuides = (): Guide[] => [...guides(), ...moreGuides()];
+
+export const guideBySlug = (slug: string) => allGuides().find((g) => g.slug === slug);

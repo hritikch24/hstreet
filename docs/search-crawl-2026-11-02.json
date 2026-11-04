@@ -1,0 +1,957 @@
+{
+  "sitemapCount": 42,
+  "fetched": 42,
+  "problems": [
+    {
+      "path": "https://www.highstreetshopfronts.co.uk/nationwide/sheffield",
+      "error": "<urlopen error timed out>"
+    }
+  ],
+  "termPageCounts": {
+    "shop front": 1,
+    "shopfront": 41,
+    "aluminium": 41,
+    "aluminum": 0,
+    "roller shutter": 41,
+    "shutter repair": 41,
+    "emergency": 41,
+    "24 hour": 41,
+    "24/7": 0,
+    "birmingham": 41,
+    "shopfront cost": 9,
+    "shopfront prices": 0,
+    "shutter stuck": 41
+  },
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfronts, Shutters & Shop Doors | High Street Shopfronts",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/aluminium-shopfronts",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/aluminium-shopfronts"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Aluminium Shopfronts Fitted UK-Wide \u00b7 High Street Shopfronts",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/roller-shutters",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/roller-shutters"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Roller Shutters for Shops, Fitted UK-Wide",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/automatic-doors",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/automatic-doors"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Automatic Sliding Doors for Shops, UK-Wide",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/security-doors",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/security-doors"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Steel Security & Fire Exit Doors for Shops",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/aluminium-doors",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/aluminium-doors"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Aluminium Shop Doors: Panel & Glazed",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/shutter-repairs",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/shutter-repairs"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Roller Shutter Repairs in Birmingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/shopfront-glass",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/shopfront-glass"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront Glass Replacement, Birmingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/lock-and-door-repairs",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/lock-and-door-repairs"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shop Door & Lock Repairs, Birmingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/glass-doors",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/glass-doors"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Frameless Glass Shop Doors, Fitted UK-Wide",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/curtain-walling",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/curtain-walling"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Curtain Walling & Glazed Screens for Shops",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/security-grilles",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/security-grilles"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Security Grilles for Shops, Fitted UK-Wide",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/canopies-and-awnings",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/canopies-and-awnings"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shop Canopies & Awnings, Fitted UK-Wide",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/automatic-door-repairs",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/automatic-door-repairs"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Automatic Door Repairs, Birmingham \u00b7 High Street Shopfronts",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/shopfront-servicing",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/shopfront-servicing"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shutter & Shopfront Servicing, Birmingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/emergency-board-up",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/emergency-board-up"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Emergency Board-Up After a Break-In, Birmingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/nationwide",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "UK-Wide Shopfront Installation: How It Works",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/nationwide/london",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide/london"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront & Shutter Fitting in London",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/nationwide/manchester",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide/manchester"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront Installation in Manchester",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/nationwide/bristol",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide/bristol"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfronts & Shutters Fitted in Bristol",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/nationwide/leicester",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide/leicester"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront & Shutter Fitters for Leicester",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/nationwide/nottingham",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide/nottingham"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront Installation in Nottingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shopfront cost",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "https://www.highstreetshopfronts.co.uk/nationwide/sheffield",
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "path": "/repairs",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront & Shutter Repairs in Birmingham",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/erdington",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/erdington"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shutter & Shopfront Repairs in Erdington",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/sutton-coldfield",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/sutton-coldfield"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shop Door & Shutter Repairs, Sutton Coldfield",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/alum-rock",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/alum-rock"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shutter Repairs on Alum Rock Road, B8",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/sparkhill",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/sparkhill"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shutter & Glass Repairs, Stratford Road B11",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/small-heath",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/small-heath"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shutter & Door Repairs in Small Heath, B10",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/handsworth",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/handsworth"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shutter Repairs on Soho Road, Handsworth",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/solihull",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/solihull"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shop Door, Glass & Shutter Repairs, Solihull",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/tamworth",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/tamworth"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront & Shutter Repairs in Tamworth",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/repairs/lichfield",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/repairs/lichfield"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront & Shutter Repairs in Lichfield",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/our-work",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/our-work"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfronts & Shutters We\u2019ve Fitted \u00b7 High Street Shopfronts",
+      "terms": [
+        "shop front",
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/prices",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/prices"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront & Shutter Guide Prices \u00b7 High Street Shopfronts",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/get-a-quote",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/get-a-quote"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Get a Shopfront or Shutter Quote \u00b7 High Street Shopfronts",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/guides",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/guides"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Shopfront Measurements & Shutter Help",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/guides/photograph-and-measure-your-shopfront",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/guides/photograph-and-measure-your-shopfront"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "How to Measure Your Shopfront for a Quote",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/guides/shutter-stuck-what-to-check",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/guides/shutter-stuck-what-to-check"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Roller Shutter Stuck? What to Check Safely",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/guides/manual-or-electric-shutter",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/guides/manual-or-electric-shutter"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Manual or Electric Shutter for a Small Shop?",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/the-firm",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/the-firm"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "The Firm: Birmingham Shopfront Fitters",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    },
+    {
+      "path": "/talk-to-us",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/talk-to-us"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "title": "Contact: Phone, WhatsApp & Hours \u00b7 High Street Shopfronts",
+      "terms": [
+        "shopfront",
+        "aluminium",
+        "roller shutter",
+        "shutter repair",
+        "emergency",
+        "24 hour",
+        "birmingham",
+        "shutter stuck"
+      ]
+    }
+  ],
+  "retryChecks": [
+    {
+      "url": "https://www.highstreetshopfronts.co.uk/nationwide/sheffield",
+      "status": 200,
+      "canonical": [
+        "https://www.highstreetshopfronts.co.uk/nationwide/sheffield"
+      ],
+      "robots": [
+        "index, follow"
+      ],
+      "h1Count": 1,
+      "note": "Initial timeout; subsequent read-only fetch passed."
+    }
+  ]
+}

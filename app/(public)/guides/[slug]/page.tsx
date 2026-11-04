@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { guideBySlug, guides } from '@/copy/guides';
+import { allGuides, guideBySlug } from '@/copy/guides';
 import { articleNode, faqNode, firmNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
 import { profile } from '@/business/profile';
 import { JsonLd, Opening, Reviewed } from '@/ui/blocks';
@@ -9,7 +9,7 @@ import { Paras } from '@/ui/Prose';
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return guides().map((g) => ({ slug: g.slug }));
+  return allGuides().map((g) => ({ slug: g.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<'/guides/[slug]'>) {

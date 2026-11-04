@@ -1,5 +1,5 @@
 import { absolute, profile } from '@/business/profile';
-import { guides } from '@/copy/guides';
+import { allGuides } from '@/copy/guides';
 import { installCities } from '@/copy/install-cities';
 import { home, nationwide, repairsHub } from '@/copy/pages';
 import { repairAreas } from '@/copy/repair-areas';
@@ -45,7 +45,7 @@ export function GET() {
   for (const c of installCities().filter((x) => cities.includes(x.slug))) {
     out.push(`## Installing in ${c.name} (${absolute(`/nationwide/${c.slug}`)})`, c.survey, ...c.onTheGround.map((l) => `- ${l}`), '', ...qa(c.questions));
   }
-  for (const g of guides()) {
+  for (const g of allGuides()) {
     out.push(`## ${g.h1} (${absolute(`/guides/${g.slug}`)})`, g.answer, '');
     for (const sec of g.sections) out.push(`### ${sec.heading}`, ...sec.paras.map(plain), ...(sec.steps ?? []).map((st, i) => `${i + 1}. ${st}`), '');
   }

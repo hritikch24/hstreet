@@ -7,6 +7,12 @@
 
 # High Street Shopfronts: agent notes
 
+For the 2 November search-traffic investigation and future Google Ads work,
+read `docs/search-traffic-and-google-ads-2026-11-02.md`. It records measured
+traffic, authenticated Search Console findings, current live crawlability, keyword
+intent and the existing conversion hooks with their remaining implementation
+gaps. The October pre-launch handoff is historical; check current evidence.
+
 Site for `highstreetshopfronts.co.uk`, a Birmingham shopfront and shutter
 installer. **Installs are UK-wide; repairs cover Birmingham and up to `profile.repairRadiusMiles` (70) miles from it.** Next.js 16
 (App Router), TypeScript, Tailwind v4, Prisma 6 + Postgres, Vercel.

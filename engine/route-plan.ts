@@ -5,7 +5,7 @@
  * `mayIndex()`, so they cannot disagree.
  */
 import { profile } from '@/business/profile';
-import { guides } from '@/copy/guides';
+import { allGuides } from '@/copy/guides';
 import { installCities } from '@/copy/install-cities';
 import { repairAreas } from '@/copy/repair-areas';
 import { servicePages } from '@/copy/services';
@@ -47,7 +47,7 @@ export function publicPaths(): string[] {
     '/prices',
     '/get-a-quote',
     '/guides',
-    ...guides().map((g) => `/guides/${g.slug}`),
+    ...allGuides().map((g) => `/guides/${g.slug}`),
     '/the-firm',
     '/talk-to-us',
     '/privacy-notice',

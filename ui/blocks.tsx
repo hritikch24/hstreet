@@ -96,13 +96,17 @@ export function Opening({
 
 /** Question-shaped sections. The same array feeds the FAQPage JSON-LD. */
 export function Questions({ questions, heading, bare = false }: { questions: QA[]; heading?: string; bare?: boolean }) {
+  // Under a section heading the questions are one level down. `.sign` is the
+  // exact h2 type style, so the page looks the same.
+  const Q = heading ? 'h3' : 'h2';
+  const qClass = heading ? 'sign text-[1.5rem] sm:text-[1.85rem]' : 'text-[1.5rem] sm:text-[1.85rem]';
   return (
     <section className={bare ? '' : 'shell py-10'}>
       {heading && <h2 className="mb-8 text-[1.9rem] sm:text-[2.4rem]">{heading}</h2>}
       <div className="grid gap-10">
         {questions.map((qa) => (
           <article key={qa.q} className="border-t border-ink pt-6">
-            <h2 className="text-[1.5rem] sm:text-[1.85rem]">{qa.q}</h2>
+            <Q className={qClass}>{qa.q}</Q>
             <div className="mt-4">
               <Paras paras={qa.a} list={qa.list} />
             </div>

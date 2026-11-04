@@ -1,5 +1,5 @@
 import { absolute, addressLine, hasStreetAddress, known, priceRange, profile, radius } from '@/business/profile';
-import { guides } from '@/copy/guides';
+import { allGuides } from '@/copy/guides';
 import { repairAreas } from '@/copy/repair-areas';
 import { installServices, publishedGaragePages, repairServices } from '@/copy/services';
 
@@ -38,7 +38,7 @@ export function GET() {
     `- [Repairs and emergency callouts](${absolute('/repairs')})`,
     '',
     '## Guides',
-    ...guides().map((g) => `- [${g.h1}](${absolute(`/guides/${g.slug}`)})`),
+    ...allGuides().map((g) => `- [${g.h1}](${absolute(`/guides/${g.slug}`)})`),
     '',
     '## More',
     `- [Full text of every answer on this site](${absolute('/llms-full.txt')})`,
