@@ -1,4 +1,4 @@
-# High Street Shopfronts
+# High Street Shopfronts 
 
 Website, enquiry handling and back office for High Street Shopfronts, a
 Birmingham firm that fits aluminium shopfronts, roller shutters, automatic
