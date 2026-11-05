@@ -13,7 +13,7 @@ const AI_CRAWLERS = [
   'Google-Extended',
 ];
 
-const PRIVATE = ['/hq', '/api/'];
+const PRIVATE = ['/hq', '/metrics', '/api/'];
 
 export default function robots(): MetadataRoute.Robots {
   assertReadyForSearch();

@@ -47,7 +47,7 @@ export function Bars({ title, rows, label, count = 'count' }: { title: string; r
   );
 }
 
-export function Periods({ hours, base }: { hours: number; base: string }) {
+export function Periods({ hours, base, query }: { hours: number; base: string; query?: string }) {
   const options = [
     ['24h', 24],
     ['7 days', 168],
@@ -59,7 +59,7 @@ export function Periods({ hours, base }: { hours: number; base: string }) {
       {options.map(([label, h]) => (
         <Link
           key={h}
-          href={`${base}?hours=${h}`}
+          href={`${base}?${query ? `${query}&` : ''}hours=${h}`}
           className={`rounded border px-3 py-1 text-sm font-bold no-underline ${h === hours ? 'border-ink bg-ink text-stone' : 'border-rule text-ink'}`}
         >
           {label}

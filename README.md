@@ -62,6 +62,7 @@ With a database, create the tables once: `npm run db:push`.
 | `DATABASE_URL` | Postgres for this site only (a new Neon or Vercel Postgres database). Never another site's. |
 | `HQ_KEY` | Back-office key, 16+ random characters. Open `/hq?key=<HQ_KEY>` once per browser; after that a cookie keeps you in for 30 days. Without it `/hq` is a plain 404. |
 | `HQ_STATS_TOKEN` | Token the combined metrics dashboard sends to `/api/hq/stats`. Different from `HQ_KEY`. |
+| `METRICS_KEY` | Optional. Key for the read-only counts page at `/metrics?key=<METRICS_KEY>`; defaults to `admin` when unset. The page has no names, contact details or photos (those are in `/hq`). |
 | `RESEND_API_KEY`, `ENQUIRY_EMAIL_TO`, `ENQUIRY_EMAIL_FROM` | Email to the owner for each enquiry, via Resend. Optional: enquiries are always saved and shown in `/hq`. The sender must be a verified address on this domain. |
 | `ANTHROPIC_API_KEY` | Turns on "Draft a reply" in `/hq`. Optional. |
 | `INDEXNOW_KEY` | This site's own IndexNow key (32 hex characters), served at `/indexnow-key.txt`. |

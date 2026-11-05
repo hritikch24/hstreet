@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { NOINDEX, PASS_COOKIE, keyIsRight, passFor, passIsValid } from '@/engine/hq-gate';
+import { metricsKeyIsRight } from '@/engine/metrics-gate';
 
 /**
  * Guards the back office. Anyone without the key gets the ordinary 404 page,
@@ -19,6 +20,12 @@ function withNoindex(res: NextResponse) {
 
 export async function proxy(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
+
+  // /metrics?key=… is stateless: the key is checked on every request, and a
+  // wrong or missing key gets the same 404 as any page that doesn't exist.
+  if (pathname === '/metrics') {
+    return metricsKeyIsRight(searchParams.get('key') ?? undefined) ? withNoindex(NextResponse.next()) : hidden(request);
+  }
 
   if (!pathname.startsWith('/hq') && !pathname.startsWith('/api/hq')) {
     return withNoindex(NextResponse.next());
@@ -57,5 +64,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/hq', '/hq/:path*', '/api/:path*'],
+  matcher: ['/hq', '/hq/:path*', '/api/:path*', '/metrics'],
 };
