@@ -55,7 +55,16 @@ export function WhatsAppLink({
  * The inline "send us a photo" ask. Used in the home hero, on every service
  * page and on the quote page. Deliberately not a floating button.
  */
-export function PhotoForQuote({ tone = 'panel', repair = false }: { tone?: 'panel' | 'ink'; repair?: boolean }) {
+export function PhotoForQuote({
+  tone = 'panel',
+  repair = false,
+  formHref,
+}: {
+  tone?: 'panel' | 'ink';
+  repair?: boolean;
+  /** Adds a plain "use the form" button, for pages where the header one is hidden. */
+  formHref?: string;
+}) {
   const ink = tone === 'ink';
   return (
     <div
@@ -74,6 +83,11 @@ export function PhotoForQuote({ tone = 'panel', repair = false }: { tone?: 'pane
           : 'One photo from across the road and the rough width of the opening is enough for a first price.'}
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
+        {formHref && (
+          <Link href={formHref} className="btn btn-accent">
+            {repair ? 'Book a repair online' : 'Get a quote online'}
+          </Link>
+        )}
         <WhatsAppLink text={repair ? REPAIR_MESSAGE : QUOTE_MESSAGE} className="btn btn-wa">
           <ChatGlyph /> WhatsApp {profile.whatsapp.value.display}
         </WhatsAppLink>

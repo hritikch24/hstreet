@@ -13,7 +13,7 @@
  */
 import Link from 'next/link';
 import { conversion } from '@/ui/Beacon';
-import { useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import {
   checkEnquiry,
   DOOR_KINDS,
@@ -114,15 +114,33 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
     }
   }
   const placeRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const doneRef = useRef<HTMLDivElement>(null);
+  const reachSeq = useRef(0);
+  const [contactBy, setContactBy] = useState<'phone' | 'whatsapp' | 'email'>('phone');
+  const [photoNote, setPhotoNote] = useState('');
+  const [focusTick, setFocusTick] = useState(0);
+  const telHref = `tel:${phoneDisplay.replace(/\s/g, '')}`;
+  const photoLimit = preview ? MAX_PHOTOS - 2 : MAX_PHOTOS;
 
+  // After a failed submit the errors have rendered: move focus to the first one.
+  useEffect(() => {
+    if (focusTick > 0) formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+  }, [focusTick]);
+  // After success the form is gone: land focus on the confirmation.
+  useEffect(() => {
+    if (state === 'done') doneRef.current?.focus();
+  }, [state]);
 
-  const checkPlace = async (value: string) => {
-    if (jobType !== 'repair' || value.trim().length < 2) return setReach(null);
+  const checkPlace = async (value: string, job: JobType = jobType) => {
+    const seq = ++reachSeq.current;
+    if (job !== 'repair' || value.trim().length < 2) return setReach(null);
     try {
       const res = await fetch(`/api/enquiries/reach?where=${encodeURIComponent(value.trim())}`);
-      setReach((await res.json()) as Reach);
+      const next = (await res.json()) as Reach;
+      if (seq === reachSeq.current) setReach(next);
     } catch {
-      setReach(null);
+      if (seq === reachSeq.current) setReach(null);
     }
   };
 
@@ -131,8 +149,10 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
     setChosenService('');
     setWants('quote');
     setProblems({});
-    if (next === 'install') setReach(null);
-    else if (placeRef.current?.value) void checkPlace(placeRef.current.value);
+    if (next === 'install') {
+      reachSeq.current++;
+      setReach(null);
+    } else if (placeRef.current?.value) void checkPlace(placeRef.current.value, next);
   };
 
   const outside = jobType === 'repair' && reach?.status === 'outside' && wants !== 'callback';
@@ -149,7 +169,9 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
     const local = checkEnquiry(Object.fromEntries([...data.entries()].filter(([, v]) => typeof v === 'string')));
     if (!local.ok) {
       setProblems(local.problems);
-      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      setMessage('Please check the highlighted answers.');
+      setState('failed');
+      setFocusTick((n) => n + 1);
       return;
     }
     if (outside) return;
@@ -187,19 +209,20 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
       if (body.problems) setProblems(body.problems);
       setMessage(body.message ?? 'Please check the highlighted answers.');
       setState('failed');
+      setFocusTick((n) => n + 1);
     } catch {
-      setMessage(`That didn’t send. Please try again, or call ${phoneDisplay}.`);
+      setMessage('That didn’t send. Please try again, or call us.');
       setState('failed');
     }
   }
 
   if (state === 'done') {
     return (
-      <div className="panel p-6" role="status">
+      <div ref={doneRef} tabIndex={-1} className="panel p-6 outline-offset-4" role="status">
         <p className="sign text-[1.5rem]">Thank you, that’s with us</p>
         <p className="mt-2">
           Your reference is <strong>{ref}</strong>. We’ll get back to you by the method you chose. If it’s urgent,
-          call {phoneDisplay}.
+          call <a href={telHref} data-tap="call" className="font-bold">{phoneDisplay}</a>.
         </p>
       </div>
     );
@@ -217,7 +240,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
   });
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid gap-5">
+    <form ref={formRef} onSubmit={onSubmit} noValidate className="grid gap-5">
       <fieldset>
         <legend className="label">Is this a new installation or a repair?</legend>
         <div className="grid gap-2 sm:grid-cols-2">
@@ -260,6 +283,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
           className="field"
           value={service}
           onChange={(e) => setService(e.target.value)}
+          aria-required="true"
           {...aria('service')}
         >
           <option value="" disabled>
@@ -301,7 +325,12 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
           className="field"
           autoComplete="postal-code"
           placeholder="e.g. B8 1AA or Erdington"
+          onChange={() => {
+            reachSeq.current++;
+            setReach(null);
+          }}
           onBlur={(e) => checkPlace(e.target.value)}
+          aria-required="true"
           {...aria('place')}
         />
         {err('place')}
@@ -341,23 +370,32 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
           <label htmlFor="name" className="label">
             Your name
           </label>
-          <input id="name" name="name" className="field" autoComplete="name" {...aria('name')} />
+          <input id="name" name="name" className="field" autoComplete="name" aria-required="true" {...aria('name')} />
           {err('name')}
         </div>
         <div>
           <label htmlFor="phone" className="label">
             Phone number
           </label>
-          <input id="phone" name="phone" type="tel" className="field" autoComplete="tel" {...aria('phone')} />
+          <input id="phone" name="phone" type="tel" className="field" autoComplete="tel" aria-required="true" {...aria('phone')} />
           {err('phone')}
         </div>
       </div>
 
       <div>
         <label htmlFor="email" className="label">
-          Email <span className="font-normal text-slate">(optional)</span>
+          Email{' '}
+          <span className="font-normal text-slate">{contactBy === 'email' ? '(needed, you asked for email)' : '(optional)'}</span>
         </label>
-        <input id="email" name="email" type="email" className="field" autoComplete="email" {...aria('email')} />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          className="field"
+          autoComplete="email"
+          aria-required={contactBy === 'email' ? 'true' : undefined}
+          {...aria('email')}
+        />
         {err('email')}
       </div>
 
@@ -370,9 +408,16 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
               ['whatsapp', 'WhatsApp'],
               ['email', 'Email'],
             ] as const
-          ).map(([value, label], i) => (
-            <label key={value} className="flex items-center gap-2">
-              <input type="radio" name="contactBy" value={value} defaultChecked={i === 0} className="h-5 w-5 accent-[var(--color-accent)]" />
+          ).map(([value, label]) => (
+            <label key={value} className="flex min-h-11 cursor-pointer items-center gap-2 pr-2">
+              <input
+                type="radio"
+                name="contactBy"
+                value={value}
+                checked={contactBy === value}
+                onChange={() => setContactBy(value)}
+                className="h-5 w-5 accent-[var(--color-accent)]"
+              />
               {label}
             </label>
           ))}
@@ -417,7 +462,7 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
             <div className="min-w-0 text-[0.95rem]">
               <p className="font-bold text-ink">Your preview is attached, with your original photo</p>
               <p className="mt-0.5 text-slate">{preview.summary}</p>
-              <button type="button" className="mt-1 font-bold text-accent underline" onClick={() => setDropPreview(true)}>
+              <button type="button" className="mt-1 min-h-11 font-bold text-accent underline" onClick={() => setDropPreview(true)}>
                 Don’t send the preview
               </button>
             </div>
@@ -431,12 +476,23 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
           type="file"
           accept="image/jpeg,image/png,image/webp"
           multiple
-          className="field py-2"
-          onChange={(e) => setPhotos(Array.from(e.target.files ?? []).slice(0, MAX_PHOTOS))}
+          className="field py-2 file:mr-3 file:cursor-pointer file:border file:border-ink file:bg-stone file:px-3 file:py-2 file:font-semibold file:text-ink"
+          onChange={(e) => {
+            const chosen = Array.from(e.target.files ?? []);
+            setPhotos(chosen.slice(0, photoLimit));
+            setPhotoNote(
+              chosen.length > photoLimit
+                ? `You chose ${chosen.length}. We can take ${photoLimit} here, so only the first ${photoLimit} will be sent. Send more by WhatsApp.`
+                : '',
+            );
+          }}
           {...aria('photos')}
         />
         {err('photos')}
-        {photos.length > 0 && <p className="mt-1 text-[0.95rem] text-slate">{photos.length} photo(s) ready to send.</p>}
+        <div role="status" aria-live="polite">
+          {photoNote && <p className="mt-1 text-[0.95rem] font-bold text-ink">{photoNote}</p>}
+          {photos.length > 0 && <p className="mt-1 text-[0.95rem] text-slate">{photos.length} photo(s) ready to send.</p>}
+        </div>
       </div>
 
       <div className="hidden" aria-hidden="true">
@@ -446,7 +502,12 @@ export function QuoteForm({ radiusMiles, phoneDisplay, garage = false }: Props) 
 
       {state === 'failed' && message && (
         <p className="font-bold text-accent" role="alert">
-          {message}
+          {message}{' '}
+          {Object.keys(problems).length === 0 && (
+            <a href={telHref} data-tap="call" className="text-ink">
+              Call {phoneDisplay}
+            </a>
+          )}
         </p>
       )}
 

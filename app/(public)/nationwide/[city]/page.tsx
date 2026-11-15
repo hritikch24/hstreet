@@ -84,7 +84,7 @@ export default async function CityPage({ params }: PageProps<'/nationwide/[city]
           <PhotoForQuote />
         </div>
         <p className="mt-4">
-          <Link href="/nationwide" className="font-bold">
+          <Link href="/nationwide" className="more">
             How every UK-wide installation works
           </Link>
         </p>

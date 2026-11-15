@@ -42,11 +42,12 @@ export default function RepairsPage() {
       <Section heading="What we repair">
         <ul className="grid gap-3 md:grid-cols-3">
           {repairServices().map((s) => (
-            <li key={s.path} className="panel p-4">
-              <Link href={s.path} className="sign text-[1.2rem] no-underline hover:underline">
-                {s.name}
+            <li key={s.path}>
+              <Link href={s.path} className="group panel block h-full p-4 no-underline hover:border-ink">
+                <span className="sign block text-[1.2rem] group-hover:underline">{s.name}</span>
+                <span className="mt-1 block text-[0.98rem]">{s.summary}</span>
+                <span className="mt-3 block text-[0.92rem] font-semibold text-accent">View →</span>
               </Link>
-              <p className="mt-1 text-[0.98rem]">{s.summary}</p>
             </li>
           ))}
         </ul>

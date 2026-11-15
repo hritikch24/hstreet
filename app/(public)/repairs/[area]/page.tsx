@@ -74,7 +74,7 @@ export default async function RepairAreaPage({ params }: PageProps<'/repairs/[ar
         <ul className="flex flex-wrap gap-2">
           {repairServices().map((s) => (
             <li key={s.path}>
-              <Link href={s.path} className="btn btn-plain min-h-0 py-2 text-[0.95rem]">
+              <Link href={s.path} className="btn btn-plain min-h-11 py-2 text-[0.95rem]">
                 {s.name}
               </Link>
             </li>

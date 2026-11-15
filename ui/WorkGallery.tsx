@@ -6,7 +6,7 @@
  * native <dialog> (Esc closes it, arrow keys move through photos).
  */
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JobPhoto } from '@/copy/job-photos';
 
 export interface GalleryGroup {
@@ -22,10 +22,12 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
   const shown = groups.filter((g) => !only || g.id === only);
   const flat = shown.flatMap((g) => g.photos);
 
-  const view = (p: JobPhoto) => {
-    setOpen(p);
-    dialog.current?.showModal();
-  };
+  const view = (p: JobPhoto) => setOpen(p);
+  // Open the dialog only once its content has rendered, so focus lands on the Close button.
+  useEffect(() => {
+    const d = dialog.current;
+    if (open && d && !d.open) d.showModal();
+  }, [open]);
   const step = (by: number) => {
     if (!open) return;
     const i = flat.findIndex((p) => p.file === open.file);
@@ -43,7 +45,7 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
               type="button"
               aria-pressed={active}
               onClick={() => setOnly(g.id)}
-              className={`rounded-full border px-4 py-2 text-[0.95rem] font-bold ${
+              className={`min-h-11 rounded-full border px-4 py-2 text-[0.95rem] font-bold ${
                 active ? 'border-ink bg-ink text-stone' : 'border-ink/40 bg-paper text-ink hover:border-ink'
               }`}
             >
@@ -64,10 +66,10 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
                 <button
                   type="button"
                   onClick={() => view(p)}
-                  className="group block w-full text-left"
+                  className="group block w-full cursor-zoom-in text-left"
                   aria-label={`View larger: ${p.caption}`}
                 >
-                  <span className="zoom block">
+                  <span className="zoom relative block">
                     <Image
                       src={p.file}
                       alt={p.alt}
@@ -76,6 +78,15 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
                       sizes="(min-width: 1024px) 380px, 50vw"
                       className="aspect-[4/3] h-auto w-full object-cover"
                     />
+                    <span
+                      aria-hidden="true"
+                      className="absolute right-3 bottom-3 grid h-9 w-9 place-items-center rounded-full bg-paper/90 text-ink"
+                    >
+                      <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6">
+                        <circle cx="8.5" cy="8.5" r="5.5" />
+                        <path d="m13 13 4.5 4.5M8.5 6v5M6 8.5h5" />
+                      </svg>
+                    </span>
                   </span>
                   <span className="block pt-3 text-[0.85rem] text-slate">{p.caption}</span>
                 </button>
@@ -106,20 +117,20 @@ export function WorkGallery({ groups }: { groups: GalleryGroup[] }) {
               width={open.width}
               height={open.height}
               sizes="96vw"
-              className="max-h-[78vh] w-auto object-contain"
+              className="mx-auto max-h-[min(78vh,calc(100dvh-9rem))] w-auto object-contain"
             />
             <figcaption className="flex flex-wrap items-center justify-between gap-3 p-3 text-stone">
               <span>
                 <strong>{open.caption}.</strong> <span className="text-stone/80">{open.alt}</span>
               </span>
               <span className="flex gap-2">
-                <button type="button" className="btn min-h-0 border border-stone/50 px-3 py-1.5" onClick={() => step(-1)}>
+                <button type="button" className="btn min-h-11 border border-stone/50 px-3 py-1.5" onClick={() => step(-1)}>
                   ‹ Previous
                 </button>
-                <button type="button" className="btn min-h-0 border border-stone/50 px-3 py-1.5" onClick={() => step(1)}>
+                <button type="button" className="btn min-h-11 border border-stone/50 px-3 py-1.5" onClick={() => step(1)}>
                   Next ›
                 </button>
-                <button type="button" className="btn btn-accent min-h-0 px-3 py-1.5" onClick={() => dialog.current?.close()}>
+                <button type="button" className="btn btn-accent min-h-11 px-3 py-1.5" onClick={() => dialog.current?.close()}>
                   Close
                 </button>
               </span>

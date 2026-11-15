@@ -81,7 +81,10 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
           </p>
         )}
         <div className="mt-5 lg:hidden">
-          <PhotoForQuote repair={s.kind === 'repair'} />
+          <PhotoForQuote
+            repair={s.kind === 'repair'}
+            formHref={`/get-a-quote?job=${s.kind === 'repair' ? 'repair' : 'install'}&service=${encodeURIComponent(s.quoteService)}`}
+          />
         </div>
       </Opening>
 
@@ -93,7 +96,7 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
           {s.guide && (
             <p className="rounded-[2px] bg-stone-deep p-4">
               <span className="kicker block text-accent">Guide</span>
-              <Link href={s.guide.href} className="mt-1 inline-block text-[1.1rem] font-bold">
+              <Link href={s.guide.href} className="more mt-1 text-[1.1rem]">
                 {s.guide.label}
               </Link>
             </p>
@@ -130,7 +133,7 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
             <PhotoGrid photos={photos} limit={6} />
           </div>
           <p className="mt-4">
-            <Link href={`/our-work#${s.photos!.line}`} className="font-bold">
+            <Link href={`/our-work#${s.photos!.line}`} className="more">
               See all our {s.name.toLowerCase()}
             </Link>
           </p>
@@ -142,7 +145,7 @@ export default async function ServicePage({ params }: PageProps<'/[service]'>) {
         <ul className="mt-3 flex flex-wrap gap-2">
           {others.map((o) => (
             <li key={o.path}>
-              <Link href={o.path} className="btn btn-plain min-h-0 py-2 text-[0.95rem]">
+              <Link href={o.path} className="btn btn-plain min-h-11 py-2 text-[0.95rem]">
                 {o.name}
               </Link>
             </li>

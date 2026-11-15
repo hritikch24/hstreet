@@ -9,7 +9,8 @@
  * customer chooses to send it.
  */
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import Link from 'next/link';
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import {
   describe,
   EXAMPLE,
@@ -65,11 +66,21 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
   const warp = useRef<Warp | null>(null);
   const shownPhoto = useRef<HTMLCanvasElement | null>(null);
   const front = useRef<HTMLCanvasElement | null>(null);
+  const [shownWidth, setShownWidth] = useState(0);
   const frontKey = useRef('');
 
   const sensible = quad ? isSensible(quad) : false;
 
   // Draw whenever the photo, corners, design or compare state change.
+  // Corner drag targets stay at least 22 CSS px in radius however small the photo is drawn.
+  useEffect(() => {
+    const el = svg.current;
+    if (!el) return;
+    const watch = new ResizeObserver(() => setShownWidth(el.getBoundingClientRect().width));
+    watch.observe(el);
+    return () => watch.disconnect();
+  }, [photo, editing]);
+
   useEffect(() => {
     if (!photo || !quad || !stage.current) return;
     try {
@@ -216,7 +227,12 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
     return (
       <div className="panel p-5">
         <p className="font-bold text-ink">This browser can’t draw the preview.</p>
-        <p className="mt-1">Send us a photo of your shop on WhatsApp instead and we’ll talk you through the options.</p>
+        <p className="mt-1">
+          Send us a photo of your shop instead and we’ll talk you through the options.{' '}
+          <Link href="/get-a-quote" className="more">
+            Ask for a quote
+          </Link>
+        </p>
       </div>
     );
   }
@@ -224,7 +240,7 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
   if (!photo || !quad) {
     return (
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="lift flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed border-ink bg-paper p-8 text-center">
+        <label className="lift flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed border-ink bg-paper p-8 text-center has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent">
           <span className="sign text-[1.35rem]">Use a photo of your shop</span>
           <span className="text-[0.95rem] text-slate">Stand across the road and take it straight on. It stays on your phone.</span>
           <span className="btn btn-accent mt-2">Choose or take a photo</span>
@@ -292,7 +308,7 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
                   <circle
                     cx={p[0]}
                     cy={p[1]}
-                    r={r * 2.4}
+                    r={Math.max(r * 2.4, shownWidth && photo ? (photo.width * 22) / shownWidth : 0)}
                     fill="transparent"
                     style={{ touchAction: 'none', cursor: 'grab' }}
                     tabIndex={0}
@@ -360,7 +376,14 @@ export function Visualiser({ phoneDisplay }: { phoneDisplay: string }) {
               onPointerDown={() => setComparing(true)}
               onPointerUp={() => setComparing(false)}
               onPointerLeave={() => setComparing(false)}
-              onKeyDown={(e) => (e.key === ' ' || e.key === 'Enter') && setComparing(true)}
+              onPointerCancel={() => setComparing(false)}
+              onBlur={() => setComparing(false)}
+              onKeyDown={(e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                  e.preventDefault();
+                  setComparing(true);
+                }
+              }}
               onKeyUp={() => setComparing(false)}
             >
               Hold to see before
@@ -422,6 +445,7 @@ function Choice<T extends string>({
   options: { value: T; label: string }[];
   onChange: (v: T) => void;
 }) {
+  const name = useId();
   return (
     <fieldset>
       <legend className="label">{legend}</legend>
@@ -429,11 +453,11 @@ function Choice<T extends string>({
         {options.map((o) => (
           <label
             key={o.value}
-            className={`cursor-pointer rounded-full border-2 px-3 py-1.5 text-[0.95rem] font-bold has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent ${
+            className={`flex min-h-11 cursor-pointer items-center rounded-full border-2 px-4 py-1.5 text-[0.95rem] font-bold has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent ${
               value === o.value ? 'border-ink bg-ink text-stone' : 'border-ink/35 bg-white text-ink'
             }`}
           >
-            <input type="radio" className="sr-only" checked={value === o.value} onChange={() => onChange(o.value)} />
+            <input type="radio" name={name} className="sr-only" checked={value === o.value} onChange={() => onChange(o.value)} />
             {o.label}
           </label>
         ))}
@@ -444,6 +468,7 @@ function Choice<T extends string>({
 
 function Swatches({ legend, list, value, onChange }: { legend: string; list: Swatch[]; value: string; onChange: (id: string) => void }) {
   const current = list.find((s) => s.id === value) ?? list[0];
+  const name = useId();
   return (
     <fieldset>
       <legend className="label">
@@ -458,7 +483,7 @@ function Swatches({ legend, list, value, onChange }: { legend: string; list: Swa
               value === s.id ? 'border-accent' : 'border-ink/30'
             }`}
           >
-            <input type="radio" className="sr-only" checked={value === s.id} onChange={() => onChange(s.id)} aria-label={s.name} />
+            <input type="radio" name={name} className="sr-only" checked={value === s.id} onChange={() => onChange(s.id)} aria-label={s.name} />
             <span className="h-8 w-8 rounded-full border border-black/20" style={{ background: s.hex }} />
           </label>
         ))}
@@ -469,7 +494,7 @@ function Swatches({ legend, list, value, onChange }: { legend: string; list: Swa
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
-    <label className="flex cursor-pointer items-center gap-2">
+    <label className="flex min-h-11 cursor-pointer items-center gap-2">
       <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="h-5 w-5 accent-[var(--color-accent)]" />
       {label}
     </label>
@@ -494,7 +519,7 @@ function Designer({ design, set }: { design: Design; set: <K extends keyof Desig
           <fieldset>
             <legend className="label">Window bays: {design.bays}</legend>
             <div className="flex items-center gap-2">
-              <button type="button" className="btn btn-plain h-11 min-h-0 w-11 p-0" onClick={() => set('bays', Math.max(1, design.bays - 1))} aria-label="Fewer bays">
+              <button type="button" className="btn btn-plain h-11 min-h-0 w-11 p-0" onClick={() => set('bays', Math.max(1, design.bays - 1))} disabled={design.bays <= 1} aria-label="Fewer bays">
                 −
               </button>
               <input
@@ -506,7 +531,7 @@ function Designer({ design, set }: { design: Design; set: <K extends keyof Desig
                 className="flex-1 accent-[var(--color-accent)]"
                 aria-label="Number of window bays"
               />
-              <button type="button" className="btn btn-plain h-11 min-h-0 w-11 p-0" onClick={() => set('bays', Math.min(7, design.bays + 1))} aria-label="More bays">
+              <button type="button" className="btn btn-plain h-11 min-h-0 w-11 p-0" onClick={() => set('bays', Math.min(7, design.bays + 1))} disabled={design.bays >= 7} aria-label="More bays">
                 +
               </button>
             </div>

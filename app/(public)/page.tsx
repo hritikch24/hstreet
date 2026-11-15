@@ -60,7 +60,7 @@ export default function HomePage() {
           </div>
           <figcaption className="flex justify-between gap-4 pt-3 text-[0.85rem] text-slate">
             <span>{hero.caption}</span>
-            <Link href="/our-work" className="shrink-0 text-slate">
+            <Link href="/our-work" className="more shrink-0">
               Our work
             </Link>
           </figcaption>
@@ -102,7 +102,7 @@ export default function HomePage() {
         </div>
         <p className="mt-12 border-t border-rule pt-6 text-ink-soft">
           Not in Birmingham? We fit anywhere in the UK.{' '}
-          <Link href="/nationwide" className="font-semibold">
+          <Link href="/nationwide" className="more">
             How a UK-wide job works
           </Link>
         </p>
@@ -155,7 +155,7 @@ export default function HomePage() {
         <div className="shell">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="text-[2.2rem] sm:text-[3rem]">{c.proofHeading}</h2>
-            <Link href="/our-work" className="font-semibold">
+            <Link href="/our-work" className="more">
               All our work
             </Link>
           </div>

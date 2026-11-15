@@ -210,7 +210,7 @@ export function TwoAreas() {
           New shopfronts, roller shutters, grilles, automatic and glass doors, canopies and curtain walling. The team
           travels to you.
         </p>
-        <Link href="/nationwide" className="mt-4 inline-block font-semibold">
+        <Link href="/nationwide" className="more mt-4">
           How a UK-wide job works
         </Link>
       </div>
@@ -221,7 +221,7 @@ export function TwoAreas() {
           Shutters, doors, automatic doors, glass and locks, with planned servicing. The emergency line is answered
           day and night.
         </p>
-        <Link href="/repairs" className="mt-4 inline-block font-semibold">
+        <Link href="/repairs" className="more mt-4">
           Repairs and emergencies
         </Link>
       </div>

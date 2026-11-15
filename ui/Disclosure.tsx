@@ -39,11 +39,24 @@ export function Disclosure({
     const onClick = (e: MouseEvent) => {
       if (el.open && !el.contains(e.target as Node)) el.open = false;
     };
+    // Following a link to the page you are already on does not change the
+    // path, so close on the activation itself.
+    const onInside = (e: MouseEvent) => {
+      if (el.open && (e.target as Element).closest('a')) el.open = false;
+    };
+    const onFocusOut = (e: FocusEvent) => {
+      const to = e.relatedTarget as Node | null;
+      if (el.open && to && !el.contains(to)) el.open = false;
+    };
     document.addEventListener('keydown', onKey);
     document.addEventListener('click', onClick);
+    el.addEventListener('click', onInside);
+    el.addEventListener('focusout', onFocusOut);
     return () => {
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('click', onClick);
+      el.removeEventListener('click', onInside);
+      el.removeEventListener('focusout', onFocusOut);
     };
   }, []);
 

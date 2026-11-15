@@ -59,7 +59,7 @@ export default function FirmPage() {
           ))}
         </ul>
         <p className="mt-6">
-          <Link href="/talk-to-us" className="font-bold">
+          <Link href="/talk-to-us" className="more">
             Phone, WhatsApp and opening hours
           </Link>
         </p>

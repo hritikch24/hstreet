@@ -25,7 +25,7 @@ function Card({ s, n }: { s: ServicePage; n: number }) {
       <span className="mt-2 block max-w-[34ch] text-slate">{s.summary}</span>
       <span className="mt-4 flex justify-between border-t border-rule pt-3 text-[0.92rem] font-semibold">
         <span>About {s.keyFacts[0].value}</span>
-        <span className="font-normal text-slate">guide</span>
+        <span className="font-semibold text-accent">View →</span>
       </span>
     </Link>
   );
@@ -57,7 +57,9 @@ export function InstallCards() {
                 <Link href={s.path} className="group grid gap-x-8 gap-y-1 py-5 no-underline md:grid-cols-[1fr_1.4fr_auto] md:items-baseline">
                   <span className="sign text-[1.5rem] group-hover:underline">{s.name}</span>
                   <span className="text-slate">{s.summary}</span>
-                  <span className="text-[0.92rem] font-semibold">About {s.keyFacts[0].value}</span>
+                  <span className="text-[0.92rem] font-semibold">
+                    About {s.keyFacts[0].value} <span className="ml-2 text-accent">View →</span>
+                  </span>
                 </Link>
               </li>
             ))}
@@ -78,6 +80,7 @@ export function RepairList() {
             <span className="font-serif text-[1.45rem] text-stone group-hover:underline sm:text-[1.7rem]">{s.name}</span>
             <span className="text-[0.92rem] text-stone/65">
               {s.keyFacts[0].label.replace(', guide', '')} · about {s.keyFacts[0].value}
+              <span className="ml-3 text-accent-soft">View →</span>
             </span>
           </Link>
         </li>

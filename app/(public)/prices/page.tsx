@@ -34,31 +34,47 @@ const repairRows: { key: PriceKey; name: string; href: string }[] = [
 
 function PriceTable({ rows, lead }: { rows: { key: PriceKey; name: string; href: string; lead?: string }[]; lead: string }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[34rem] border-collapse text-left">
-        <thead>
-          <tr className="border-b-2 border-ink text-sm uppercase tracking-wider text-slate">
-            <th className="py-2 pr-4">Job</th>
-            <th className="py-2 pr-4">Guide price</th>
-            <th className="py-2 pr-4">{lead}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.key} className="border-b border-rule align-top">
-              <td className="py-3 pr-4">
-                <Link href={r.href} className="font-bold">
-                  {r.name}
-                </Link>
-                <span className="block text-sm text-slate">{priceBasis(r.key)}</span>
-              </td>
-              <td className="py-3 pr-4 font-bold whitespace-nowrap text-ink">{priceRange(r.key)}</td>
-              <td className="py-3 pr-4">{r.lead ?? profile.response.value.standard}</td>
+    <>
+      <ul className="border-t-2 border-ink sm:hidden">
+        {rows.map((r) => (
+          <li key={r.key} className="border-b border-rule py-4">
+            <Link href={r.href} className="font-bold">
+              {r.name}
+            </Link>
+            <span className="block text-sm text-slate">{priceBasis(r.key)}</span>
+            <span className="mt-2 block text-[1.15rem] font-bold text-ink">{priceRange(r.key)}</span>
+            <span className="mt-1 block text-[0.95rem] text-ink-soft">
+              {lead}: {r.lead ?? profile.response.value.standard}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden overflow-x-auto sm:block">
+        <table className="w-full border-collapse text-left">
+          <thead>
+            <tr className="border-b-2 border-ink text-sm uppercase tracking-wider text-slate">
+              <th className="py-2 pr-4">Job</th>
+              <th className="py-2 pr-4">Guide price</th>
+              <th className="py-2 pr-4">{lead}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.key} className="border-b border-rule align-top">
+                <td className="py-3 pr-4">
+                  <Link href={r.href} className="font-bold">
+                    {r.name}
+                  </Link>
+                  <span className="block text-sm text-slate">{priceBasis(r.key)}</span>
+                </td>
+                <td className="py-3 pr-4 font-bold whitespace-nowrap text-ink">{priceRange(r.key)}</td>
+                <td className="py-3 pr-4">{r.lead ?? profile.response.value.standard}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 

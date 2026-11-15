@@ -4,7 +4,7 @@ import { guides } from '@/copy/guides';
 import { installServices, repairServices } from '@/copy/services';
 import { CallLink, WhatsAppLink } from '@/ui/reach';
 
-const quiet = 'text-stone/80 no-underline hover:text-stone hover:underline';
+const quiet = 'inline-flex min-h-8 items-center text-stone/80 no-underline hover:text-stone hover:underline';
 
 /** The footer: the business facts, stated once, the same way everywhere. */
 export function SiteFooter() {
@@ -17,15 +17,18 @@ export function SiteFooter() {
           <p className="mt-4 text-[0.95rem] text-stone/75">{addressLine()}</p>
           <ul className="mt-6 grid gap-1.5 text-[0.95rem]">
             <li>
-              <CallLink className="font-semibold text-stone no-underline hover:underline" />
+              <CallLink className="font-semibold text-stone underline decoration-stone/40 underline-offset-4 hover:text-stone hover:decoration-stone" />
             </li>
             <li>
-              <WhatsAppLink className="text-stone/85 no-underline hover:underline">
+              <WhatsAppLink className="text-stone/85 underline decoration-stone/40 underline-offset-4 hover:text-stone hover:decoration-stone">
                 WhatsApp {profile.whatsapp.value.display}
               </WhatsAppLink>
             </li>
             <li>
-              <a href={`mailto:${profile.email.value}`} className={quiet}>
+              <a
+                href={`mailto:${profile.email.value}`}
+                className="text-stone/80 underline decoration-stone/40 underline-offset-4 hover:text-stone hover:decoration-stone"
+              >
                 {profile.email.value}
               </a>
             </li>
