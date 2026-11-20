@@ -19,3 +19,11 @@ export function metricsKeyIsRight(given: string | string[] | undefined): boolean
   if (typeof given !== 'string' || !given) return false;
   return same(given, metricsKey());
 }
+
+/**
+ * True only when METRICS_KEY has been set to something long (16+ characters),
+ * i.e. the address is no longer the guessable /metrics?key=admin.
+ */
+export function metricsKeyIsStrong(): boolean {
+  return (process.env.METRICS_KEY?.trim().length ?? 0) >= 16;
+}

@@ -47,13 +47,14 @@ export function Bars({ title, rows, label, count = 'count' }: { title: string; r
   );
 }
 
-export function Periods({ hours, base, query }: { hours: number; base: string; query?: string }) {
-  const options = [
+export function Periods({ hours, base, query, withHour = false }: { hours: number; base: string; query?: string; withHour?: boolean }) {
+  const options: readonly (readonly [string, number])[] = [
+    ...(withHour ? ([['1 hour', 1]] as const) : []),
     ['24h', 24],
     ['7 days', 168],
     ['30 days', 720],
     ['90 days', 2160],
-  ] as const;
+  ];
   return (
     <div className="flex flex-wrap gap-1">
       {options.map(([label, h]) => (
