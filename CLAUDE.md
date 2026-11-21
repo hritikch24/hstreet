@@ -14,7 +14,7 @@ intent and the existing conversion hooks with their remaining implementation
 gaps. The October pre-launch handoff is historical; check current evidence.
 
 Site for `highstreetshopfronts.co.uk`, a Birmingham shopfront and shutter
-installer. **Installs are UK-wide; repairs cover Birmingham and up to `profile.repairRadiusMiles` (70) miles from it.** Next.js 16
+installer. **Installs are UK-wide; repairs cover Birmingham and up to `profile.repairRadiusMiles` (100, owner decision 21 Nov 2026) miles from it.** Next.js 16
 (App Router), TypeScript, Tailwind v4, Prisma 6 + Postgres, Vercel.
 
 Human setup, env vars and the launch checklist are in `README.md`.

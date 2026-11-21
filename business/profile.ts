@@ -122,7 +122,7 @@ export const profile: Profile = {
   domain: 'highstreetshopfronts.co.uk',
   host: 'www.highstreetshopfronts.co.uk',
   oneLiner:
-    'Birmingham fitters of aluminium shopfronts, roller shutters and shop doors: new installs anywhere in the UK, repairs within 70 miles.',
+    'Birmingham fitters of aluminium shopfronts, roller shutters and shop doors: new installs anywhere in the UK, repairs within 100 miles.',
   indexable: true,
 
   // The firm is presented as a company, not a named person.
@@ -149,7 +149,7 @@ export const profile: Profile = {
   companyNumber: confirmed('17529805'),
   vatRegistered: confirmed(false),
 
-  repairRadiusMiles: confirmed(70), // keep in step with oneLiner above
+  repairRadiusMiles: confirmed(100), // owner confirmed 21 Nov 2026; keep in step with oneLiner above
   // No promised arrival time: the owner has not given one, and none is invented.
   response: confirmed({ emergency: 'as soon as we can', standard: 'on a day we agree with you' }),
 
@@ -204,7 +204,7 @@ export const profile: Profile = {
   sameAs: [],
   googleReviewLink: '',
 
-  copyReviewedOn: '2026-10-26',
+  copyReviewedOn: '2026-11-21',
   pricesCheckedOn: confirmed('2026-10-26'),
 };
 

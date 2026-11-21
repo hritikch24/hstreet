@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { guidePrice, priceRange, profile } from '@/business/profile';
+import { guidePrice, priceRange, profile, radius } from '@/business/profile';
 import { confirmedJobs } from '@/copy/job-photos';
 import { installCityBySlug } from '@/copy/install-cities';
 import { faqNode, graph, pageMeta, pageNode, trailNode } from '@/engine/search-meta';
@@ -31,7 +31,8 @@ export default async function CityPage({ params }: PageProps<'/nationwide/[city]
   ];
   // Only jobs whose town the owner has confirmed. Nothing is inferred.
   const jobs = confirmedJobs().filter((j) => j.town.toLowerCase() === city.name.toLowerCase());
-  const answer = `Yes, we fit shopfronts, roller shutters and shop doors in ${city.name}. It is about ${city.miles} miles from Birmingham, ${city.drive} via ${city.route}; a typical shopfront costs ${guidePrice('shopfront')} and is fitted ${profile.leadTimes.value.shopfront}. We install in ${city.name} but do not do repairs there.`;
+  const repairsHere = city.miles <= radius();
+  const answer = `Yes, we fit shopfronts, roller shutters and shop doors in ${city.name}. It is about ${city.miles} miles from Birmingham, ${city.drive} via ${city.route}; a typical shopfront costs ${guidePrice('shopfront')} and is fitted ${profile.leadTimes.value.shopfront}. ${repairsHere ? `Repairs and emergency callouts in ${city.name} are covered too, as it is within about ${radius()} miles of Birmingham.` : `We install in ${city.name} but do not do repairs there.`}`;
 
   return (
     <>
@@ -45,7 +46,7 @@ export default async function CityPage({ params }: PageProps<'/nationwide/[city]
           { label: 'From Birmingham', value: `About ${city.miles} miles` },
           { label: 'Drive', value: city.drive },
           { label: 'Shopfront, guide', value: priceRange('shopfront') },
-          { label: 'Repairs here', value: 'Not offered' },
+          { label: 'Repairs here', value: repairsHere ? 'Yes, inside our repair area' : 'Not offered' },
         ]}
       />
 
